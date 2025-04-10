@@ -33,6 +33,7 @@ class RENTALS {
     start DATETIME
     end DATETIME
     nb_days INT
+    state ENUM('paid', 'cancelled', 'ongoing', 'completed')
     total_price FLOAT
     customer_id INT <<FK>>
     warranty_id INT <<FK>>

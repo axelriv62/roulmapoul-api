@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\RentalState;
 use App\Models\Car;
 use App\Models\Customer;
 use Illuminate\Database\Migrations\Migration;
@@ -14,6 +15,7 @@ return new class extends Migration {
             $table->dateTime('start');
             $table->dateTime('end');
             $table->integer('nb_days');
+            $table->enum('state', RentalState::cases());
             $table->float('total_price');
             $table->foreignIdFor(Customer::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(Car::class, 'car_plate')->constrained()->cascadeOnDelete()->cascadeOnUpdate();

@@ -9,22 +9,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('customers', function (Blueprint $table) {
-            $table->id('cust_id');
-            $table->string('cust_first_name');
-            $table->string('cust_last_name');
-            $table->date('cust_birth_date');
-            $table->string('cust_mail');
-            $table->string('cust_phone');
-            $table->string('cust_num');
-            $table->string('cust_street');
-            $table->string('cust_zip');
-            $table->string('cust_city');
-            $table->string('cust_country');
-            $table->string('cust_num_bill');
-            $table->string('cust_street_bill');
-            $table->string('cust_zip_bill');
-            $table->string('cust_city_bill');
-            $table->string('cust_country_bill');
+            $table->id('id');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->date('birth_date');
+            $table->string('mail');
+            $table->string('phone');
+            $table->string('num');
+            $table->string('street');
+            $table->string('zip');
+            $table->string('city');
+            $table->string('country');
+            $table->string('num_bill');
+            $table->string('street_bill');
+            $table->string('zip_bill');
+            $table->string('city_bill');
+            $table->string('country_bill');
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });

@@ -51,7 +51,7 @@ class License extends Model
      * @var string[]
      */
     protected $casts = [
-        'acquirement_date' => 'datetime',
-        'distribution_date' => 'datetime'
+        'acquirement_date' => 'date',
+        'distribution_date' => 'date'
     ];
 }

@@ -9,11 +9,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('licenses', function (Blueprint $table) {
-            $table->string('license_num')->primary();
-            $table->date('license_date_acquisition');
-            $table->string('license_date_distribution');
-            $table->string('license_country');
-            $table->foreignId('cust_id')->nullable()->constrained('customers')->nullOnDelete();
+            $table->string('num')->primary();
+            $table->date('date_acquisition');
+            $table->string('date_distribution');
+            $table->string('country');
+            $table->foreignId('customer_id')->nullable()->constrained('customers')->nullOnDelete();
             $table->timestamps();
         });
     }

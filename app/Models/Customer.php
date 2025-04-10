@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $zip_bill
  * @property string $city_bill
  * @property string $country_bill
- * @property string $user_id
+ * @property int $user_id
  */
 class Customer extends Model
 {
@@ -59,6 +59,9 @@ class Customer extends Model
         'country_bill',
     ];
 
+    /**
+     * @var string[]
+     */
     protected $casts = [
         'birthday' => 'date',
         'num' => 'string',

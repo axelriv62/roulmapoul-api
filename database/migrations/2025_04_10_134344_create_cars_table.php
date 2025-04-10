@@ -9,8 +9,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cars', function (Blueprint $table) {
-            $table->string('registration')->primary();
-            $table->enum('type', ['type1', 'type2', 'type3']);
+            $table->string('plate')->primary();
+            $table->enum('type', ['type1', 'type2', 'type3']);//TODO ajouter les bonnes énumérations
             $table->string('condition');
             $table->float('remaining_gas');
             $table->float('price_day');

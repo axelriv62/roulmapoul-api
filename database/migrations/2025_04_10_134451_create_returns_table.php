@@ -8,9 +8,9 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('returns', function (Blueprint $table) {
-            $table->id('id');
-            $table->date('hour');
+        Schema::create('handovers', function (Blueprint $table) {
+            $table->id();
+            $table->datetime('hour');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
@@ -18,6 +18,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('returns');
+        Schema::dropIfExists('handovers');
     }
 };

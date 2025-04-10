@@ -1,0 +1,129 @@
+@startuml
+hide empty members
+
+class USER {
+    id SERIAL <<PK>>
+    name VARCHAR
+    email VARCHAR
+    password VARCHAR
+}
+
+class CUSTOMER {
+    id SERIAL <<PK>>
+    first_name VARCHAR
+    last_name VARCHAR
+    birthday DATE
+    email VARCHAR
+    phone VARCHAR
+    num VARCHAR
+    street VARCHAR
+    zip VARCHAR
+    city VARCHAR
+    country VARCHAR
+    num_bill VARCHAR
+    street_bill VARCHAR
+    zip_bill VARCHAR
+    city_bill VARCHAR
+    country_bill VARCHAR
+    user_id INT <<FK>>
+}
+
+class RENTAL {
+    id SERIAL <<PK>>
+    start DATETIME
+    end DATETIME
+    nb_days INT
+    total_price FLOAT
+    customer_id INT <<FK>>
+    warranty_id INT <<FK>>
+}
+
+class LICENSE {
+    num VARCHAR <<PK>>
+    acquirement_date DATE
+    distribution_date DATE
+    country VARCHAR
+    customer_id INT <<FK>>
+}
+
+class WARRANTY {
+    id SERIAL <<PK>>
+    name VARCHAR
+    price FLOAT
+}
+
+class AMENDMENT {
+    id SERIAL <<PK>>
+    name VARCHAR
+    content VARCHAR
+}
+
+class DOCUMENT {
+    id SERIAL <<PK>>
+    type ENUM
+    url VARCHAR
+    rental_id INT <<FK>>
+}
+
+class WITHDRAWAL {
+    id SERIAL <<PK>>
+    datetime DATE
+    user_id INT <<FK>>
+    rental_id INT <<FK>>
+}
+
+class HANDOVER {
+    id SERIAL <<PK>>
+    datetime DATE
+    user_id INT <<FK>>
+    rental_id INT <<FK>>
+}
+
+class CAR {
+    plate VARCHAR <<PK>>
+    type ENUM
+    condition VARCHAR
+    remaining_gas FLOAT
+    price_day FLOAT
+    category_id INT <<FK>>
+    agency_id INT <<FK>>
+}
+
+class OPTION {
+    id SERIAL <<PK>>
+    name VARCHAR
+    description VARCHAR
+    price FLOAT
+}
+
+class CATEGORY {
+    id SERIAL <<PK>>
+    name VARCHAR
+    description VARCHAR
+}
+
+class AGENCY {
+    id SERIAL <<PK>>
+    num VARCHAR
+    street VARCHAR
+    zip VARCHAR
+    city VARCHAR
+    country VARCHAR
+}
+
+CAR "*" -- "1" AGENCY
+CAR "*" -- "1" CATEGORY
+CAR "1" -- "*" RENTAL
+RENTAL "1" -- "*" AMENDMENT
+RENTAL "1" -- "0..1" WITHDRAWAL
+WITHDRAWAL "*" -- "1" USER
+USER "0..1" -- "0..1" CUSTOMER
+LICENSE "0..1" -- "1" CUSTOMER
+WARRANTY "0..1" -- "*" RENTAL
+OPTION "*" -- "*" RENTAL
+DOCUMENT "0..*" -- "1" RENTAL
+USER "1" -- "*" HANDOVER
+RENTAL "1" -- "0..1" HANDOVER
+CUSTOMER "1" -- "*" RENTAL
+
+@enduml

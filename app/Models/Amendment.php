@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $name
- * @property string $description
+ * @property float $price
+ * @property string $content
+ * @property int $rental_id
  */
 class Amendment extends Model
 {
@@ -28,6 +30,14 @@ class Amendment extends Model
      */
     protected $fillable = [
         'name',
-        'description'
+        'description',
+        'price',
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $casts = [
+        'price' => 'float'
     ];
 }

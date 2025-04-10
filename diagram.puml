@@ -55,6 +55,7 @@ class WARRANTIES {
 class AMENDMENTS {
     id SERIAL <<PK>>
     name VARCHAR
+    price FLOAT
     content VARCHAR
 }
 

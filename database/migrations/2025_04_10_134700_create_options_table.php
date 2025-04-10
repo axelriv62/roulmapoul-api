@@ -9,10 +9,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('options', function (Blueprint $table) {
-            $table->id('option_id');
-            $table->string('option_name');
-            $table->string('option_desc');
-            $table->float('option_price');
+            $table->id('id');
+            $table->string('name');
+            $table->string('desc');
+            $table->float('price');
             $table->timestamps();
         });
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\DocumentType;
 use App\Models\Rental;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -10,7 +11,7 @@ return new class extends Migration {
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            // TODO: type avec enum
+            $table->enum('type', DocumentType::cases());
             $table->string('url');
             $table->foreignIdFor(Rental::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();

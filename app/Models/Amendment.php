@@ -7,11 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Un avenant.
  *
- * @property int $category_id
- * @property string $category_name
- * @property string $category_description
+ * @property int $amendment_id
+ * @property string $amendment_name
+ * @property string $amendment_description
  */
 class Amendment extends Model
 {
-    //
+    /**
+     * @var string
+     */
+    protected $table = 'amendment';
+
+    /**
+     * @var string
+     */
+    protected $primaryKey = 'amendment_id';
 }

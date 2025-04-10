@@ -34,8 +34,8 @@ class RENTAL {
     end DATETIME
     nb_days INT
     total_price FLOAT
-    cust_id INT <<FK>>
-    waranty_id INT <<FK>>
+    customer_id INT <<FK>>
+    warranty_id INT <<FK>>
 }
 
 class LICENSE {
@@ -43,7 +43,7 @@ class LICENSE {
     acquirement_date DATE
     distribution_date DATE
     country VARCHAR
-    cust_id INT <<FK>>
+    customer_id INT <<FK>>
 }
 
 class WARRANTY {
@@ -119,7 +119,7 @@ RENTAL "1" -- "0..1" WITHDRAWAL
 WITHDRAWAL "*" -- "1" USER
 USER "0..1" -- "0..1" CUSTOMER
 LICENSE "0..1" -- "1" CUSTOMER
-WARANTY "0..1" -- "*" RENTAL
+WARRANTY "0..1" -- "*" RENTAL
 OPTION "*" -- "*" RENTAL
 DOCUMENT "0..*" -- "1" RENTAL
 USER "1" -- "*" HANDOVER

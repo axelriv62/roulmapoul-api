@@ -9,8 +9,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('returns', function (Blueprint $table) {
-            $table->id('return_id');
-            $table->date('return_hour');
+            $table->id('id');
+            $table->date('hour');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });

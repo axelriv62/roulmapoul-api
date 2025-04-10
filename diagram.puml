@@ -1,15 +1,15 @@
-plantuml
 @startuml
+hide empty members
 
 class USER {
-    user_id SERIAL
+    user_id SERIAL <<PK>>
     user_name VARCHAR
     user_email VARCHAR
     user_password VARCHAR
 }
 
 class CUSTOMER {
-    cust_id SERIAL
+    cust_id SERIAL <<PK>>
     cust_first_name VARCHAR
     cust_last_name VARCHAR
     cust_birthday DATE
@@ -25,75 +25,85 @@ class CUSTOMER {
     cust_zip_bill VARCHAR
     cust_city_bill VARCHAR
     cust_country_bill VARCHAR
+    user_id INT <<FK>>
 }
 
 class RENTAL {
-    rental_id SERIAL
+    rental_id SERIAL <<PK>>
     rental_start DATETIME
     rental_end DATETIME
-    rental_options JSON
     rental_nb_days INT
     rental_total_price FLOAT
+    cust_id INT <<FK>>
+    waranty_id INT <<FK>>
 }
 
 class LICENSE {
-    license_num VARCHAR
+    license_num VARCHAR <<PK>>
     license_acquirement_date DATE
     license_distribution_date VARCHAR
     license_country VARCHAR
+    cust_id INT <<FK>>
 }
 
 class WARANTY {
-    waranty_id SERIAL
+    waranty_id SERIAL <<PK>>
     waranty_name VARCHAR
     waranty_price FLOAT
 }
 
 class AMENDMENT {
-    amendment_id SERIAL
+    amendment_id SERIAL <<PK>>
     amendment_name VARCHAR
     amendment_content VARCHAR
 }
 
 class DOCUMENT {
-    doc_id SERIAL
+    doc_id SERIAL <<PK>>
     doc_type ENUM
     doc_url VARCHAR
+    rental_id INT <<FK>>
 }
 
 class WITHDRAWAL {
-    withdrawal_id SERIAL
+    withdrawal_id SERIAL <<PK>>
     withdrawal_datetime DATE
+    user_id INT <<FK>>
+    rental_id INT <<FK>>
 }
 
 class HANDOVER {
-    handover_id SERIAL
+    handover_id SERIAL <<PK>>
     handover_datetime DATE
+    user_id INT <<FK>>
+    rental_id INT <<FK>>
 }
 
 class CAR {
-    car_plate VARCHAR
+    car_plate VARCHAR <<PK>>
     car_type ENUM
     car_condition VARCHAR
     car_remaining_gas FLOAT
     car_price_day FLOAT
+    category_id INT <<FK>>
+    agency_id INT <<FK>>
 }
 
 class OPTION {
-    option_id SERIAL
+    option_id SERIAL <<PK>>
     option_name VARCHAR
     option_desc VARCHAR
     option_price FLOAT
 }
 
 class CATEGORY {
-    category_id SERIAL
+    category_id SERIAL <<PK>>
     category_name VARCHAR
     category_description VARCHAR
 }
 
 class AGENCY {
-    agency_id SERIAL
+    agency_id SERIAL <<PK>>
     agency_num VARCHAR
     agency_street VARCHAR
     agency_zip VARCHAR
@@ -108,7 +118,7 @@ RENTAL "1" -- "*" AMENDMENT
 RENTAL "1" -- "0..1" WITHDRAWAL
 WITHDRAWAL "*" -- "1" USER
 USER "0..1" -- "0..1" CUSTOMER
-LICENSE "1" -- "0..1" CUSTOMER
+LICENSE "0..1" -- "1" CUSTOMER
 WARANTY "0..1" -- "*" RENTAL
 OPTION "*" -- "*" RENTAL
 DOCUMENT "0..*" -- "1" RENTAL

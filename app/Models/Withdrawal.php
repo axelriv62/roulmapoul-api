@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Un retour d'une voiture de location.
+ * Un retrait d'une voiture de location.
  *
  * @property int $id
  * @property float $fuel_level
@@ -18,12 +18,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $user_id
  * @property int $rental_id
  */
-class Handover extends Model
+class Withdrawal extends Model
 {
     /**
      * @var string
      */
-    protected $table = 'handover';
+    protected $table = 'withdrawals';
 
     /**
      * @var string

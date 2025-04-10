@@ -2,54 +2,71 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Un client.
  *
- * @property int $cust_id
- * @property string $cust_first_name
- * @property string $cust_last_name
- * @property string $cust_birthday
- * @property string $cust_email
- * @property string $cust_phone
- * @property string $cust_num
- * @property string $cust_street
- * @property string $cust_zip
- * @property string $cust_city
- * @property string $cust_country
- * @property string $cust_num_bill
- * @property string $cust_street_bill
- * @property string $cust_zip_bill
- * @property string $cust_city_bill
- * @property string $cust_country_bill
- * @property string $user_id
+ * @property int $id
+ * @property string $first_name
+ * @property string $last_name
+ * @property Carbon $birthday
+ * @property string $email
+ * @property string $phone
+ * @property string $num
+ * @property string $street
+ * @property string $zip
+ * @property string $city
+ * @property string $country
+ * @property string $num_bill
+ * @property string $street_bill
+ * @property string $zip_bill
+ * @property string $city_bill
+ * @property string $country_bill
+ * @property int $user_id
  */
 class Customer extends Model
 {
     /**
      * @var string
      */
-    protected $table = 'customer';
+    protected $table = 'customers';
+
+    /**
+     * @var string
+     */
+    protected $primaryKey = 'id';
 
     /**
      * @var string[]
      */
     protected $fillable = [
-        'cust_first_name',
-        'cust_last_name',
-        'cust_birthday',
-        'cust_email',
-        'cust_phone',
-        'cust_num',
-        'cust_street',
-        'cust_zip',
-        'cust_city',
-        'cust_country',
-        'cust_num_bill',
-        'cust_street_bill',
-        'cust_zip_bill',
-        'cust_city_bill',
-        'cust_country_bill',
+        'first_name',
+        'last_name',
+        'birthday',
+        'email',
+        'phone',
+        'num',
+        'street',
+        'zip',
+        'city',
+        'country',
+        'num_bill',
+        'street_bill',
+        'zip_bill',
+        'city_bill',
+        'country_bill',
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $casts = [
+        'birthday' => 'date',
+        'num' => 'string',
+        'zip' => 'string',
+        'num_bill' => 'string',
+        'zip_bill' => 'string'
     ];
 }

@@ -5,20 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Un avenant.
+ * Une garantie.
  *
  * @property int $id
  * @property string $name
  * @property float $price
- * @property string $content
- * @property int $rental_id
  */
-class Amendment extends Model
+class Warranty extends Model
 {
     /**
      * @var string
      */
-    protected $table = 'amendments';
+    protected $table = 'warranties';
 
     /**
      * @var string
@@ -30,14 +28,13 @@ class Amendment extends Model
      */
     protected $fillable = [
         'name',
-        'description',
-        'price',
+        'price'
     ];
 
     /**
      * @var string[]
      */
     protected $casts = [
-        'price' => 'float'
+        'price' => 'float',
     ];
 }

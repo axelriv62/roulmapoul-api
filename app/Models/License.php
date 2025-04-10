@@ -8,13 +8,50 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Un permis de conduire possédé par un client.
  *
- * @property string $license_num
- * @property Carbon $license_acquirement_date
- * @property Carbon $license_distribution_date
- * @property string $license_country
- * @property int $cust_id
+ * @property string $num
+ * @property Carbon $acquirement_date
+ * @property Carbon $distribution_date
+ * @property string $country
+ * @property int $customer_id
  */
 class License extends Model
 {
-    //
+    /**
+     * @var bool
+     */
+    public $incrementing = false;
+
+    /**
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
+     * @var string
+     */
+    protected $table = 'licenses';
+
+    /**
+     * @var string
+     */
+    protected $primaryKey = 'num';
+
+    /**
+     * @var string[]
+     */
+    protected $fillable = [
+        'num',
+        'acquirement_date',
+        'distribution_date',
+        'country',
+        'customer_id'
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $casts = [
+        'acquirement_date' => 'date',
+        'distribution_date' => 'date'
+    ];
 }

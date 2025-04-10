@@ -9,9 +9,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('warranties', function (Blueprint $table) {
-            $table->id('waranty_id');
-            $table->string('waranty_name');
-            $table->float('waranty_price');
+            $table->id('id');
+            $table->string('name');
+            $table->float('price');
             $table->timestamps();
         });
     }

@@ -6,6 +6,6 @@ enum RentalState: string
 {
     case PAID = 'paid';
     case CANCELLED = 'cancelled';
-    case IN_PROGRESS = 'in_progress';
-    case FINISHED = 'finished';
+    case ONGOING = 'ongoing';
+    case COMPLETED = 'completed';
 }

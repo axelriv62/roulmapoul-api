@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $nb_days
  * @property float $total_price
  * @property int $customer_id
- * @property int $car_plate
+ * @property string $car_plate
  * @property int $warranty_id
  */
 class Rental extends Model

@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\CarAvailability;
 use App\Models\Agency;
 use App\Models\Category;
 use Illuminate\Database\Migrations\Migration;
@@ -11,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('cars', function (Blueprint $table) {
             $table->string('plate')->primary();
+            $table->enum('availability', CarAvailability::cases());
             $table->float('price_day');
             $table->foreignIdFor(Agency::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();

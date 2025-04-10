@@ -33,6 +33,7 @@ class RENTALS {
     start DATETIME
     end DATETIME
     nb_days INT
+    state ENUM('paid', 'cancelled', 'ongoing', 'completed')
     total_price FLOAT
     customer_id INT <<FK>>
     warranty_id INT <<FK>>
@@ -61,7 +62,7 @@ class AMENDMENTS {
 
 class DOCUMENTS {
     id SERIAL <<PK>>
-    type ENUM
+    type ENUM('bill', 'handover', 'withdrawal')
     url VARCHAR
     rental_id INT <<FK>>
 }
@@ -92,6 +93,7 @@ class HANDOVERS {
 
 class CARS {
     plate VARCHAR <<PK>>
+    availability ENUM('available', 'reserved', 'rented', 'under_maintenance', 'under_repair')
     price_day FLOAT
     category_id INT <<FK>>
     agency_id INT <<FK>>

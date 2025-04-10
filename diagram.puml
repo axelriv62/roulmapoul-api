@@ -92,7 +92,7 @@ class CAR {
 class OPTION {
     option_id SERIAL <<PK>>
     option_name VARCHAR
-    option_desc VARCHAR
+    option_description VARCHAR
     option_price FLOAT
 }
 

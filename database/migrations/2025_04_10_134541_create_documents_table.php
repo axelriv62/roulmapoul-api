@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->id();
             // TODO: type avec enum
             $table->string('url');
-            $table->foreignIdfor(Rental::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(Rental::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

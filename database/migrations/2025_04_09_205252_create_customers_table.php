@@ -25,7 +25,7 @@ return new class extends Migration {
             $table->string('zip_bill');
             $table->string('city_bill');
             $table->string('country_bill');
-            $table->foreignIdfor(User::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

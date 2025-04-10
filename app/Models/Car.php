@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Une voiture.
  *
- * @property string $car_plate
- * TODO ajouter la property pour le type de la voiture après avoir créé l'enum (car_type)
- * @property string $car_condition
- * @property float $car_remaining_gas
- * @property float $car_price_day
+ * @property string $plate
+ * TODO ajouter la property pour le type de la voiture après avoir créé l'enum (type)
+ * @property string $condition
+ * @property float $remaining_gas
+ * @property float $price_day
  * @property int $category_id
  * @property int $agency_id
  */
@@ -21,7 +21,7 @@ class Car extends Model
      * @var string
      */
     public $keyType = 'string';
-    
+
     /**
      * @var bool
      */
@@ -30,22 +30,22 @@ class Car extends Model
     /**
      * @var string
      */
-    protected $table = 'car';
+    protected $table = 'cars';
 
     /**
      * @var string
      */
-    protected $primaryKey = 'car_plate';
+    protected $primaryKey = 'plate';
 
     /**
      * @var string[]
      */
     protected $fillable = [
-        'car_plate',
-        'car_type',
-        'car_condition',
-        'car_remaining_gas',
-        'car_price_day',
+        'plate',
+        'type',
+        'condition',
+        'remaining_gas',
+        'price_day',
         'category_id',
         'agency_id'
     ];
@@ -54,7 +54,7 @@ class Car extends Model
      * @var string[]
      */
     protected $casts = [
-        'car_remaining_gas' => 'float',
-        'car_price_day' => 'float'
+        'remaining_gas' => 'float',
+        'price_day' => 'float'
     ];
 }

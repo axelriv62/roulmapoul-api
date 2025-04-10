@@ -7,34 +7,34 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Une garantie.
  *
- * @property int $warranty_id
- * @property string $warranty_name
- * @property float $warranty_price
+ * @property int $id
+ * @property string $name
+ * @property float $price
  */
 class Warranty extends Model
 {
     /**
      * @var string
      */
-    protected $table = 'warranty';
+    protected $table = 'warranties';
 
     /**
      * @var string
      */
-    protected $primaryKey = 'warranty_id';
+    protected $primaryKey = 'id';
 
     /**
      * @var string[]
      */
     protected $fillable = [
-        'warranty_name',
-        'warranty_price'
+        'name',
+        'price'
     ];
 
     /**
      * @var string[]
      */
     protected $casts = [
-        'warranty_price' => 'float',
+        'price' => 'float',
     ];
 }

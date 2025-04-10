@@ -18,7 +18,7 @@ class Withdrawal extends Model
     /**
      * @var string
      */
-    protected $table = 'withdrawal';
+    protected $table = 'withdrawals';
 
     /**
      * @var string

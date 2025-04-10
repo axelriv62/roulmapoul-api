@@ -7,27 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Un avenant.
  *
- * @property int $amendment_id
- * @property string $amendment_name
- * @property string $amendment_description
+ * @property int $id
+ * @property string $name
+ * @property string $description
  */
 class Amendment extends Model
 {
     /**
      * @var string
      */
-    protected $table = 'amendment';
+    protected $table = 'amendments';
 
     /**
      * @var string
      */
-    protected $primaryKey = 'amendment_id';
+    protected $primaryKey = 'id';
 
     /**
      * @var string[]
      */
     protected $fillable = [
-        'amendment_name',
-        'amendment_description'
+        'name',
+        'description'
     ];
 }

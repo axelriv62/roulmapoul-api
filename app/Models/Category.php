@@ -7,27 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Une catégorie de véhicule.
  *
- * @property int $category_id
- * @property string $category_name
- * @property string $category_description
+ * @property int $id
+ * @property string $name
+ * @property string $description
  */
 class Category extends Model
 {
     /**
      * @var string
      */
-    protected $table = 'category';
+    protected $table = 'categories';
 
     /**
      * @var string
      */
-    protected $primaryKey = 'category_id';
+    protected $primaryKey = 'id';
 
     /**
      * @var string[]
      */
     protected $fillable = [
-        'category_name',
-        'category_description'
+        'name',
+        'description'
     ];
 }

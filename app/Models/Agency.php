@@ -7,41 +7,41 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Une agence de location de voitures.
  *
- * @property int $agency_id
- * @property string $agency_num
- * @property string $agency_street
- * @property string $agency_zip
- * @property string $agency_city
- * @property string $agency_country
+ * @property int $id
+ * @property string $num
+ * @property string $street
+ * @property string $zip
+ * @property string $city
+ * @property string $country
  */
 class Agency extends Model
 {
     /**
      * @var string
      */
-    protected $table = 'agency';
+    protected $table = 'agencies';
 
     /**
      * @var string
      */
-    protected $primaryKey = 'agency_id';
+    protected $primaryKey = 'id';
 
     /**
      * @var string[]
      */
     protected $fillable = [
-        'agency_num',
-        'agency_street',
-        'agency_zip',
-        'agency_city',
-        'agency_country'
+        'num',
+        'street',
+        'zip',
+        'city',
+        'country'
     ];
 
     /**
      * @var string[]
      */
     protected $casts = [
-        'agency_num' => 'string',
-        'agency_zip' => 'string'
+        'num' => 'string',
+        'zip' => 'string'
     ];
 }

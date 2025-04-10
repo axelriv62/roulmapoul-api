@@ -10,12 +10,12 @@ use Illuminate\Notifications\Notifiable;
 /**
  * Un utilisateur de l'application.
  *
- * @property int $user_id
- * @property string $user_name
- * @property string $user_email
- * @property string $user_password
- * @property string $user_remember_token
- * @property string $user_email_verified_at
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property string $remember_token
+ * @property string $email_verified_at
  */
 class User extends Authenticatable
 {
@@ -23,14 +23,19 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
+     * @var string
+     */
+    protected $table = 'users';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
     protected $fillable = [
-        'user_name',
-        'user_email',
-        'user_password',
+        'name',
+        'email',
+        'password',
     ];
 
     /**
@@ -39,8 +44,8 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $hidden = [
-        'user_password',
-        'user_remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
@@ -51,8 +56,8 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'user_email_verified_at' => 'datetime',
-            'user_password' => 'hashed',
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
         ];
     }
 }

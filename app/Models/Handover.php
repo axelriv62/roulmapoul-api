@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Un retour.
  *
- * @property int $handover_id
- * @property Carbon handover_datetime
+ * @property int $id
+ * @property Carbon datetime
  * @property int $user_id
  * @property int $rental_id
  */
@@ -23,13 +23,13 @@ class Handover extends Model
     /**
      * @var string
      */
-    protected $primaryKey = 'handover_id';
+    protected $primaryKey = 'id';
 
     /**
      * @var string[]
      */
     protected $fillable = [
-        'handover_datetime',
+        'datetime',
         'user_id',
         'rental_id'
     ];
@@ -38,6 +38,6 @@ class Handover extends Model
      * @var string[]
      */
     protected $casts = [
-        'handover_datetime' => 'datetime',
+        'datetime' => 'datetime',
     ];
 }

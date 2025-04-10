@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('rental_warranty', function (Blueprint $table) {
             $table->id();
             $table->foreignId('rental_id')->constrained('rentals')->onDelete('cascade');
-            $table->foreignId('waranty_id')->constrained('warranties')->onDelete('cascade');
+            $table->foreignId('warranties_id')->constrained('warranties')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -2,15 +2,14 @@
 
 namespace App\Models;
 
+use App\Enums\CarAvailability;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Une voiture.
  *
  * @property string $plate
- * TODO ajouter la property pour le type de la voiture après avoir créé l'enum (type)
- * @property string $condition
- * @property float $remaining_gas
+ * @property CarAvailability $availability
  * @property float $price_day
  * @property int $category_id
  * @property int $agency_id
@@ -42,9 +41,7 @@ class Car extends Model
      */
     protected $fillable = [
         'plate',
-        'type',
-        'condition',
-        'remaining_gas',
+        'availability',
         'price_day',
         'category_id',
         'agency_id'
@@ -54,7 +51,6 @@ class Car extends Model
      * @var string[]
      */
     protected $casts = [
-        'remaining_gas' => 'float',
         'price_day' => 'float'
     ];
 }

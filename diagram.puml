@@ -35,6 +35,7 @@ class RENTALS {
     nb_days INT
     state ENUM
     total_price FLOAT
+    car_plate VARCHAR <<FK>>
     customer_id INT <<FK>>
     warranty_id INT <<FK>>
 }

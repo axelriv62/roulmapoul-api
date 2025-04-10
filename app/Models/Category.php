@@ -13,5 +13,21 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Category extends Model
 {
-    //
+    /**
+     * @var string
+     */
+    protected $table = 'category';
+
+    /**
+     * @var string
+     */
+    protected $primaryKey = 'category_id';
+
+    /**
+     * @var string[]
+     */
+    protected $fillable = [
+        'category_name',
+        'category_description'
+    ];
 }

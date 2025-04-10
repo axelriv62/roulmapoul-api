@@ -16,5 +16,42 @@ use Illuminate\Database\Eloquent\Model;
  */
 class License extends Model
 {
-    //
+    /**
+     * @var bool
+     */
+    public $incrementing = false;
+
+    /**
+     * @var string
+     */
+    protected $keyType = 'string';
+    
+    /**
+     * @var string
+     */
+    protected $table = 'license';
+
+    /**
+     * @var string
+     */
+    protected $primaryKey = 'license_num';
+
+    /**
+     * @var string[]
+     */
+    protected $fillable = [
+        'license_num',
+        'license_acquirement_date',
+        'license_distribution_date',
+        'license_country',
+        'cust_id'
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $casts = [
+        'license_acquirement_date' => 'datetime',
+        'license_distribution_date' => 'datetime'
+    ];
 }

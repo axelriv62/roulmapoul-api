@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $cust_id
  * @property string $cust_first_name
  * @property string $cust_last_name
- * @property string $cust_birthday
+ * @property Carbon $cust_birthday
  * @property string $cust_email
  * @property string $cust_phone
  * @property string $cust_num
@@ -33,6 +34,11 @@ class Customer extends Model
     protected $table = 'customer';
 
     /**
+     * @var string
+     */
+    protected $primaryKey = 'customer_id';
+
+    /**
      * @var string[]
      */
     protected $fillable = [
@@ -51,5 +57,13 @@ class Customer extends Model
         'cust_zip_bill',
         'cust_city_bill',
         'cust_country_bill',
+    ];
+
+    protected $casts = [
+        'cust_birthday' => 'date',
+        'cust_num' => 'string',
+        'cust_zip' => 'string',
+        'cust_num_bill' => 'string',
+        'cust_zip_bill' => 'string'
     ];
 }

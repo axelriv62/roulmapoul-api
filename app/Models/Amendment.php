@@ -22,4 +22,12 @@ class Amendment extends Model
      * @var string
      */
     protected $primaryKey = 'amendment_id';
+
+    /**
+     * @var string[]
+     */
+    protected $fillable = [
+        'amendment_name',
+        'amendment_description'
+    ];
 }

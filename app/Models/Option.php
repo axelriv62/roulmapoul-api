@@ -14,5 +14,29 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Option extends Model
 {
-    //
+    /**
+     * @var string
+     */
+    protected $table = 'option';
+
+    /**
+     * @var string
+     */
+    protected $primaryKey = 'option_id';
+
+    /**
+     * @var string[]
+     */
+    protected $fillable = [
+        'option_name',
+        'option_description',
+        'option_price'
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $casts = [
+        'option_price' => 'float',
+    ];
 }

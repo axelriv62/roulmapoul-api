@@ -15,5 +15,29 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Handover extends Model
 {
-    //
+    /**
+     * @var string
+     */
+    protected $table = 'handover';
+
+    /**
+     * @var string
+     */
+    protected $primaryKey = 'handover_id';
+
+    /**
+     * @var string[]
+     */
+    protected $fillable = [
+        'handover_datetime',
+        'user_id',
+        'rental_id'
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $casts = [
+        'handover_datetime' => 'datetime',
+    ];
 }

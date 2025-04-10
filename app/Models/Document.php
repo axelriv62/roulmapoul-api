@@ -14,5 +14,28 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Document extends Model
 {
-    //
+    /**
+     * @var string
+     */
+    protected $table = 'document';
+
+    /**
+     * @var string
+     */
+    protected $primaryKey = 'doc_id';
+
+    /**
+     * @var string[]
+     */
+    protected $fillable = [
+        'doc_url',
+        'rental_id'
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $casts = [
+        'doc_url' => 'string'
+    ];
 }

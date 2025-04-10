@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\DocumentType;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Un document associé à une location, il peut s'agir d'une facture ou d'un document comportant les informations d'un retrait ou d'un retour.
@@ -40,4 +41,9 @@ class Document extends Model
     protected $casts = [
         'url' => 'string'
     ];
+
+    public function rental(): BelongsTo
+    {
+        return $this->belongsTo(Rental::class);
+    }
 }

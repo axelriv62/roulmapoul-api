@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Enums\CarAvailability;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Une voiture.
@@ -53,4 +55,19 @@ class Car extends Model
     protected $casts = [
         'price_day' => 'float'
     ];
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function agency(): BelongsTo
+    {
+        return $this->belongsTo(Agency::class);
+    }
+
+    public function rentals(): HasMany
+    {
+        return $this->hasMany(Rental::class, 'car_plate', 'plate');
+    }
 }

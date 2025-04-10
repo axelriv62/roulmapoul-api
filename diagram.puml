@@ -41,7 +41,7 @@ class RENTAL {
 class LICENSE {
     license_num VARCHAR <<PK>>
     license_acquirement_date DATE
-    license_distribution_date VARCHAR
+    license_distribution_date DATE
     license_country VARCHAR
     cust_id INT <<FK>>
 }
@@ -92,7 +92,7 @@ class CAR {
 class OPTION {
     option_id SERIAL <<PK>>
     option_name VARCHAR
-    option_desc VARCHAR
+    option_description VARCHAR
     option_price FLOAT
 }
 

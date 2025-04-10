@@ -58,6 +58,7 @@ class AMENDMENTS {
     name VARCHAR
     price FLOAT
     content VARCHAR
+    rental_id INT <<FK>>
 }
 
 class DOCUMENTS {

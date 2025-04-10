@@ -11,7 +11,7 @@ return new class extends Migration {
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', DocumentType::cases());
+            $table->enum('type', DocumentType::toValuesArray());
             $table->string('url');
             $table->foreignIdFor(Rental::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();

@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('cars', function (Blueprint $table) {
             $table->string('plate')->primary();
-            $table->enum('availability', CarAvailability::cases());
+            $table->enum('availability', CarAvailability::toValuesArray());
             $table->float('price_day');
             $table->foreignIdFor(Agency::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();

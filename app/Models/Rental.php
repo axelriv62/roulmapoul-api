@@ -5,6 +5,10 @@ namespace App\Models;
 use App\Enums\RentalState;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Une location de véhicule.
@@ -55,4 +59,44 @@ class Rental extends Model
         'total_price' => 'float',
         'car_plate' => 'string',
     ];
+
+    public function options(): BelongsToMany
+    {
+        return $this->belongsToMany(Option::class, 'rental_option', 'rental_id', 'option_id');
+    }
+
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function car(): BelongsTo
+    {
+        return $this->belongsTo(Car::class, 'car_plate', 'plate');
+    }
+
+    public function warranty(): BelongsTo
+    {
+        return $this->belongsTo(Warranty::class);
+    }
+
+    public function handover(): HasOne
+    {
+        return $this->hasOne(Handover::class);
+    }
+
+    public function withdrawal(): HasOne
+    {
+        return $this->hasOne(Withdrawal::class);
+    }
+
+    public function amendments(): HasMany
+    {
+        return $this->hasMany(Amendment::class);
+    }
+
+    public function documents(): HasMany
+    {
+        return $this->hasMany(Document::class);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Une option sélectionnée pour une location.
@@ -39,4 +40,9 @@ class Option extends Model
     protected $casts = [
         'price' => 'float',
     ];
+
+    public function rentals(): BelongsToMany
+    {
+        return $this->belongsToMany(Rental::class);
+    }
 }

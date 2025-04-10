@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Une agence de location de voitures.
@@ -44,4 +45,9 @@ class Agency extends Model
         'num' => 'string',
         'zip' => 'string'
     ];
+
+    public function cars(): HasMany
+    {
+        return $this->hasMany(Car::class);
+    }
 }

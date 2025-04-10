@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\RentalState;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,10 +12,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property Carbon $start
  * @property Carbon $end
+ * @property RentalState $state
  * @property int $nb_days
  * @property float $total_price
  * @property int $customer_id
- * @property int $car_id
+ * @property int $car_plate
  * @property int $warranty_id
  */
 class Rental extends Model
@@ -35,10 +37,11 @@ class Rental extends Model
     protected $fillable = [
         'start',
         'end',
+        'state',
         'nb_days',
         'total_price',
-        'cust_id',
-        'car_id',
+        'customer_id',
+        'car_plate',
         'warranty_id'
     ];
 
@@ -49,6 +52,7 @@ class Rental extends Model
         'start' => 'datetime',
         'end' => 'datetime',
         'nb_days' => 'integer',
-        'total_price' => 'float'
+        'total_price' => 'float',
+        'car_plate' => 'string',
     ];
 }

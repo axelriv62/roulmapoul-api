@@ -1,14 +1,14 @@
 @startuml
 hide empty members
 
-class USER {
+class USERS {
     id SERIAL <<PK>>
     name VARCHAR
     email VARCHAR
     password VARCHAR
 }
 
-class CUSTOMER {
+class CUSTOMERS {
     id SERIAL <<PK>>
     first_name VARCHAR
     last_name VARCHAR
@@ -28,7 +28,7 @@ class CUSTOMER {
     user_id INT <<FK>>
 }
 
-class RENTAL {
+class RENTALS {
     id SERIAL <<PK>>
     start DATETIME
     end DATETIME
@@ -38,7 +38,7 @@ class RENTAL {
     warranty_id INT <<FK>>
 }
 
-class LICENSE {
+class LICENSES {
     num VARCHAR <<PK>>
     acquirement_date DATE
     distribution_date DATE
@@ -46,63 +46,70 @@ class LICENSE {
     customer_id INT <<FK>>
 }
 
-class WARRANTY {
+class WARRANTIES {
     id SERIAL <<PK>>
     name VARCHAR
     price FLOAT
 }
 
-class AMENDMENT {
+class AMENDMENTS {
     id SERIAL <<PK>>
     name VARCHAR
     content VARCHAR
 }
 
-class DOCUMENT {
+class DOCUMENTS {
     id SERIAL <<PK>>
     type ENUM
     url VARCHAR
     rental_id INT <<FK>>
 }
 
-class WITHDRAWAL {
+class WITHDRAWALS {
     id SERIAL <<PK>>
-    datetime DATE
+    fuel_level FLOAT
+    interior_condition VARCHAR
+    exterior_condition VARCHAR
+    mileage FLOAT
+    datetime DATETIME
+    comment VARCHAR
     user_id INT <<FK>>
     rental_id INT <<FK>>
 }
 
-class HANDOVER {
+class HANDOVERS {
     id SERIAL <<PK>>
-    datetime DATE
+    fuel_level FLOAT
+    interior_condition VARCHAR
+    exterior_condition VARCHAR
+    mileage FLOAT
+    datetime DATETIME
+    comment VARCHAR
     user_id INT <<FK>>
     rental_id INT <<FK>>
 }
 
-class CAR {
+class CARS {
     plate VARCHAR <<PK>>
-    type ENUM
-    condition VARCHAR
-    remaining_gas FLOAT
     price_day FLOAT
     category_id INT <<FK>>
     agency_id INT <<FK>>
 }
 
-class OPTION {
+class OPTIONS {
     id SERIAL <<PK>>
     name VARCHAR
     description VARCHAR
     price FLOAT
 }
 
-class CATEGORY {
+class CATEGORIES {
     id SERIAL <<PK>>
     name VARCHAR
     description VARCHAR
 }
 
-class AGENCY {
+class AGENCIES {
     id SERIAL <<PK>>
     num VARCHAR
     street VARCHAR
@@ -111,19 +118,19 @@ class AGENCY {
     country VARCHAR
 }
 
-CAR "*" -- "1" AGENCY
-CAR "*" -- "1" CATEGORY
-CAR "1" -- "*" RENTAL
-RENTAL "1" -- "*" AMENDMENT
-RENTAL "1" -- "0..1" WITHDRAWAL
-WITHDRAWAL "*" -- "1" USER
-USER "0..1" -- "0..1" CUSTOMER
-LICENSE "0..1" -- "1" CUSTOMER
-WARRANTY "0..1" -- "*" RENTAL
-OPTION "*" -- "*" RENTAL
-DOCUMENT "0..*" -- "1" RENTAL
-USER "1" -- "*" HANDOVER
-RENTAL "1" -- "0..1" HANDOVER
-CUSTOMER "1" -- "*" RENTAL
+CARS "*" -- "1" AGENCIES
+CARS "*" -- "1" CATEGORIES
+CARS "1" -- "*" RENTALS
+RENTALS "1" -- "*" AMENDMENTS
+RENTALS "1" -- "0..1" WITHDRAWALS
+WITHDRAWALS "*" -- "1" USERS
+USERS "0..1" -- "0..1" CUSTOMERS
+LICENSES "0..1" -- "1" CUSTOMERS
+WARRANTIES "0..1" -- "*" RENTALS
+OPTIONS "*" -- "*" RENTALS
+DOCUMENTS "0..*" -- "1" RENTALS
+USERS "1" -- "*" HANDOVERS
+RENTALS "1" -- "0..1" HANDOVERS
+CUSTOMERS "1" -- "*" RENTALS
 
 @enduml

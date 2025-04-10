@@ -9,9 +9,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('amendments', function (Blueprint $table) {
-            $table->id('amendment_id');
-            $table->string('amendment_name');
-            $table->string('amendment_content');
+            $table->id('id');
+            $table->string('name');
+            $table->string('content');
             $table->foreignId('rental_id')->constrained('rentals')->onDelete('cascade');
             $table->timestamps();
         });

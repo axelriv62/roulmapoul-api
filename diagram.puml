@@ -67,23 +67,30 @@ class DOCUMENTS {
 
 class WITHDRAWALS {
     id SERIAL <<PK>>
-    datetime DATE
+    fuel_level FLOAT
+    interior_condition VARCHAR
+    exterior_condition VARCHAR
+    mileage FLOAT
+    datetime DATETIME
+    comment VARCHAR
     user_id INT <<FK>>
     rental_id INT <<FK>>
 }
 
 class HANDOVERS {
     id SERIAL <<PK>>
-    datetime DATE
+    fuel_level FLOAT
+    interior_condition VARCHAR
+    exterior_condition VARCHAR
+    mileage FLOAT
+    datetime DATETIME
+    comment VARCHAR
     user_id INT <<FK>>
     rental_id INT <<FK>>
 }
 
 class CARS {
     plate VARCHAR <<PK>>
-    type ENUM
-    condition VARCHAR
-    remaining_gas FLOAT
     price_day FLOAT
     category_id INT <<FK>>
     agency_id INT <<FK>>

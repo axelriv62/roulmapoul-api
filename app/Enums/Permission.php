@@ -10,5 +10,5 @@ enum Permission: string
     case CREATE_WITHDRAWAL = 'withdrawal.create';
     case CREATE_HANDOVER = 'handover.create';
     case CREATE_AMENDMENT = 'amendment.create';
-    case CUSTOMER_READ = 'customer.read';
+    case READ_CUSTOMER = 'customer.read';
 }

@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use App\Enums\CarAvailability;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * Une voiture.
@@ -15,6 +19,23 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property float $price_day
  * @property int $category_id
  * @property int $agency_id
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Agency $agency
+ * @property-read Category $category
+ * @property-read Collection<int, Rental> $rentals
+ * @property-read int|null $rentals_count
+ * @method static Builder<static>|Car newModelQuery()
+ * @method static Builder<static>|Car newQuery()
+ * @method static Builder<static>|Car query()
+ * @method static Builder<static>|Car whereAgencyId($value)
+ * @method static Builder<static>|Car whereAvailability($value)
+ * @method static Builder<static>|Car whereCategoryId($value)
+ * @method static Builder<static>|Car whereCreatedAt($value)
+ * @method static Builder<static>|Car wherePlate($value)
+ * @method static Builder<static>|Car wherePriceDay($value)
+ * @method static Builder<static>|Car whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class Car extends Model
 {

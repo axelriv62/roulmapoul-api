@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -28,6 +31,35 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string $city_bill
  * @property string $country_bill
  * @property int $user_id
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read License|null $license
+ * @property-read Collection<int, Rental> $rentals
+ * @property-read int|null $rentals_count
+ * @property-read User $user
+ * @method static Builder<static>|Customer newModelQuery()
+ * @method static Builder<static>|Customer newQuery()
+ * @method static Builder<static>|Customer query()
+ * @method static Builder<static>|Customer whereBirthday($value)
+ * @method static Builder<static>|Customer whereCity($value)
+ * @method static Builder<static>|Customer whereCityBill($value)
+ * @method static Builder<static>|Customer whereCountry($value)
+ * @method static Builder<static>|Customer whereCountryBill($value)
+ * @method static Builder<static>|Customer whereCreatedAt($value)
+ * @method static Builder<static>|Customer whereEmail($value)
+ * @method static Builder<static>|Customer whereFirstName($value)
+ * @method static Builder<static>|Customer whereId($value)
+ * @method static Builder<static>|Customer whereLastName($value)
+ * @method static Builder<static>|Customer whereNum($value)
+ * @method static Builder<static>|Customer whereNumBill($value)
+ * @method static Builder<static>|Customer wherePhone($value)
+ * @method static Builder<static>|Customer whereStreet($value)
+ * @method static Builder<static>|Customer whereStreetBill($value)
+ * @method static Builder<static>|Customer whereUpdatedAt($value)
+ * @method static Builder<static>|Customer whereUserId($value)
+ * @method static Builder<static>|Customer whereZip($value)
+ * @method static Builder<static>|Customer whereZipBill($value)
+ * @mixin Eloquent
  */
 class Customer extends Model
 {

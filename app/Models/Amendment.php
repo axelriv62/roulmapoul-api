@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * Un avenant.
@@ -13,6 +16,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property float $price
  * @property string $content
  * @property int $rental_id
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Rental $rental
+ * @method static Builder<static>|Amendment newModelQuery()
+ * @method static Builder<static>|Amendment newQuery()
+ * @method static Builder<static>|Amendment query()
+ * @method static Builder<static>|Amendment whereContent($value)
+ * @method static Builder<static>|Amendment whereCreatedAt($value)
+ * @method static Builder<static>|Amendment whereId($value)
+ * @method static Builder<static>|Amendment whereName($value)
+ * @method static Builder<static>|Amendment wherePrice($value)
+ * @method static Builder<static>|Amendment whereRentalId($value)
+ * @method static Builder<static>|Amendment whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class Amendment extends Model
 {

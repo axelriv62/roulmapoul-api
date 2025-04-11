@@ -4442,7 +4442,7 @@ namespace  {
         {
             /** @var \Illuminate\Database\Query\Builder $instance */
             return $instance->ddRawSql();
-        } 
+        }
 
         /**
          * Add a where clause to determine if a "date" column is in the past to the query.

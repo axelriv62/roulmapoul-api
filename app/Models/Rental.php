@@ -4,6 +4,9 @@ namespace App\Models;
 
 use App\Enums\RentalState;
 use Carbon\Carbon;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -22,6 +25,34 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property int $customer_id
  * @property string $car_plate
  * @property int $warranty_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read Collection<int, Amendment> $amendments
+ * @property-read int|null $amendments_count
+ * @property-read Car $car
+ * @property-read Customer $customer
+ * @property-read Collection<int, Document> $documents
+ * @property-read int|null $documents_count
+ * @property-read Handover|null $handover
+ * @property-read Collection<int, Option> $options
+ * @property-read int|null $options_count
+ * @property-read Warranty $warranty
+ * @property-read Withdrawal|null $withdrawal
+ * @method static Builder<static>|Rental newModelQuery()
+ * @method static Builder<static>|Rental newQuery()
+ * @method static Builder<static>|Rental query()
+ * @method static Builder<static>|Rental whereCarPlate($value)
+ * @method static Builder<static>|Rental whereCreatedAt($value)
+ * @method static Builder<static>|Rental whereCustomerId($value)
+ * @method static Builder<static>|Rental whereEnd($value)
+ * @method static Builder<static>|Rental whereId($value)
+ * @method static Builder<static>|Rental whereNbDays($value)
+ * @method static Builder<static>|Rental whereStart($value)
+ * @method static Builder<static>|Rental whereState($value)
+ * @method static Builder<static>|Rental whereTotalPrice($value)
+ * @method static Builder<static>|Rental whereUpdatedAt($value)
+ * @method static Builder<static>|Rental whereWarrantyId($value)
+ * @mixin Eloquent
  */
 class Rental extends Model
 {

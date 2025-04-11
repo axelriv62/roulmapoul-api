@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -14,6 +16,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property Carbon $distribution_date
  * @property string $country
  * @property int $customer_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read Customer $customer
+ * @method static Builder<static>|License newModelQuery()
+ * @method static Builder<static>|License newQuery()
+ * @method static Builder<static>|License query()
+ * @method static Builder<static>|License whereAcquirementDate($value)
+ * @method static Builder<static>|License whereCountry($value)
+ * @method static Builder<static>|License whereCreatedAt($value)
+ * @method static Builder<static>|License whereCustomerId($value)
+ * @method static Builder<static>|License whereDistributionDate($value)
+ * @method static Builder<static>|License whereNum($value)
+ * @method static Builder<static>|License whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class License extends Model
 {

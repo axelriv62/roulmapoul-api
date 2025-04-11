@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * Une agence de location de voitures.
@@ -14,6 +18,22 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $zip
  * @property string $city
  * @property string $country
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection<int, Car> $cars
+ * @property-read int|null $cars_count
+ * @method static Builder<static>|Agency newModelQuery()
+ * @method static Builder<static>|Agency newQuery()
+ * @method static Builder<static>|Agency query()
+ * @method static Builder<static>|Agency whereCity($value)
+ * @method static Builder<static>|Agency whereCountry($value)
+ * @method static Builder<static>|Agency whereCreatedAt($value)
+ * @method static Builder<static>|Agency whereId($value)
+ * @method static Builder<static>|Agency whereNum($value)
+ * @method static Builder<static>|Agency whereStreet($value)
+ * @method static Builder<static>|Agency whereUpdatedAt($value)
+ * @method static Builder<static>|Agency whereZip($value)
+ * @mixin Eloquent
  */
 class Agency extends Model
 {

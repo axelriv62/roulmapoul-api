@@ -31,10 +31,11 @@ class RentalPolicy
     }
 
     /**
-     * Détermine si l'utilisateur peut lire une location.
+     * Détermine si l'utilisateur peut consulter une location.
      *
      * @param User $user l'utilisateur qui effectue la demande.
-     * @return bool true si l'utilisateur a la permission de lire une location, sinon false.
+     * @param Rental $rental la location à consulter.
+     * @return bool true si l'utilisateur a la permission de consulter une location, sinon false.
      */
     public function read(User $user, Rental $rental): bool
     {

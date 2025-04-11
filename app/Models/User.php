@@ -19,6 +19,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $password
  * @property string $remember_token
  * @property string $email_verified_at
+ * @property Customer $customer
  */
 class User extends Authenticatable
 {

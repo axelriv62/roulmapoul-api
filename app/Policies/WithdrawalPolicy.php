@@ -17,5 +17,4 @@ class WithdrawalPolicy
     {
         return $user->hasPermissionTo(Permission::CREATE_WITHDRAWAL);
     }
-
 }

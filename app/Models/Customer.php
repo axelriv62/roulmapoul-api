@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string $city_bill
  * @property string $country_bill
  * @property int $user_id
+ * @property User $user
  */
 class Customer extends Model
 {

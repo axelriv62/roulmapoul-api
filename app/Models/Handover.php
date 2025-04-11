@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -18,6 +20,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $comment
  * @property int $user_id
  * @property int $rental_id
+ * @property-read Rental|null $rental
+ * @property-read User|null $user
+ * @method static Builder<static>|Handover newModelQuery()
+ * @method static Builder<static>|Handover newQuery()
+ * @method static Builder<static>|Handover query()
+ * @mixin Eloquent
  */
 class Handover extends Model
 {

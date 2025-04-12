@@ -10,6 +10,7 @@ return new class extends Migration {
     {
         Schema::create('licenses', function (Blueprint $table) {
             $table->string('num')->primary();
+            $table->date('birthday');
             $table->date('acquirement_date');
             $table->date('distribution_date');
             $table->string('country');

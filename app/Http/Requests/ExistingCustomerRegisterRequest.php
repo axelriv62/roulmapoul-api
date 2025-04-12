@@ -15,18 +15,35 @@ class ExistingCustomerRegisterRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
         return [
-            //
+            "email" => "required|email|exists:customers,email",
+            "password" => "required|string|between:6,50",
+        ];
+    }
+
+    /**
+     * Get the validation messages that apply to the request.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            "required" => "Le champ :attribute est requis.",
+            "email" => "Adresse mail invalide.",
+            "exists" => "Aucun client n'est associé avec cette adresse mail.",
+            "string" => "Le champ :attribute doit être une chaîne de caractères.",
+            "between" => "Le champ :attribute doit être compris entre :min et :max caractères.",
         ];
     }
 }

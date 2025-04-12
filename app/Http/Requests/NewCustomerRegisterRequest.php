@@ -15,7 +15,7 @@ class NewCustomerRegisterRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -34,7 +34,7 @@ class NewCustomerRegisterRequest extends FormRequest
             "city" => "required|string|between:2,50",
             "country" => "required|string|between:2,50",
             "phone" => "required|string|between:4,50",
-            "email" => "required|string|email|max:255|unique:users,email," . $this->user()->id,
+            "email" => "required|string|email|max:255|unique:customers,email",
             "password" => "required|string|between:6,50",
         ];
     }
@@ -52,7 +52,7 @@ class NewCustomerRegisterRequest extends FormRequest
             "between" => "Le champ :attribute doit contenir entre :min et :max caractères.",
             "size" => "Le champ :attribute doit contenir :size caractères.",
             "email" => "Le champ :attribute doit être une adresse e-mail valide.",
-            "unique" => "Cette adresse e-mail est déjà utilisée.",
+            "unique" => "Cette adresse e-mail est déjà utilisée, peut-être avez-vous déjà un compte client ?",
             "max" => "Le champ :attribute ne doit pas dépasser :max caractères.",
         ];
     }

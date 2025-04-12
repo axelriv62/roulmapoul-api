@@ -12,7 +12,6 @@ class CUSTOMERS {
     id SERIAL <<PK>>
     first_name VARCHAR
     last_name VARCHAR
-    birthday DATE
     email VARCHAR
     phone VARCHAR
     num VARCHAR
@@ -42,6 +41,7 @@ class RENTALS {
 
 class LICENSES {
     num VARCHAR <<PK>>
+    birthday DATE
     acquirement_date DATE
     distribution_date DATE
     country VARCHAR

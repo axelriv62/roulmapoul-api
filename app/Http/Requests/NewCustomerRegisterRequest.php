@@ -5,7 +5,10 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CustomerRegisterRequest extends FormRequest
+/**
+ * Valide l'enregistrement d'un nouvel utilisateur n'ayant pas de compte client.
+ */
+class NewCustomerRegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

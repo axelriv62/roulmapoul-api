@@ -31,7 +31,7 @@ class CustomerRequest extends FormRequest
             "city" => "required|string|between:2,50",
             "country" => "required|string|between:2,50",
             "phone" => "required|string|between:4,50",
-            "email" => "required|string|email|max:255|unique:users,email," . $this->user()->id,
+            "email" => "required|string|email|max:255",
         ];
     }
 

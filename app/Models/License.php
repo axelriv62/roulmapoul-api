@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * Un permis de conduire possédé par un client.
  *
  * @property string $num
+ * @property Carbon $birthday
  * @property Carbon $acquirement_date
  * @property Carbon $distribution_date
  * @property string $country

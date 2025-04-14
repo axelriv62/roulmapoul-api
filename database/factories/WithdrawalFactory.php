@@ -24,7 +24,7 @@ class WithdrawalFactory extends Factory
             'interior_condition' => $this->faker->text(20),
             'exterior_condition' => $this->faker->text(20),
             'mileage'            => $this->faker->randomFloat(2, 0.01, 200000),
-            'datetime'           => $this->faker->dateTime(),
+            'datetime'           => fn (array $attributes) => Rental::find($attributes['rental_id'])->start->copy()->addDays(rand(0, 1)),
             'comment'            => $this->faker->text(),
             'user_id'            => User::factory(),
             'rental_id'          => Rental::factory()

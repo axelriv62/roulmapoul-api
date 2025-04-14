@@ -2,11 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Models\Amendment;
 use App\Models\Rental;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Amendment>
+ * @extends Factory<Amendment>
  */
 class AmendmentFactory extends Factory
 {

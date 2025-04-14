@@ -3,10 +3,11 @@
 namespace Database\Factories;
 
 use App\Models\Customer;
+use App\Models\License;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\License>
+ * @extends Factory<License>
  */
 class LicenseFactory extends Factory
 {

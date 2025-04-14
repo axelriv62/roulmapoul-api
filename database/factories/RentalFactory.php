@@ -5,12 +5,13 @@ namespace Database\Factories;
 use App\Enums\RentalState;
 use App\Models\Car;
 use App\Models\Customer;
+use App\Models\Rental;
 use App\Models\Warranty;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Rental>
+ * @extends Factory<Rental>
  */
 class RentalFactory extends Factory
 {

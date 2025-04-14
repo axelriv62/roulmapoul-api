@@ -4,11 +4,12 @@ namespace Database\Factories;
 
 use App\Enums\CarAvailability;
 use App\Models\Agency;
+use App\Models\Car;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Car>
+ * @extends Factory<Car>
  */
 class CarFactory extends Factory
 {

@@ -3,11 +3,12 @@
 namespace Database\Factories;
 
 use App\Enums\DocumentType;
+use App\Models\Document;
 use App\Models\Rental;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Document>
+ * @extends Factory<Document>
  */
 class DocumentFactory extends Factory
 {

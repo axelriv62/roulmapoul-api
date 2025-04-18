@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Enums\DocumentType;
-use Database\Factories\DocumentFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;

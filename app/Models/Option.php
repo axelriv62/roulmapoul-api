@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Database\Factories\OptionFactory;
-use Database\Factories\UserFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -32,6 +31,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|Option whereName($value)
  * @method static Builder<static>|Option wherePrice($value)
  * @method static Builder<static>|Option whereUpdatedAt($value)
+ * @method static OptionFactory factory($count = null, $state = [])
  * @mixin Eloquent
  */
 class Option extends Model

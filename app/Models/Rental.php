@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\RentalState;
 use Carbon\Carbon;
+use Database\Factories\RentalFactory;
 use Database\Factories\UserFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 
 /**
@@ -55,6 +58,9 @@ use Illuminate\Notifications\Notifiable;
  * @method static Builder<static>|Rental whereTotalPrice($value)
  * @method static Builder<static>|Rental whereUpdatedAt($value)
  * @method static Builder<static>|Rental whereWarrantyId($value)
+ * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
+ * @property-read int|null $notifications_count
+ * @method static RentalFactory factory($count = null, $state = [])
  * @mixin Eloquent
  */
 class Rental extends Model

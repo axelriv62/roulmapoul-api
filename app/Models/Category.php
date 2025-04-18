@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Database\Factories\CategoryFactory;
-use Database\Factories\UserFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -30,6 +29,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|Category whereId($value)
  * @method static Builder<static>|Category whereName($value)
  * @method static Builder<static>|Category whereUpdatedAt($value)
+ * @method static CategoryFactory factory($count = null, $state = [])
  * @mixin Eloquent
  */
 class Category extends Model

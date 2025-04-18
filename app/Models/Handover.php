@@ -18,14 +18,29 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $interior_condition
  * @property string $exterior_condition
  * @property float $mileage
- * @property Carbon datetime
+ * @property Carbon $datetime
  * @property string $comment
- * @property int $user_id
  * @property int $rental_id
  * @property-read Rental|null $rental
  * @method static Builder<static>|Handover newModelQuery()
  * @method static Builder<static>|Handover newQuery()
  * @method static Builder<static>|Handover query()
+ * @property int $customer_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read Customer $customer
+ * @method static HandoverFactory factory($count = null, $state = [])
+ * @method static Builder<static>|Handover whereComment($value)
+ * @method static Builder<static>|Handover whereCreatedAt($value)
+ * @method static Builder<static>|Handover whereCustomerId($value)
+ * @method static Builder<static>|Handover whereDatetime($value)
+ * @method static Builder<static>|Handover whereExteriorCondition($value)
+ * @method static Builder<static>|Handover whereFuelLevel($value)
+ * @method static Builder<static>|Handover whereId($value)
+ * @method static Builder<static>|Handover whereInteriorCondition($value)
+ * @method static Builder<static>|Handover whereMileage($value)
+ * @method static Builder<static>|Handover whereRentalId($value)
+ * @method static Builder<static>|Handover whereUpdatedAt($value)
  * @mixin Eloquent
  */
 class Handover extends Model
@@ -58,7 +73,7 @@ class Handover extends Model
         'mileage',
         'datetime',
         'comment',
-        'user_id',
+        'customer_id',
         'rental_id',
     ];
 

@@ -13,10 +13,10 @@ class WithdrawalSeeder extends Seeder
      */
     public function run(): void
     {
-        $rental_ids = Rental::all()->pluck('id');
+        $rentals = Rental::all();
 
-        foreach ($rental_ids as $rental_id) {
-            $rental = Rental::find($rental_id);
+        foreach ($rentals as $rental) {
+            $rental = Rental::find($rental->id);
             $customer = $rental->customer;
 
             $withdrawal = Withdrawal::factory()->make();

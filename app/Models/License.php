@@ -62,6 +62,11 @@ class License extends Model
     protected $primaryKey = 'num';
 
     /**
+     * @var string
+     */
+    protected $dateFormat = 'Y-m-d';
+
+    /**
      * @var string[]
      */
     protected $fillable = [

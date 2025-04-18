@@ -20,14 +20,18 @@ class RentalSeeder extends Seeder
         $customer_ids = Customer::all()->pluck('id');
         $warranty_ids = Warranty::all()->pluck('id');
 
-        // Récupérer les voitures disponibles
-        $cars = Car::all()->where('availability', CarAvailability::AVAILABLE->value);
-        $car_plates = $cars->pluck('plate');
-
         foreach ($rentals as $rental) {
+            // Récupérer les voitures disponibles
+            $cars = Car::all()->where('availability', CarAvailability::AVAILABLE->value);
+            $car_plates = $cars->pluck('plate');
+
             $rental->car_plate = $car_plates->random();
             $rental->customer_id = $customer_ids->random();
-            $rental->warranty_id = $warranty_ids->random();
+
+            if (rand(0, 100) < 70) {
+                $rental->warranty_id = $warranty_ids->random();
+            }
+
             $rental->save();
 
             // Mettre à jour la disponibilité de la voiture

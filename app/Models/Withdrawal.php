@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Database\Factories\WithdrawalFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
@@ -41,6 +43,9 @@ use Illuminate\Support\Carbon;
  */
 class Withdrawal extends Model
 {
+    /** @use HasFactory<WithdrawalFactory> */
+    use HasFactory;
+
     /**
      * @var string
      */
@@ -50,6 +55,11 @@ class Withdrawal extends Model
      * @var string
      */
     protected $primaryKey = 'id';
+
+    /**
+     * @var string
+     */
+    protected $dateFormat = "Y-m-d H:i:s";
 
     /**
      * @var string[]

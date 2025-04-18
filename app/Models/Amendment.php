@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use Database\Factories\AmendmentFactory;
+use Database\Factories\UserFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
@@ -33,6 +36,9 @@ use Illuminate\Support\Carbon;
  */
 class Amendment extends Model
 {
+    /** @use HasFactory<AmendmentFactory> */
+    use HasFactory;
+
     /**
      * @var string
      */

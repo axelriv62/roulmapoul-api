@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use Database\Factories\OptionFactory;
+use Database\Factories\UserFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
@@ -33,6 +36,9 @@ use Illuminate\Support\Carbon;
  */
 class Option extends Model
 {
+    /** @use HasFactory<OptionFactory> */
+    use HasFactory;
+
     /**
      * @var string
      */

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Enums\CarAvailability;
 use App\Models\Car;
 use App\Models\Customer;
+use App\Models\Option;
 use App\Models\Rental;
 use App\Models\Warranty;
 use Illuminate\Database\Seeder;
@@ -19,6 +20,7 @@ class RentalSeeder extends Seeder
         $rentals = Rental::factory(50)->make();
         $customer_ids = Customer::all()->pluck('id');
         $warranty_ids = Warranty::all()->pluck('id');
+        $option_ids = Option::all()->pluck('id');
 
         foreach ($rentals as $rental) {
             // Récupérer les voitures disponibles
@@ -33,6 +35,11 @@ class RentalSeeder extends Seeder
             }
 
             $rental->save();
+
+            // Ajouter des options à la location
+            if (rand(0, 100) < 50) {
+                $rental->options()->attach($option_ids->random(rand(0, 3)));
+            }
 
             // Mettre à jour la disponibilité de la voiture
             $car = Car::where('plate', $rental->car_plate)->first();

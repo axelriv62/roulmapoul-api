@@ -21,10 +21,10 @@ class DatabaseSeeder extends Seeder
             CarSeeder::class,
             CustomerSeeder::class,
             WarrantySeeder::class,
+            OptionSeeder::class,
             RentalSeeder::class,
             HandoverSeeder::class,
             LicenseSeeder::class,
-            OptionSeeder::class,
             WithdrawalSeeder::class
         ]);
 

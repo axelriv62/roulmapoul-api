@@ -32,9 +32,9 @@ class LicenseRequest extends FormRequest
     }
 
     /**
-     * Customise les messages de validation.
+     * Get the validation messages that apply to the request.
      *
-     * @return array<string, string> les messages de validation.
+     * @return array<string, string>
      */
     public function messages(): array
     {

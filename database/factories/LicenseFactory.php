@@ -19,7 +19,7 @@ class LicenseFactory extends Factory
     {
         return [
             'num' => $this->faker->unique()->numerify('##########'),
-            'birthday' => $this->faker->dateTimeBetween('-100 years', '-18 years')->format('Y-m-d'),
+            'birthday' => $this->faker->dateTimeBetween('-80 years', '-18 years')->format('Y-m-d'),
             'acquirement_date' => $this->faker->date(),
             'distribution_date' => $this->faker->date(),
             'country' => $this->faker->country(),

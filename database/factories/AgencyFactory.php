@@ -18,10 +18,10 @@ class AgencyFactory extends Factory
     public function definition(): array
     {
         return [
-            'num'     => $this->faker->unique()->buildingNumber(),
-            'street'  => $this->faker->streetAddress(),
-            'zip'     => $this->faker->postcode(),
-            'city'    => $this->faker->city(),
+            'num' => $this->faker->unique()->buildingNumber(),
+            'street' => $this->faker->streetName(),
+            'zip' => $this->faker->postcode(),
+            'city' => $this->faker->city(),
             'country' => $this->faker->country(),
         ];
     }

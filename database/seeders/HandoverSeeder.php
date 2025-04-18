@@ -16,10 +16,9 @@ class HandoverSeeder extends Seeder
     {
         // Récupérer les locations qui sont terminées
         $rentals = Rental::all()->where('state', RentalState::COMPLETED->value);
-        $rental_ids = $rentals->pluck('id');
 
-        foreach ($rental_ids as $rental_id) {
-            $rental = Rental::find($rental_id);
+        foreach ($rentals as $rental) {
+            $rental = Rental::find($rental->id);
             $customer = $rental->customer;
             $user = $customer->user;
 

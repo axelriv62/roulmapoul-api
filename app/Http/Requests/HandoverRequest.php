@@ -26,9 +26,9 @@ class HandoverRequest extends FormRequest
             "datetime" => "required|date_format:Y-m-d H:i:s",
             "mileage" => "required|integer|min:0",
             "fuel_level" => "required|numeric|min:0",
-            "interior_condition" => "string|between:0,500",
-            "exterior_condition" => "string|between:0,500",
-            "comment" => "string|between:0,500",
+            "interior_condition" => "nullable|string|between:0,500",
+            "exterior_condition" => "nullable|string|between:0,500",
+            "comment" => "nullable|string|between:0,500",
         ];
     }
 

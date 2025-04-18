@@ -17,10 +17,13 @@ class CustomerFactory extends Factory
      */
     public function definition(): array
     {
+        $firstName = $this->faker->firstName();
+        $lastName = $this->faker->lastName();
+
         return [
-            'first_name' => $this->faker->firstName(),
-            'last_name' => $this->faker->lastName(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'email' => strtolower($firstName . '.' . $lastName) . '@domain.fr',
             'phone' => $this->faker->phoneNumber(),
 
             'num' => $this->faker->buildingNumber(),

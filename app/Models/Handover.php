@@ -45,6 +45,11 @@ class Handover extends Model
     protected $primaryKey = 'id';
 
     /**
+     * @var string
+     */
+    protected $dateFormat = "Y-m-d H:i:s";
+
+    /**
      * @var string[]
      */
     protected $fillable = [

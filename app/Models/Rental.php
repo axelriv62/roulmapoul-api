@@ -90,12 +90,17 @@ class Rental extends Model
      * @var string[]
      */
     protected $casts = [
-        'start' => 'datetime',
-        'end' => 'datetime',
+        'start' => 'date',
+        'end' => 'date',
         'nb_days' => 'integer',
         'total_price' => 'float',
         'car_plate' => 'string',
     ];
+
+    /**
+     * @var string
+     */
+    protected $dateFormat = "Y-m-d";
 
     public function options(): BelongsToMany
     {

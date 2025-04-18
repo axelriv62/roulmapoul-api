@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Database\Factories\UserFactory;
 use Database\Factories\WithdrawalFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -57,6 +56,11 @@ class Withdrawal extends Model
      * @var string
      */
     protected $primaryKey = 'id';
+
+    /**
+     * @var string
+     */
+    protected $dateFormat = "Y-m-d H:i:s";
 
     /**
      * @var string[]

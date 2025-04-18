@@ -17,7 +17,7 @@ class LicenseSeeder extends Seeder
         $customer_ids = Customer::all()->pluck('id');
 
         foreach ($licenses as $license) {
-            $license->customer_id = $customer_ids->random();
+            $license->customer_id = $customer_ids->random(); // TODO Corriger le problème du linter
             $license->save();
         }
     }

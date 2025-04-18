@@ -18,9 +18,9 @@ class OptionFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'        => $this->faker->unique()->word(),
-            'description' => $this->faker->optional()->text(),
-            'price'       => $this->faker->randomFloat(2, 10, 200)
+            'name' => $this->faker->word(),
+            'description' => $this->faker->text(),
+            'price' => $this->faker->randomFloat(2, 10, 200)
         ];
     }
 }

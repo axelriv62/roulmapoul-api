@@ -3,10 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\RentalState;
-use App\Models\Car;
-use App\Models\Customer;
 use App\Models\Rental;
-use App\Models\Warranty;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
@@ -30,14 +27,11 @@ class RentalFactory extends Factory
             : $this->faker->randomElement(RentalState::toValuesArray());
 
         return [
-            'start'       => $start,
-            'end'         => $end,
-            'nb_days'     => $start->diffInDays($end),
-            'state'       => $state,
+            'start' => $start,
+            'end' => $end,
+            'nb_days' => $start->diffInDays($end),
+            'state' => $state,
             'total_price' => $this->faker->randomFloat(2, 100, 1000),
-            'car_plate'   => Car::factory(),
-            'customer_id' => Customer::factory(),
-            'warranty_id' => Warranty::factory(),
         ];
     }
 }

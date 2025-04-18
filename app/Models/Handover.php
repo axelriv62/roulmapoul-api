@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Database\Factories\HandoverFactory;
-use Database\Factories\UserFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -38,7 +37,7 @@ class Handover extends Model
     /**
      * @var string
      */
-    protected $table = 'handover';
+    protected $table = 'handovers';
 
     /**
      * @var string

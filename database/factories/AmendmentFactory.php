@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Amendment;
-use App\Models\Rental;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,10 +18,9 @@ class AmendmentFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'      => $this->faker->unique()->word(),
-            'price'     => $this->faker->randomFloat(2, 10, 100),
-            'content'   => $this->faker->text(),
-            'rental_id' => Rental::factory()
+            'name' => $this->faker->unique()->word(),
+            'price' => $this->faker->randomFloat(2, 10, 100),
+            'content' => $this->faker->text(),
         ];
     }
 }

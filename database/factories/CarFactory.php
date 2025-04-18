@@ -3,10 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\CarAvailability;
-use App\Enums\RentalState;
-use App\Models\Agency;
 use App\Models\Car;
-use App\Models\Category;
 use App\Models\Rental;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
@@ -24,11 +21,9 @@ class CarFactory extends Factory
     public function definition(): array
     {
         return [
-            'plate'       => $this->faker->unique()->bothify('??###??'), // les ? seront remplacé par des lettres et les # des chiffres
-            'availability'=> CarAvailability::AVAILABLE->value,
-            'price_day'   => $this->faker->randomFloat(2, 50, 200), // Prix entre 50 et 200 par jour
-            'agency_id'   => Agency::factory(),
-            'category_id' => Category::factory(),
+            'plate' => $this->faker->unique()->bothify('??###??'), // les ? seront remplacé par des lettres et les # des chiffres
+            'availability' => CarAvailability::AVAILABLE->value,
+            'price_day' => $this->faker->randomFloat(2, 50, 200), // Prix entre 50 et 200 par jour
         ];
     }
 

@@ -18,7 +18,7 @@ class WarrantyFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'  => $this->faker->unique()->word(),
+            'name'  => $this->faker->word(),
             'price' => $this->faker->randomFloat(2, 500, 3000)
         ];
     }

@@ -13,12 +13,14 @@ class LicenseSeeder extends Seeder
      */
     public function run(): void
     {
-        $licenses = License::factory(50)->make();
-        $customer_ids = Customer::all()->pluck('id');
+        $customers = Customer::all();
 
-        foreach ($licenses as $license) {
-            $license->customer_id = $customer_ids->random();
-            $license->save();
+        foreach ($customers as $customer) {
+            if (rand(0, 100) < 80) {
+                $license = License::factory()->make();
+                $license->customer_id = $customer->id;
+                $license->save();
+            }
         }
     }
 }

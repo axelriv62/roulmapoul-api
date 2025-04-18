@@ -25,6 +25,8 @@ COPY . .
 RUN composer install
 
 # Générer la clé Laravel, migrer et seed
+RUN touch database/database.sqlite
+RUN php artisan config:clear
 RUN php artisan key:generate
 RUN php artisan migrate:fresh --seed
 
@@ -32,5 +34,5 @@ RUN php artisan migrate:fresh --seed
 EXPOSE 8000
 
 # Lancer le serveur de développement
-CMD php artisan serve --host=0.0.0.0 --port=8000
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
 

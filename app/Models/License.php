@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Database\Factories\LicenseFactory;
-use Database\Factories\UserFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -59,6 +58,11 @@ class License extends Model
      * @var string
      */
     protected $primaryKey = 'num';
+
+    /**
+     * @var string
+     */
+    protected $dateFormat = 'Y-m-d';
 
     /**
      * @var string[]

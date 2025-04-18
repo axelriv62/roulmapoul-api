@@ -21,11 +21,10 @@ class HandoverSeeder extends Seeder
         foreach ($rentals as $rental) {
             $rental = Rental::find($rental->id);
             $customer = $rental->customer;
-            $user = $customer->user;
 
             $handover = Handover::factory()->make();
             $handover->rental_id = $rental->id;
-            $handover->user_id = $user->id;
+            $handover->customer_id = $customer->id;
             $handover->datetime = $rental->end->addMinutes(rand(-1440, 1440)); // date de retour entre 24 heures avant et 24 heures après la fin de la location
             $handover->save();
 

@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Database\Factories\AgencyFactory;
-use Database\Factories\UserFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -37,6 +36,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|Agency whereStreet($value)
  * @method static Builder<static>|Agency whereUpdatedAt($value)
  * @method static Builder<static>|Agency whereZip($value)
+ * @method static AgencyFactory factory($count = null, $state = [])
+ * @method static Builder<static>|Agency whereName($value)
  * @mixin Eloquent
  */
 class Agency extends Model

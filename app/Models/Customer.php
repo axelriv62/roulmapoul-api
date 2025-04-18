@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Database\Factories\CustomerFactory;
-use Database\Factories\UserFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -61,6 +60,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static Builder<static>|Customer whereUserId($value)
  * @method static Builder<static>|Customer whereZip($value)
  * @method static Builder<static>|Customer whereZipBill($value)
+ * @property-read Collection<int, Handover> $handovers
+ * @property-read int|null $handovers_count
+ * @property-read Collection<int, Withdrawal> $withdrawals
+ * @property-read int|null $withdrawals_count
+ * @method static CustomerFactory factory($count = null, $state = [])
  * @mixin Eloquent
  */
 class Customer extends Model
@@ -123,5 +127,15 @@ class Customer extends Model
     public function license(): HasOne
     {
         return $this->hasOne(License::class);
+    }
+
+    public function handovers(): HasMany
+    {
+        return $this->hasMany(HandOver::class);
+    }
+
+    public function withdrawals(): HasMany
+    {
+        return $this->hasMany(Withdrawal::class);
     }
 }

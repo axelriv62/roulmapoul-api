@@ -32,6 +32,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder<static>|License whereDistributionDate($value)
  * @method static Builder<static>|License whereNum($value)
  * @method static Builder<static>|License whereUpdatedAt($value)
+ * @method static LicenseFactory factory($count = null, $state = [])
+ * @method static Builder<static>|License whereBirthday($value)
  * @mixin Eloquent
  */
 class License extends Model

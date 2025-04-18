@@ -18,11 +18,10 @@ class WithdrawalSeeder extends Seeder
         foreach ($rentals as $rental) {
             $rental = Rental::find($rental->id);
             $customer = $rental->customer;
-            $user = $customer->user;
 
             $withdrawal = Withdrawal::factory()->make();
             $withdrawal->rental_id = $rental->id;
-            $withdrawal->user_id = $user->id;
+            $withdrawal->customer_id = $customer->id;
             $withdrawal->datetime = $rental->start->addMinutes(rand(30, 1440)); // date de retrait entre 30 minutes et 24 heures après le début de la location
             $withdrawal->save();
         }

@@ -12,8 +12,8 @@ return new class extends Migration {
     {
         Schema::create('rentals', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('start');
-            $table->dateTime('end');
+            $table->date('start');
+            $table->date('end');
             $table->integer('nb_days');
             $table->enum('state', RentalState::toValuesArray());
             $table->float('total_price');

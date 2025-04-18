@@ -12,7 +12,6 @@ return new class extends Migration {
         Schema::create('rental_option', function (Blueprint $table) {
             $table->foreignIdFor(Rental::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(Option::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->timestamps();
         });
     }
 

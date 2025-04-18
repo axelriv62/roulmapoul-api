@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Database\Factories\AmendmentFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
@@ -29,10 +31,14 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|Amendment wherePrice($value)
  * @method static Builder<static>|Amendment whereRentalId($value)
  * @method static Builder<static>|Amendment whereUpdatedAt($value)
+ * @method static AmendmentFactory factory($count = null, $state = [])
  * @mixin Eloquent
  */
 class Amendment extends Model
 {
+    /** @use HasFactory<AmendmentFactory> */
+    use HasFactory;
+
     /**
      * @var string
      */

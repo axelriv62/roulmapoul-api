@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Database\Factories\LicenseFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -30,10 +32,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder<static>|License whereDistributionDate($value)
  * @method static Builder<static>|License whereNum($value)
  * @method static Builder<static>|License whereUpdatedAt($value)
+ * @method static LicenseFactory factory($count = null, $state = [])
+ * @method static Builder<static>|License whereBirthday($value)
  * @mixin Eloquent
  */
 class License extends Model
 {
+    /** @use HasFactory<LicenseFactory> */
+    use HasFactory;
+
     /**
      * @var bool
      */
@@ -53,6 +60,11 @@ class License extends Model
      * @var string
      */
     protected $primaryKey = 'num';
+
+    /**
+     * @var string
+     */
+    protected $dateFormat = 'Y-m-d';
 
     /**
      * @var string[]

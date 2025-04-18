@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Database\Factories\AgencyFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
@@ -34,10 +36,15 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|Agency whereStreet($value)
  * @method static Builder<static>|Agency whereUpdatedAt($value)
  * @method static Builder<static>|Agency whereZip($value)
+ * @method static AgencyFactory factory($count = null, $state = [])
+ * @method static Builder<static>|Agency whereName($value)
  * @mixin Eloquent
  */
 class Agency extends Model
 {
+    /** @use HasFactory<AgencyFactory> */
+    use HasFactory;
+
     /**
      * @var string
      */

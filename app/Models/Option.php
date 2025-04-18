@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Database\Factories\OptionFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
@@ -29,10 +31,14 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|Option whereName($value)
  * @method static Builder<static>|Option wherePrice($value)
  * @method static Builder<static>|Option whereUpdatedAt($value)
+ * @method static OptionFactory factory($count = null, $state = [])
  * @mixin Eloquent
  */
 class Option extends Model
 {
+    /** @use HasFactory<OptionFactory> */
+    use HasFactory;
+
     /**
      * @var string
      */

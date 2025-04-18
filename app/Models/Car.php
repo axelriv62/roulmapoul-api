@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use App\Enums\CarAvailability;
+use Database\Factories\CarFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -35,10 +37,14 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|Car wherePlate($value)
  * @method static Builder<static>|Car wherePriceDay($value)
  * @method static Builder<static>|Car whereUpdatedAt($value)
+ * @method static CarFactory factory($count = null, $state = [])
  * @mixin Eloquent
  */
 class Car extends Model
 {
+    /** @use HasFactory<CarFactory> */
+    use HasFactory;
+
     /**
      * @var string
      */

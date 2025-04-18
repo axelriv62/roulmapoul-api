@@ -4,9 +4,12 @@ namespace App\Models;
 
 use App\Enums\RentalState;
 use Carbon\Carbon;
+use Database\Factories\RentalFactory;
+use Database\Factories\UserFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -52,10 +55,14 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static Builder<static>|Rental whereTotalPrice($value)
  * @method static Builder<static>|Rental whereUpdatedAt($value)
  * @method static Builder<static>|Rental whereWarrantyId($value)
+ * @method static RentalFactory factory($count = null, $state = [])
  * @mixin Eloquent
  */
 class Rental extends Model
 {
+    /** @use HasFactory<UserFactory> */
+    use HasFactory;
+
     /**
      * @var string
      */
@@ -84,12 +91,17 @@ class Rental extends Model
      * @var string[]
      */
     protected $casts = [
-        'start' => 'datetime',
-        'end' => 'datetime',
+        'start' => 'date',
+        'end' => 'date',
         'nb_days' => 'integer',
         'total_price' => 'float',
         'car_plate' => 'string',
     ];
+
+    /**
+     * @var string
+     */
+    protected $dateFormat = "Y-m-d";
 
     public function options(): BelongsToMany
     {

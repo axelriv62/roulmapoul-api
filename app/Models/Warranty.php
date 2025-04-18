@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Database\Factories\WarrantyFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
@@ -27,10 +29,14 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|Warranty whereName($value)
  * @method static Builder<static>|Warranty wherePrice($value)
  * @method static Builder<static>|Warranty whereUpdatedAt($value)
+ * @method static WarrantyFactory factory($count = null, $state = [])
  * @mixin Eloquent
  */
 class Warranty extends Model
 {
+    /** @use HasFactory<WarrantyFactory> */
+    use HasFactory;
+
     /**
      * @var string
      */

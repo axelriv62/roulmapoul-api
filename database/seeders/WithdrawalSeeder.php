@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Rental;
-use App\Models\User;
 use App\Models\Withdrawal;
 use Illuminate\Database\Seeder;
 
@@ -15,12 +14,15 @@ class WithdrawalSeeder extends Seeder
     public function run(): void
     {
         $withdrawals = Withdrawal::factory(50)->make();
-        $user_ids = User::all()->pluck('id');
-        $rentals = Rental::all()->pluck('id');
+        $rental_ids = Rental::all()->pluck('id');
 
         foreach ($withdrawals as $withdrawal) {
-            $withdrawal->user_id = $user_ids->random();
-            $withdrawal->rental_id = $rentals->random();
+            $rental = Rental::find($rental_ids->random());
+            $customer = $rental->customer;
+            $user = $customer->user;
+
+            $withdrawal->rental_id = $rental->id;
+            $withdrawal->user_id = $user->id;
             $withdrawal->save();
         }
     }

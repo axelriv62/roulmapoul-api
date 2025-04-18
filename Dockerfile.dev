@@ -33,3 +33,4 @@ EXPOSE 8000
 
 # Lancer le serveur de développement
 CMD php artisan serve --host=0.0.0.0 --port=8000
+

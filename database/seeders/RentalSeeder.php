@@ -27,7 +27,9 @@ class RentalSeeder extends Seeder
         foreach ($rentals as $rental) {
             $rental->car_plate = $car_plates->random();
             $rental->customer_id = $customer_ids->random();
-            $rental->warranty_id = $warranty_ids->random();
+            if (rand(0, 100) < 70) {
+                $rental->warranty_id = $warranty_ids->random();
+            }
             $rental->save();
 
             // Mettre à jour la disponibilité de la voiture

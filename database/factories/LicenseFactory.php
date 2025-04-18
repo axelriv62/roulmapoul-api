@@ -18,7 +18,7 @@ class LicenseFactory extends Factory
     public function definition(): array
     {
         return [
-            'num' => $this->faker->unique()->numerify('##########'),
+            'num' => $this->faker->unique()->numerify('############'),
             'birthday' => $this->faker->dateTimeBetween('-80 years', '-18 years')->format('Y-m-d'),
             'acquirement_date' => $this->faker->date(),
             'distribution_date' => $this->faker->date(),

@@ -21,7 +21,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $user_id
  * @property int $rental_id
  * @property-read Rental|null $rental
- * @property-read User|null $user
  * @method static Builder<static>|Handover newModelQuery()
  * @method static Builder<static>|Handover newQuery()
  * @method static Builder<static>|Handover query()
@@ -62,9 +61,9 @@ class Handover extends Model
         'datetime' => 'datetime'
     ];
 
-    public function user(): BelongsTo
+    public function customer(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Customer::class);
     }
 
     public function rental(): BelongsTo

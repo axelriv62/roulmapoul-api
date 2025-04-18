@@ -118,4 +118,14 @@ class Customer extends Model
     {
         return $this->hasOne(License::class);
     }
+
+    public function handovers(): HasMany
+    {
+        return $this->hasMany(HandOver::class);
+    }
+
+    public function withdrawals(): HasMany
+    {
+        return $this->hasMany(Withdrawal::class);
+    }
 }

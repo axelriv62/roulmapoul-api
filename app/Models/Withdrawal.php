@@ -23,7 +23,6 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Rental $rental
- * @property-read User $user
  * @method static Builder<static>|Withdrawal newModelQuery()
  * @method static Builder<static>|Withdrawal newQuery()
  * @method static Builder<static>|Withdrawal query()
@@ -75,9 +74,9 @@ class Withdrawal extends Model
         'datetime' => 'datetime'
     ];
 
-    public function user(): BelongsTo
+    public function customer(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Customer::class);
     }
 
     public function rental(): BelongsTo

@@ -2,9 +2,13 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Car;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin Car
+ */
 class CarResource extends JsonResource
 {
     /**
@@ -14,6 +18,12 @@ class CarResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            "plate" => $this->plate,
+            "availability" => $this->availability,
+            "price_day" => $this->price_day,
+            "category" => $this->category->name,
+            "agency" => $this->agency->name,
+        ];
     }
 }

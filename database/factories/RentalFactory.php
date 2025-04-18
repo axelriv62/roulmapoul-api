@@ -19,8 +19,8 @@ class RentalFactory extends Factory
      */
     public function definition(): array
     {
-        $start = Carbon::now()->addDays(rand(1, 30));
-        $end = $start->copy()->addDays(rand(1, 10));
+        $start = Carbon::now()->addDays(rand(-60, 60));
+        $end = $start->copy()->addDays(rand(7, 30));
 
         $state = Carbon::now()->between($start, $end)
             ? RentalState::ONGOING->value

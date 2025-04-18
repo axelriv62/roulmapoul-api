@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder
             CustomerSeeder::class,
             WarrantySeeder::class,
             RentalSeeder::class,
-            AmendmentSeeder::class,
             HandoverSeeder::class,
             LicenseSeeder::class,
             OptionSeeder::class,

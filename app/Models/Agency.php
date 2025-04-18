@@ -16,6 +16,7 @@ use Illuminate\Support\Carbon;
  * Une agence de location de voitures.
  *
  * @property int $id
+ * @property string $name
  * @property string $num
  * @property string $street
  * @property string $zip
@@ -57,6 +58,7 @@ class Agency extends Model
      * @var string[]
      */
     protected $fillable = [
+        'name',
         'num',
         'street',
         'zip',

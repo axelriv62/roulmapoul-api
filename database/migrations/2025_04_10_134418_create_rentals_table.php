@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->string('car_plate');
             $table->foreign('car_plate')->references('plate')->on('cars')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(Customer::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignIdFor(Warranty::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(Warranty::class)->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

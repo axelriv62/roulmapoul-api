@@ -14,14 +14,15 @@ class CustomerSeeder extends Seeder
     public function run(): void
     {
         $customers = Customer::factory(50)->make();
-        $user_ids = User::all()->pluck('id');
 
         foreach ($customers as $customer) {
-            $user = User::factory()->create([
-                'name' => $customer->first_name . '.' . $customer->last_name,
-                'email' => $customer->email,
-            ]);
-            $customer->user_id = $user->id;
+            if (rand(0, 100) < 80) {
+                $user = User::factory()->create([
+                    'name' => $customer->first_name . '.' . $customer->last_name,
+                    'email' => $customer->email,
+                ]);
+                $customer->user_id = $user->id;
+            }
             $customer->save();
         }
     }

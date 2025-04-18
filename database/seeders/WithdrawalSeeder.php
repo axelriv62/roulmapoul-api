@@ -23,6 +23,7 @@ class WithdrawalSeeder extends Seeder
             $withdrawal = Withdrawal::factory()->make();
             $withdrawal->rental_id = $rental->id;
             $withdrawal->user_id = $user->id;
+            $withdrawal->datetime = $rental->start->addMinutes(rand(30, 1440)); // date de retrait entre 30 minutes et 24 heures après le début de la location
             $withdrawal->save();
         }
     }

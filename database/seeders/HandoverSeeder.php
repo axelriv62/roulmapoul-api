@@ -26,6 +26,7 @@ class HandoverSeeder extends Seeder
             $handover = Handover::factory()->make();
             $handover->rental_id = $rental->id;
             $handover->user_id = $user->id;
+            $handover->datetime = $rental->end->addMinutes(rand(-1440, 1440)); // date de retour entre 24 heures avant et 24 heures après la fin de la location
             $handover->save();
         }
     }

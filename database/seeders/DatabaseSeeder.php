@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            RoleSeeder::class,
             AgencySeeder::class,
             CategorySeeder::class,
             CarSeeder::class,
@@ -26,8 +27,7 @@ class DatabaseSeeder extends Seeder
             RentalSeeder::class,
             HandoverSeeder::class,
             LicenseSeeder::class,
-            WithdrawalSeeder::class,
-            RoleSeeder::class
+            WithdrawalSeeder::class
         ]);
 
         $robert = User::factory()->create([

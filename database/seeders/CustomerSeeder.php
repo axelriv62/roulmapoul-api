@@ -17,8 +17,13 @@ class CustomerSeeder extends Seeder
         $user_ids = User::all()->pluck('id');
 
         foreach ($customers as $customer) {
-            $customer->user_id = $user_ids->random();
+            $user = User::factory()->create([
+                'name' => $customer->first_name . '.' . $customer->last_name,
+                'email' => $customer->email,
+            ]);
+            $customer->user_id = $user->id;
             $customer->save();
         }
     }
 }
+

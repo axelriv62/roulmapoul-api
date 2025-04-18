@@ -14,8 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(50)->create();
-
         $this->call([
             AgencySeeder::class,
             CategorySeeder::class,
@@ -31,7 +29,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory()->create([
-            'name' => 'Robert Duchmol',
+            'name' => 'robert.duchmol',
             'email' => 'robert.duchmol@roulmapoul.fr',
         ]);
     }

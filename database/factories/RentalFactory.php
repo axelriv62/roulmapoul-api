@@ -38,7 +38,6 @@ class RentalFactory extends Factory
             'end' => $end->format('Y-m-d'),
             'nb_days' => $start->diffInDays($end),
             'state' => $state,
-            'total_price' => $this->faker->randomFloat(2, 100, 1000),
         ];
     }
 }

@@ -1,0 +1,23 @@
+meta {
+  name: register agent
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{URL}}/api/agent/register
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: 5|2QFLCuPFNVTjnoBThGSHJjgEgtigCAl1jNdSeBuS0150554f
+}
+
+body:json {
+  {
+    "name": "rara.goumzi",
+    "email": "rara.goumzi@roulmapoul.fr",
+    "password": "GrosSecret"
+  }
+}

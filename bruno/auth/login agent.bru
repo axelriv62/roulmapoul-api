@@ -1,18 +1,18 @@
 meta {
-  name: admin login
+  name: login agent
   type: http
-  seq: 1
+  seq: 2
 }
 
 post {
   url: {{URL}}/api/login
   body: json
-  auth: none
+  auth: inherit
 }
 
 body:json {
   {
-    "email": "robert.duchmol@roulmapoul.fr",
+    "email": "carl.kolodziejski@roulmapoul.fr",
     "password": "GrosSecret"
   }
 }

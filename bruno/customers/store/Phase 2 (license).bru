@@ -1,0 +1,21 @@
+meta {
+  name: Phase 2 (license)
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{URL}}/api/customers/52/driver
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "num": "12345678912",
+    "birthday": "19-09-2006",
+    "acquirement_date": "2024-10-31",
+    "distribution_date": "2024-11-12",
+    "country": "France"
+  }
+}

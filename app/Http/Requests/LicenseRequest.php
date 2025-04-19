@@ -23,7 +23,7 @@ class LicenseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "num" => "required|string|between:1;15",
+            "num" => "required|string|between:1,15",
             "birthday" => "required|date|date_format:Y-m-d",
             "acquirement_date" => "required|date|date_format:Y-m-d",
             "distribution_date" => "required|date|date_format:Y-m-d",

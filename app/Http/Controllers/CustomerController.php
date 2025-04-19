@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BillingAddressRequest;
+use App\Http\Requests\CustomerRequest;
+use App\Http\Requests\LicenseRequest;
 use App\Http\Resources\CustomerCollection;
+use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -38,9 +42,11 @@ class CustomerController extends BaseController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CustomerRequest $request): JsonResponse
     {
-        //
+        $customer = Customer::create($request->validated());
+        $success = new CustomerResource($customer);
+        return $this->sendResponse($success, "Le client a été créé avec succès.");
     }
 
     /**
@@ -52,17 +58,52 @@ class CustomerController extends BaseController
     }
 
     /**
-     * Update the specified resource in storage.
+     * Remove the specified resource from storage.
      */
-    public function update(Request $request, string $id)
+    public function destroy(string $id)
     {
         //
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Associe le client à son permis de conduire.
+     *
+     * @param LicenseRequest $request La requête HTTP contenant les données du permis de conduire.
+     * @param string $id L'identifiant du client.
      */
-    public function destroy(string $id)
+    public function addLicense(LicenseRequest $request, string $id): JsonResponse
+    {
+        $customer = Customer::findOrFail($id);
+
+        $customer->license()->create($request->validated());
+
+        return $this->sendResponse([], "Le permis de conduire a été associé au client " . $id . " avec succès.");
+    }
+
+    /**
+     * Ajoute les informations de facturation du client.
+     *
+     * @param BillingAddressRequest $request La requête HTTP contenant les informations de facturation.
+     * @param string $id L'identifiant du client.
+     */
+    public function addBillingAddress(BillingAddressRequest $request, string $id): JsonResponse
+    {
+        $customer = Customer::findOrFail($id);
+
+        $customer->num_bill = $request->validated()['num'];
+        $customer->street_bill = $request->validated()['street'];
+        $customer->zip_bill = $request->validated()['zip'];
+        $customer->city_bill = $request->validated()['city'];
+        $customer->country_bill = $request->validated()['country'];
+        $customer->save();
+
+        return $this->sendResponse([], "L'adresse de facturation a été ajoutée au client avec succès.");
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
     {
         //
     }

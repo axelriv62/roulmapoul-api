@@ -10,11 +10,11 @@ return new class extends Migration {
     {
         Schema::create('licenses', function (Blueprint $table) {
             $table->string('num')->primary();
-            $table->date('birthday');
-            $table->date('acquirement_date');
-            $table->date('distribution_date');
-            $table->string('country');
-            $table->foreignIdFor(Customer::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->date('birthday')->nullable(false);
+            $table->date('acquirement_date')->nullable(false);
+            $table->date('distribution_date')->nullable(false);
+            $table->string('country')->nullable(false);
+            $table->foreignIdFor(Customer::class)->unique()->nullable(false)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

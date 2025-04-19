@@ -16,11 +16,9 @@ class LicenseSeeder extends Seeder
         $customers = Customer::all();
 
         foreach ($customers as $customer) {
-            if (rand(0, 100) < 80) {
-                $license = License::factory()->make();
-                $license->customer_id = $customer->id;
-                $license->save();
-            }
+            $license = License::factory()->make();
+            $license->customer_id = $customer->id;
+            $license->save();
         }
     }
 }

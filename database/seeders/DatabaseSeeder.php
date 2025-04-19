@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\Role;
+use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -69,5 +70,17 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
         $bylel->assignRole(Role::AGENT->value);
+
+        $gerard = Customer::factory()->create([
+            'first_name' => 'Gérard',
+            'last_name' => 'Martin',
+            'email' => 'gerard.martin@domain.fr'
+        ]);
+        $gerardUser = User::factory()->create([
+            'name' => 'gerard.martin',
+            'email' => $gerard->email
+        ])->assignRole(Role::CLIENT->value);
+        $gerard->user_id = $gerardUser->id;
+        $gerard->save();
     }
 }

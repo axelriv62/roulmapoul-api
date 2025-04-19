@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Enums\Role;
+use App\Http\Requests\AgentRegisterRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\NewCustomerRegisterRequest;
 use App\Http\Resources\UserResource;
@@ -17,6 +18,27 @@ use Spatie\Permission\Models\Role as SpatieRole;
 
 class AuthController extends BaseController
 {
+    public function registerAgent(AgentRegisterRequest $request): JsonResponse
+    {
+        if (Auth::user()->cannot('createAgent', User::class)) {
+            return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à performer cette opération.', 403);
+        }
+
+        $agentRole = SpatieRole::where('name', Role::AGENT->value)->first();
+
+        $user = User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+        ])->assignRole($agentRole);
+
+        $success['token'] = $user->createToken('auth_token')->plainTextToken;
+        $success['name'] = $request['name'];
+        $success['token_type'] = 'Bearer';
+
+        return $this->sendResponse($success, 'Agent créé avec succès.');
+    }
+
     public function register(NewCustomerRegisterRequest $request): JsonResponse
     {
         $validator = $request->validated();

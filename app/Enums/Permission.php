@@ -11,4 +11,5 @@ enum Permission: string
     case CREATE_HANDOVER = 'handover.create';
     case CREATE_AMENDMENT = 'amendment.create';
     case READ_CUSTOMER = 'customer.read';
+    case CREATE_AGENT = 'agent.create';
 }

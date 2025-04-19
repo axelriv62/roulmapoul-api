@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\Role;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class AgentRegisterRequest extends FormRequest // Permet aux administrateurs de créer des agents.
 {
@@ -12,7 +14,7 @@ class AgentRegisterRequest extends FormRequest // Permet aux administrateurs de 
      */
     public function authorize(): bool
     {
-        return false; // TODO changer pour Auth::user()->hasRole(Role::ADMIN) quand le système de rôle sera mis en place.
+        return Auth::user()->hasRole(Role::ADMIN);
     }
 
     /**
@@ -23,8 +25,7 @@ class AgentRegisterRequest extends FormRequest // Permet aux administrateurs de 
     public function rules(): array
     {
         return [
-            "first_name" => "required|string|max:255",
-            "last_name" => "required|string|max:255",
+            "name" => "required|string|max:255",
             "email" => "required|email|max:255|unique:users,email",
             "password" => "required|string|min:8",
             "phone" => "required|string|max:255",

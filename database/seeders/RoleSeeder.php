@@ -19,17 +19,7 @@ class RoleSeeder extends Seeder
         $agentRole = SpatieRole::create(['name' => Role::AGENT->value]);
         $adminRole = SpatieRole::create(['name' => Role::ADMIN->value]);
 
-        $permissions = [
-            Permission::CREATE_RENTAL,
-            Permission::UPDATE_RENTAL,
-            Permission::READ_ALL_RENTAL,
-            Permission::CREATE_WITHDRAWAL,
-            Permission::CREATE_HANDOVER,
-            Permission::CREATE_AMENDMENT,
-            Permission::READ_CUSTOMER,
-        ];
-
-        foreach ($permissions as $permission) {
+        foreach (Permission::cases() as $permission) {
             SpatiePermission::create(['name' => $permission->value]);
         }
 

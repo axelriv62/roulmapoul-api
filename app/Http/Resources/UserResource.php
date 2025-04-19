@@ -22,8 +22,10 @@ class UserResource extends JsonResource
             "id" => $this->id,
             "name" => $this->name,
             "email" => $this->email,
-            // TODO Afficher le rôle de l'utilisateur
-            "customer_id" => $this->customer->id
+            "role" => $this->roles->pluck('name')->first(),
+
+            // Afficher l'id du client uniquement si l'utilisateur a le rôle 'client'
+            "customer_id" => $this->when($this->roles->pluck('name')->contains('client') && $this->customer, $this->customer->id ?? null),
         ];
     }
 }

@@ -1,0 +1,18 @@
+meta {
+  name: customer login
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{URL}}/api/login
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email": "gerard.martin@domain.fr",
+    "password": "password"
+  }
+}

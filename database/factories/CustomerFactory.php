@@ -25,7 +25,6 @@ class CustomerFactory extends Factory
             'last_name' => $lastName,
             'email' => strtolower($firstName . '.' . $lastName) . '@domain.fr',
             'phone' => $this->faker->phoneNumber(),
-
             'num' => $this->faker->buildingNumber(),
             'street' => $this->faker->streetName(),
             'zip' => $this->faker->postcode(),

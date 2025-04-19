@@ -5,7 +5,11 @@ meta {
 }
 
 get {
-  url: {{URL}}/customers
+  url: {{URL}}/api/customers
   body: none
-  auth: inherit
+  auth: bearer
+}
+
+auth:bearer {
+  token: 2|7eMiS8rWSJPjyycSaRPkKJH0qvJyqHjjK6JBtbn239bc5d9a
 }

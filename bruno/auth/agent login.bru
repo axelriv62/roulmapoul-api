@@ -5,7 +5,14 @@ meta {
 }
 
 post {
-  url: {URL}/api/login
-  body: none
+  url: {{URL}}/api/login
+  body: json
   auth: inherit
+}
+
+body:json {
+  {
+    "email": "carl.kolodziejski@roulmapoul.fr",
+    "password": "GrosSecret"
+  }
 }

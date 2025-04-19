@@ -83,7 +83,7 @@ class AuthController extends BaseController
         ], 'Token generate with success');
     }
 
-    public function me(Request $request): JsonResponse
+    public function me(): JsonResponse
     {
         $user = new UserResource(Auth::user());
         return $this->sendResponse($user, 'User retrieve with success');

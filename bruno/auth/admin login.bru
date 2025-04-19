@@ -5,7 +5,14 @@ meta {
 }
 
 post {
-  url: {URL}/api/login
-  body: none
-  auth: inherit
+  url: {{URL}}/api/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "robert.duchmol@roulmapoul.fr",
+    "password": "GrosSecret"
+  }
 }

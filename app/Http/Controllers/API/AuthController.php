@@ -37,4 +37,13 @@ class AuthController extends BaseController
         $user = new UserResource(Auth::user());
         return $this->sendResponse($user, 'User retrieve with success');
     }
+
+    public function logout(Request $request): JsonResponse
+    {
+        if (!Auth::user()) {
+            return $this->sendResponse([], 'All token are already revoqued');
+        }
+        Auth::user()->tokens()->delete();
+        return $this->sendResponse([], 'All token are revoqued');
+    }
 }

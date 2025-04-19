@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\LoginRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Request;
 
 class AuthController extends BaseController
 {
@@ -27,5 +30,11 @@ class AuthController extends BaseController
             'token' => $token,
             'token_type' => 'Bearer',
         ], 'Token generate with success');
+    }
+
+    public function me(Request $request): JsonResponse
+    {
+        $user = new UserResource(Auth::user());
+        return $this->sendResponse($user, 'User retrieve with success');
     }
 }

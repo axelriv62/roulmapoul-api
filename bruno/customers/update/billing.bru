@@ -1,0 +1,25 @@
+meta {
+  name: billing
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{URL}}/api/customers/52/billing
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: 4|yqcU1zIkStQvnFZyykx6woWaLw3I6DGylf056Max53b3c0ab
+}
+
+body:json {
+  {
+    "num": "77",
+    "street": "Rue Victor Hugo",
+    "zip": "62980",
+    "city": "Vermelles",
+    "country": "Chikoutimi"
+  }
+}

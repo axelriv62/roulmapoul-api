@@ -1,0 +1,25 @@
+meta {
+  name: license
+  type: http
+  seq: 2
+}
+
+put {
+  url: {{URL}}/api/customers/52/driver
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: 4|yqcU1zIkStQvnFZyykx6woWaLw3I6DGylf056Max53b3c0ab
+}
+
+body:json {
+  {
+    "num": "12345678912",
+    "birthday": "2006-09-19",
+    "acquirement_date": "2024-10-31",
+    "distribution_date": "2024-11-21",
+    "country": "France"
+  }
+}

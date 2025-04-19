@@ -13,6 +13,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/agent/register', [AuthController::class, 'registerAgent'])->name('agent.register');
 
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
+    Route::put('/customers/{id}', [CustomerController::class, 'updateInfos'])->name('customers.update');
+    Route::put('/customers/{id}/driver', [CustomerController::class, 'updateLicense'])->name('customers.update-license');
+    Route::put('/customers/{id}/billing', [CustomerController::class, 'updateBillingAddress'])->name('customers.update-billing-addr');
 });
 
 Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');

@@ -31,4 +31,19 @@ class CustomerPolicy
     {
         return $user->hasPermissionTo(Permission::READ_ALL_CUSTOMER);
     }
+
+    /**
+     * Vérifie si l'utilisateur peut modifier le profil d'un client.
+     *
+     * @param User $user L'utilisateur qui effectue la demande.
+     * @param Customer $customer Le client dont le profil est modifié.
+     * @return bool true si l'utilisateur peut modifier le profil, sinon false.
+     */
+    public function update(User $user, Customer $customer): bool
+    {
+        if ($user->hasPermissionTo(Permission::UPDATE_CUSTOMER)) {
+            return true;
+        }
+        return ($user->id === $customer->user->id);
+    }
 }

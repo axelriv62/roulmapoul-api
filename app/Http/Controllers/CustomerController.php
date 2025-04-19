@@ -7,6 +7,7 @@ use App\Http\Requests\CustomerRequest;
 use App\Http\Requests\LicenseRequest;
 use App\Http\Resources\CustomerCollection;
 use App\Http\Resources\CustomerResource;
+use App\Http\Resources\LicenseResource;
 use App\Models\Customer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -103,8 +104,63 @@ class CustomerController extends BaseController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function updateInfos(CustomerRequest $request, string $id): JsonResponse
     {
-        //
+        $customer = Customer::findOrFail($id);
+
+        if (Auth::user()->cannot('update', $customer)) {
+            return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
+        }
+
+        $customer->first_name = $request->validated()['first_name'];
+        $customer->last_name = $request->validated()['last_name'];
+        $customer->email = $request->validated()['email'];
+        $customer->phone = $request->validated()['phone'];
+        $customer->num = $request->validated()['num'];
+        $customer->street = $request->validated()['street'];
+        $customer->zip = $request->validated()['zip'];
+        $customer->city = $request->validated()['city'];
+        $customer->country = $request->validated()['country'];
+        $customer->save();
+
+        $success = new CustomerResource($customer);
+
+        return $this->sendResponse($success, "Les informations du client ont été mises à jour avec succès.");
+    }
+
+    public function updateLicense(LicenseRequest $request, string $id): JsonResponse
+    {
+        $customer = Customer::findOrFail($id);
+
+        if (Auth::user()->cannot('update', $customer)) {
+            return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
+        }
+
+        $customer->license()->update($request->validated());
+
+        $success = new LicenseResource($customer->license);
+
+        return $this->sendResponse($success, "Le permis de conduire a été mis à jour avec succès.");
+    }
+
+    public function updateBillingAddress(BillingAddressRequest $request, string $id): JsonResponse
+    {
+        $customer = Customer::findOrFail($id);
+
+        if (Auth::user()->cannot('update', $customer)) {
+            return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
+        }
+
+        $customer->update([
+            'num_bill' => $request->validated()['num'],
+            'street_bill' => $request->validated()['street'],
+            'zip_bill' => $request->validated()['zip'],
+            'city_bill' => $request->validated()['city'],
+            'country_bill' => $request->validated()['country'],
+        ]);
+
+        $success = new CustomerResource($customer);
+
+        return $this->sendResponse($success, "L'adresse de facturation a été mise à jour avec succès.");
     }
 }

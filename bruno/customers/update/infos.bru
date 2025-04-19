@@ -1,0 +1,29 @@
+meta {
+  name: infos
+  type: http
+  seq: 1
+}
+
+put {
+  url: {{URL}}/api/customers/52
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: 4|yqcU1zIkStQvnFZyykx6woWaLw3I6DGylf056Max53b3c0ab
+}
+
+body:json {
+  {
+    "first_name": "Bella",
+    "last_name": "Taco",
+    "email": "bella.taco@burger.fr",
+    "phone": "0321887979",
+    "num": "32",
+    "street": "Nelson Mandela",
+    "zip": "62122",
+    "city": "Angres",
+    "country": "France"
+  }
+}

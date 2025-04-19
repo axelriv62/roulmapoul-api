@@ -75,9 +75,7 @@ class CustomerController extends BaseController
     public function addLicense(LicenseRequest $request, string $id): JsonResponse
     {
         $customer = Customer::findOrFail($id);
-
         $customer->license()->create($request->validated());
-
         return $this->sendResponse([], "Le permis de conduire a été associé au client " . $id . " avec succès.");
     }
 
@@ -112,19 +110,8 @@ class CustomerController extends BaseController
             return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
         }
 
-        $customer->first_name = $request->validated()['first_name'];
-        $customer->last_name = $request->validated()['last_name'];
-        $customer->email = $request->validated()['email'];
-        $customer->phone = $request->validated()['phone'];
-        $customer->num = $request->validated()['num'];
-        $customer->street = $request->validated()['street'];
-        $customer->zip = $request->validated()['zip'];
-        $customer->city = $request->validated()['city'];
-        $customer->country = $request->validated()['country'];
-        $customer->save();
-
+        $customer->update($request->validated());
         $success = new CustomerResource($customer);
-
         return $this->sendResponse($success, "Les informations du client ont été mises à jour avec succès.");
     }
 
@@ -137,9 +124,7 @@ class CustomerController extends BaseController
         }
 
         $customer->license()->update($request->validated());
-
         $success = new LicenseResource($customer->license);
-
         return $this->sendResponse($success, "Le permis de conduire a été mis à jour avec succès.");
     }
 
@@ -158,9 +143,7 @@ class CustomerController extends BaseController
             'city_bill' => $request->validated()['city'],
             'country_bill' => $request->validated()['country'],
         ]);
-
         $success = new CustomerResource($customer);
-
         return $this->sendResponse($success, "L'adresse de facturation a été mise à jour avec succès.");
     }
 }

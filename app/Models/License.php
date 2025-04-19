@@ -71,6 +71,7 @@ class License extends Model
      */
     protected $fillable = [
         'num',
+        'birthday',
         'acquirement_date',
         'distribution_date',
         'country',
@@ -81,6 +82,7 @@ class License extends Model
      * @var string[]
      */
     protected $casts = [
+        'birthday' => 'date',
         'acquirement_date' => 'date',
         'distribution_date' => 'date'
     ];

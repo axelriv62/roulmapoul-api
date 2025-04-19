@@ -5,10 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-/**
- * Valide l'enregistrement d'un utilisateur ayant déjà un compte client.
- */
-class ExistingCustomerRegisterRequest extends FormRequest
+class NewUserRequest extends FormRequest // Permet aux administrateurs de créer des agents.
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +23,9 @@ class ExistingCustomerRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "email" => "required|email|exists:customers,email",
-            "password" => "required|string|between:6,50",
+            "name" => "required|string|max:255|unique:users,name",
+            "email" => "required|email|max:255|unique:users,email",
+            "password" => "required|string|min:8"
         ];
     }
 
@@ -40,10 +38,12 @@ class ExistingCustomerRegisterRequest extends FormRequest
     {
         return [
             "required" => "Le champ :attribute est requis.",
-            "email" => "Adresse mail invalide.",
-            "exists" => "Aucun client n'est associé avec cette adresse mail.",
             "string" => "Le champ :attribute doit être une chaîne de caractères.",
-            "between" => "Le champ :attribute doit être compris entre :min et :max caractères.",
+            "max" => "Le champ :attribute ne doit pas dépasser :max caractères.",
+            "email" => "Le champ :attribute doit être une adresse e-mail valide.",
+            "name.unique" => "Ce nom d'utilisateur est déjà pris.",
+            "email.unique" => "Cette adresse e-mail est déjà utilisée.",
+            "min" => "Le champ :attribute doit contenir au moins :min caractères.",
         ];
     }
 }

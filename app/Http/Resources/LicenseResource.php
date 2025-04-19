@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\License;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,8 +21,9 @@ class LicenseResource extends JsonResource
     {
         return [
             "num" => $this->num,
-            "acquirement_date" => $this->acquirement_date,
-            "distribution_date" => $this->distribution_date,
+            "birthday" => (new Carbon($this->birthday))->format('Y-m-d'),
+            "acquirement_date" => (new Carbon($this->acquirement_date))->format('Y-m-d'),
+            "distribution_date" => (new Carbon($this->distribution_date))->format('Y-m-d'),
             "country" => $this->country,
             "customer_id" => $this->customer_id
         ];

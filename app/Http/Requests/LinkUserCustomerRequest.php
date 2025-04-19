@@ -2,19 +2,17 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\Role;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-class AgentRegisterRequest extends FormRequest // Permet aux administrateurs de créer des agents.
+class LinkUserCustomerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return Auth::user()->hasRole(Role::ADMIN);
+        return true;
     }
 
     /**
@@ -25,10 +23,8 @@ class AgentRegisterRequest extends FormRequest // Permet aux administrateurs de 
     public function rules(): array
     {
         return [
-            "name" => "required|string|max:255",
-            "email" => "required|email|max:255|unique:users,email",
-            "password" => "required|string|min:8",
-            "phone" => "required|string|max:255",
+            "name" => "required|string|max:255|unique:users,name",
+            "password" => "required|string|min:8"
         ];
     }
 
@@ -43,8 +39,7 @@ class AgentRegisterRequest extends FormRequest // Permet aux administrateurs de 
             "required" => "Le champ :attribute est requis.",
             "string" => "Le champ :attribute doit être une chaîne de caractères.",
             "max" => "Le champ :attribute ne doit pas dépasser :max caractères.",
-            "email" => "Le champ :attribute doit être une adresse e-mail valide.",
-            "unique" => "Cette adresse e-mail est déjà utilisée.",
+            "name.unique" => "Ce nom d'utilisateur est déjà pris.",
             "min" => "Le champ :attribute doit contenir au moins :min caractères.",
         ];
     }

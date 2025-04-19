@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest // Permet aux administrateurs de créer des agents.
+class NewUserRequest extends FormRequest // Permet aux administrateurs de créer des agents.
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Role;
+use App\Http\Requests\LinkUserCustomerRequest;
 use App\Http\Requests\LoginRequest;
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\NewUserRequest;
 use App\Http\Resources\UserResource;
+use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +16,30 @@ use Spatie\Permission\Models\Role as SpatieRole;
 
 class AuthController extends BaseController
 {
-    public function registerAgent(UserRequest $request): JsonResponse
+    public function registerCustomer(LinkUserCustomerRequest $request, string $id): JsonResponse
+    {
+        $customer = Customer::findOrFail($id);
+
+        $customerRole = SpatieRole::where('name', Role::CLIENT->value)->first();
+
+        $user = User::create([
+            'name' => $request->validated()['name'],
+            'email' => $customer->email,
+            'password' => Hash::make($request->validated()['password']),
+        ]);
+        $user->assignRole($customerRole);
+
+        $customer->user_id = $user->id;
+        $customer->save();
+
+        $success['token'] = $user->createToken('auth_token')->plainTextToken;
+        $success['name'] = $request->validated()['name'];
+        $success['token_type'] = 'Bearer';
+
+        return $this->sendResponse($success, 'Utilisateur créé avec succès.');
+    }
+
+    public function registerAgent(NewUserRequest $request): JsonResponse
     {
         if (Auth::user()->cannot('createAgent', User::class)) {
             return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à performer cette opération.', 403);

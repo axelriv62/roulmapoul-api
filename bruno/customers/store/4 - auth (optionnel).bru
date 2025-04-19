@@ -1,0 +1,18 @@
+meta {
+  name: 4 : auth (optionnel)
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{URL}}/api/customers/52/auth
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "TacosDestroyer26000",
+    "password": "CrousLover"
+  }
+}

@@ -10,7 +10,6 @@ use App\Models\Customer;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -89,7 +88,7 @@ class AuthController extends BaseController
         return $this->sendResponse($user, 'User retrieve with success');
     }
 
-    public function logout(Request $request): JsonResponse
+    public function logout(): JsonResponse
     {
         if (!Auth::user()) {
             return $this->sendResponse([], 'All token are already revoqued');

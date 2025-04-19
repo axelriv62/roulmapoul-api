@@ -20,4 +20,15 @@ class CustomerPolicy
         return $user->hasPermissionTo(Permission::READ_CUSTOMER)
             && ($user->id === $customer->user->id);
     }
+
+    /**
+     * Vérifie si l'utilisateur peut lister les clients
+     *
+     * @param User $user L'utilisateur qui effectue la demande.
+     * @return bool true si l'utilisateur peut lister les clients, sinon false.
+     */
+    public function readAny(User $user): bool
+    {
+        return $user->hasPermissionTo(Permission::READ_ALL_CUSTOMER);
+    }
 }

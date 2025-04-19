@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
 use App\Enums\Role;
-use App\Http\Requests\AgentRegisterRequest;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -14,7 +14,7 @@ use Spatie\Permission\Models\Role as SpatieRole;
 
 class AuthController extends BaseController
 {
-    public function registerAgent(AgentRegisterRequest $request): JsonResponse
+    public function registerAgent(UserRequest $request): JsonResponse
     {
         if (Auth::user()->cannot('createAgent', User::class)) {
             return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à performer cette opération.', 403);

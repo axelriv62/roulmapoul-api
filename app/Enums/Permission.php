@@ -14,4 +14,6 @@ enum Permission: string
     case READ_ALL_CUSTOMER = 'customer.all.read';
     case CREATE_AGENT = 'agent.create';
     case UPDATE_CUSTOMER = 'customer.update';
+    case CREATE_OPTION = 'option.create';
+    case UPDATE_OPTION = 'option.update';
 }

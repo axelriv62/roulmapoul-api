@@ -1,0 +1,22 @@
+meta {
+  name: update
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{URL}}/api/categories/15
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: 1|nMZEdApLha5rJifM0jmK7WzKteBXk5FAwkdMzU4tf04933a7
+}
+
+body:json {
+  {
+    "name": "djeziiodz",
+    "description": "Voitures qui vont très très vites."
+  }
+}

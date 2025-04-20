@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\OptionController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -22,3 +23,5 @@ Route::post('/customers', [CustomerController::class, 'store'])->name('customers
 Route::post('/customers/{id}/driver', [CustomerController::class, 'addLicense'])->name('customers.add-license');
 Route::post('/customers/{id}/billing', [CustomerController::class, 'addBillingAddress'])->name('customers.add-billing-addr');
 Route::post('/customers/{id}/auth', [AuthController::class, 'registerCustomer'])->name('customers.register');
+
+Route::get('/options', [OptionController::class, 'index'])->name('options.index');

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\OptionController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -25,3 +26,5 @@ Route::post('/customers/{id}/billing', [CustomerController::class, 'addBillingAd
 Route::post('/customers/{id}/auth', [AuthController::class, 'registerCustomer'])->name('customers.register');
 
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+
+Route::get('/options', [OptionController::class, 'index'])->name('options.index');

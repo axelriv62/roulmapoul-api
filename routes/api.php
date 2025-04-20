@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OptionController;
+use App\Http\Controllers\WarrantyController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -29,3 +30,4 @@ Route::post('/customers/{id}/auth', [AuthController::class, 'registerCustomer'])
 Route::get('/agencies', [AgencyController::class, 'index'])->name('agencies.index');
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 Route::get('/options', [OptionController::class, 'index'])->name('options.index');
+Route::get('/warranties', [WarrantyController::class, 'index'])->name('warranties.index');

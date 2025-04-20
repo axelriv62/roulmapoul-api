@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,3 +23,5 @@ Route::post('/customers', [CustomerController::class, 'store'])->name('customers
 Route::post('/customers/{id}/driver', [CustomerController::class, 'addLicense'])->name('customers.add-license');
 Route::post('/customers/{id}/billing', [CustomerController::class, 'addBillingAddress'])->name('customers.add-billing-addr');
 Route::post('/customers/{id}/auth', [AuthController::class, 'registerCustomer'])->name('customers.register');
+
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');

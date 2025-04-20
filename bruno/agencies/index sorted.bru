@@ -1,0 +1,15 @@
+meta {
+  name: index sorted
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{URL}}/api/agencies?sort[name]=asc
+  body: none
+  auth: inherit
+}
+
+params:query {
+  sort[name]: asc
+}

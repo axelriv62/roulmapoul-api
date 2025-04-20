@@ -18,14 +18,12 @@ class AgencyController extends BaseController
     public function index(Request $request): JsonResponse
     {
         $filters = $request->query('filter', []);
+        $sorts = $request->query('sort', []);
 
         $agencies = Agency::query()
-            ->when(isset($filters['name']), fn($query) => $query->where('name', 'like', '%' . $filters['name'] . '%'))
-            ->when(isset($filters['num']), fn($query) => $query->where('num', 'like', '%' . $filters['num'] . '%'))
-            ->when(isset($filters['street']), fn($query) => $query->where('street', 'like', '%' . $filters['street'] . '%'))
-            ->when(isset($filters['zip']), fn($query) => $query->where('zip', 'like', '%' . $filters['zip'] . '%'))
             ->when(isset($filters['city']), fn($query) => $query->where('city', 'like', '%' . $filters['city'] . '%'))
-            ->when(isset($filters['country']), fn($query) => $query->where('country', 'like', '%' . $filters['country'] . '%'))
+            ->when(isset($filters['zip']), fn($query) => $query->where('zip', 'like', '%' . $filters['zip'] . '%'))
+            ->when(isset($sorts['name']), fn($query) => $query->orderBy('name', $sorts['name'] === 'desc' ? 'desc' : 'asc'))
             ->get();
 
         $success = new AgencyCollection($agencies);

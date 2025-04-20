@@ -15,7 +15,7 @@ class OptionPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermission(Permission::CREATE_OPTION);
+        return $user->hasPermissionTo(Permission::CREATE_OPTION);
     }
 
     /**
@@ -26,6 +26,6 @@ class OptionPolicy
      */
     public function update(User $user): bool
     {
-        return $user->hasPermission(Permission::UPDATE_OPTION);
+        return $user->hasPermissionTo(Permission::UPDATE_OPTION);
     }
 }

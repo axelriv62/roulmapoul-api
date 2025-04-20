@@ -17,14 +17,7 @@ class OptionController extends BaseController
      */
     public function index(Request $request): JsonResponse
     {
-        $filters = $request->query('filter', []);
-
-        $options = Option::query()
-            ->when(isset($filters['name']), fn($query) => $query->where('name', 'like', '%' . $filters['name'] . '%'))
-            ->when(isset($filters['description']), fn($query) => $query->where('description', 'like', '%' . $filters['description'] . '%'))
-            ->when(isset($filters['price']), fn($query) => $query->where('price', $filters['price']))
-            ->get();
-
+        $options = Option::all();
         $success = new OptionCollection($options);
         return $this->sendResponse($success, "Liste des options retrouvées avec succès.");
     }

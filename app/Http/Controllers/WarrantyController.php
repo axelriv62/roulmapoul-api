@@ -4,19 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\WarrantyCollection;
 use App\Models\Warranty;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class WarrantyController extends BaseController
 {
-    public function index(Request $request)
+    /**
+     * Liste les garanties.
+     *
+     * @param Request $request La requête HTTP qui contient les paramètres de filtrage.
+     * @return JsonResponse La réponse JSON contenant la liste des garanties.
+     */
+    public function index(Request $request): JsonResponse
     {
-        $filters = $request->query('filter', []);
-
-        $warranties = Warranty::query()
-            ->when(isset($filters['name']), fn($query) => $query->where('name', 'like', '%' . $filters['name'] . '%'))
-            ->when(isset($filters['price']), fn($query) => $query->where('price', '<=', $filters['price']))
-            ->get();
-
+        $warranties = Warranty::all();
         $success = new WarrantyCollection($warranties);
         return $this->sendResponse($success, 'Garanties récupérées avec succès.');
     }

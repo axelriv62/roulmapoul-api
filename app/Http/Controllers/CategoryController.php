@@ -17,13 +17,7 @@ class CategoryController extends BaseController
      */
     public function index(Request $request): JsonResponse
     {
-        $filters = $request->query('filter', []);
-
-        $categories = Category::query()
-            ->when(isset($filters['name']), fn($query) => $query->where('name', 'like', '%' . $filters['name'] . '%'))
-            ->when(isset($filters['description']), fn($query) => $query->where('description', 'like', '%' . $filters['description'] . '%'))
-            ->get();
-
+        $categories = Category::all();
         $success = new CategoryCollection($categories);
         return $this->sendResponse($success, "Liste des catégories retrouvées avec succès.");
     }

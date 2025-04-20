@@ -48,6 +48,4 @@ class CarController extends BaseController
         $success = new CarCollection($cars);
         return $this->sendResponse($success, 'Voitures récupérées avec succès.');
     }
-
-
 }

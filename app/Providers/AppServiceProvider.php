@@ -4,13 +4,11 @@ namespace App\Providers;
 
 use App\Enums\Role;
 use App\Models\Amendment;
-use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Handover;
 use App\Models\Rental;
 use App\Models\Withdrawal;
 use App\Policies\AmendmentPolicy;
-use App\Policies\CategoryPolicy;
 use App\Policies\CustomerPolicy;
 use App\Policies\HandoverPolicy;
 use App\Policies\RentalPolicy;
@@ -42,6 +40,5 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Handover::class, HandoverPolicy::class);
         Gate::policy(Withdrawal::class, WithdrawalPolicy::class);
         Gate::policy(Amendment::class, AmendmentPolicy::class);
-        Gate::policy(Category::class, CategoryPolicy::class);
     }
 }

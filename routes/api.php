@@ -32,4 +32,7 @@ Route::get('/agencies', [AgencyController::class, 'index'])->name('agencies.inde
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 Route::get('/options', [OptionController::class, 'index'])->name('options.index');
 Route::get('/warranties', [WarrantyController::class, 'index'])->name('warranties.index');
+
 Route::get('/cars', [CarController::class, 'index'])->name('cars.index');
+Route::get('/cars/agency/{id}', [CarController::class, 'indexAgency'])->name('cars.index-agency');
+

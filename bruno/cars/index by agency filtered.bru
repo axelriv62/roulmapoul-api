@@ -1,0 +1,15 @@
+meta {
+  name: index by agency filtered
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{URL}}/api/cars/agency/1?filter[availabilty]=available
+  body: none
+  auth: inherit
+}
+
+params:query {
+  filter[availabilty]: available
+}

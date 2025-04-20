@@ -1,0 +1,15 @@
+meta {
+  name: filtered index
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{URL}}/api/categories?filter[name]=Sport
+  body: none
+  auth: inherit
+}
+
+params:query {
+  filter[name]: Sport
+}

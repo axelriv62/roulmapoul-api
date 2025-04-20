@@ -47,4 +47,21 @@ class OptionController extends BaseController
         $success = new OptionResource($option);
         return $this->sendResponse($success, "L'option a été créée avec succès.");
     }
+
+    public function update(OptionRequest $request, string $id): JsonResponse
+    {
+        if (auth()->user()->cannot('update', Option::class)) {
+            return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
+        }
+
+        $option = Option::find($id);
+
+        if (!$option) {
+            return $this->sendError('Non trouvé.', 'L\'option demandée n\'existe pas.', 404);
+        }
+
+        $option->update($request->validated());
+        $success = new OptionResource($option);
+        return $this->sendResponse($success, "L'option a été mise à jour avec succès.");
+    }
 }

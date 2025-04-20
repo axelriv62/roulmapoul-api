@@ -19,6 +19,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/customers/{id}/billing', [CustomerController::class, 'updateBillingAddress'])->name('customers.update-billing-addr');
 
     Route::post('/options', [OptionController::class, 'store'])->name('options.store');
+    Route::put('/options/{id}', [OptionController::class, 'update'])->name('options.update');
 });
 
 Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');

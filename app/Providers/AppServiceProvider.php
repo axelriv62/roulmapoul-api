@@ -6,13 +6,11 @@ use App\Enums\Role;
 use App\Models\Amendment;
 use App\Models\Customer;
 use App\Models\Handover;
-use App\Models\Option;
 use App\Models\Rental;
 use App\Models\Withdrawal;
 use App\Policies\AmendmentPolicy;
 use App\Policies\CustomerPolicy;
 use App\Policies\HandoverPolicy;
-use App\Policies\OptionPolicy;
 use App\Policies\RentalPolicy;
 use App\Policies\WithdrawalPolicy;
 use Illuminate\Support\Facades\Gate;
@@ -42,6 +40,5 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Handover::class, HandoverPolicy::class);
         Gate::policy(Withdrawal::class, WithdrawalPolicy::class);
         Gate::policy(Amendment::class, AmendmentPolicy::class);
-        Gate::policy(Option::class, OptionPolicy::class);
     }
 }

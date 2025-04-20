@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\OptionRequest;
 use App\Http\Resources\OptionCollection;
-use App\Http\Resources\OptionResource;
 use App\Models\Option;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -29,39 +27,5 @@ class OptionController extends BaseController
 
         $success = new OptionCollection($options);
         return $this->sendResponse($success, "Liste des options retrouvées avec succès.");
-    }
-
-    /**
-     * Crée une nouvelle option.
-     *
-     * @param OptionRequest $request La requête HTTP contenant les données de l'option à créer.
-     * @return JsonResponse La réponse JSON contenant l'option créée.
-     */
-    public function store(OptionRequest $request): JsonResponse
-    {
-        if (auth()->user()->cannot('create', Option::class)) {
-            return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
-        }
-
-        $option = Option::create($request->validated());
-        $success = new OptionResource($option);
-        return $this->sendResponse($success, "L'option a été créée avec succès.");
-    }
-
-    public function update(OptionRequest $request, string $id): JsonResponse
-    {
-        if (auth()->user()->cannot('update', Option::class)) {
-            return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
-        }
-
-        $option = Option::find($id);
-
-        if (!$option) {
-            return $this->sendError('Non trouvé.', 'L\'option demandée n\'existe pas.', 404);
-        }
-
-        $option->update($request->validated());
-        $success = new OptionResource($option);
-        return $this->sendResponse($success, "L'option a été mise à jour avec succès.");
     }
 }

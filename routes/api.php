@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OptionController;
@@ -31,3 +32,4 @@ Route::get('/agencies', [AgencyController::class, 'index'])->name('agencies.inde
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 Route::get('/options', [OptionController::class, 'index'])->name('options.index');
 Route::get('/warranties', [WarrantyController::class, 'index'])->name('warranties.index');
+Route::get('/cars', [CarController::class, 'index'])->name('cars.index');

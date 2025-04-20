@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
@@ -25,6 +26,6 @@ Route::post('/customers/{id}/driver', [CustomerController::class, 'addLicense'])
 Route::post('/customers/{id}/billing', [CustomerController::class, 'addBillingAddress'])->name('customers.add-billing-addr');
 Route::post('/customers/{id}/auth', [AuthController::class, 'registerCustomer'])->name('customers.register');
 
+Route::get('/agencies', [AgencyController::class, 'index'])->name('agencies.index');
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
-
 Route::get('/options', [OptionController::class, 'index'])->name('options.index');

@@ -1,0 +1,22 @@
+meta {
+  name: store
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{URL}}/api/categories
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: 1|nMZEdApLha5rJifM0jmK7WzKteBXk5FAwkdMzU4tf04933a7
+}
+
+body:json {
+  {
+    "name": "Sporedzdt",
+    "description": "Voitures qui vont vites."
+  }
+}

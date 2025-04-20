@@ -33,9 +33,7 @@ class RoleSeeder extends Seeder
             Permission::CREATE_HANDOVER,
             Permission::CREATE_AMENDMENT,
             Permission::READ_CUSTOMER,
-            Permission::READ_ALL_CUSTOMER,
-            Permission::CREATE_OPTION,
-            Permission::UPDATE_OPTION
+            Permission::READ_ALL_CUSTOMER
         ]);
 
         $clientRole->givePermissionTo([

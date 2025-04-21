@@ -5,15 +5,11 @@ meta {
 }
 
 get {
-  url: {{URL}}/api/customers?filter[first_name]=Gérard
+  url: {{URL}}/api/customers?first_name=Gérard
   body: none
-  auth: bearer
+  auth: inherit
 }
 
 params:query {
-  filter[first_name]: Gérard
-}
-
-auth:bearer {
-  token: 2|7eMiS8rWSJPjyycSaRPkKJH0qvJyqHjjK6JBtbn239bc5d9a
+  first_name: Gérard
 }

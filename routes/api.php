@@ -1,7 +1,12 @@
 <?php
 
+use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CarController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\OptionController;
+use App\Http\Controllers\WarrantyController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -22,3 +27,12 @@ Route::post('/customers', [CustomerController::class, 'store'])->name('customers
 Route::post('/customers/{id}/driver', [CustomerController::class, 'addLicense'])->name('customers.add-license');
 Route::post('/customers/{id}/billing', [CustomerController::class, 'addBillingAddress'])->name('customers.add-billing-addr');
 Route::post('/customers/{id}/auth', [AuthController::class, 'registerCustomer'])->name('customers.register');
+
+Route::get('/agencies', [AgencyController::class, 'index'])->name('agencies.index');
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+Route::get('/options', [OptionController::class, 'index'])->name('options.index');
+Route::get('/warranties', [WarrantyController::class, 'index'])->name('warranties.index');
+
+Route::get('/cars', [CarController::class, 'index'])->name('cars.index');
+Route::get('/cars/agency/{id}', [CarController::class, 'indexAgency'])->name('cars.index-agency');
+

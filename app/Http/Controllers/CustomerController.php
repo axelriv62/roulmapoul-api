@@ -41,7 +41,7 @@ class CustomerController extends BaseController
             ->when($rental_id, fn($query) => $query->whereHas('rentals', fn($q) => $q->where('id', $rental_id)))
             ->get();
 
-        $success = new CustomerCollection($customers);
+        $success['customers'] = new CustomerCollection($customers);
         return $this->sendResponse($success, "Liste des clients retrouvées avec succès.");
     }
 
@@ -51,7 +51,7 @@ class CustomerController extends BaseController
     public function store(CustomerRequest $request): JsonResponse
     {
         $customer = Customer::create($request->validated());
-        $success = new CustomerResource($customer);
+        $success['customer'] = new CustomerResource($customer);
         return $this->sendResponse($success, "Le client a été créé avec succès.");
     }
 
@@ -116,7 +116,7 @@ class CustomerController extends BaseController
         }
 
         $customer->update($request->validated());
-        $success = new CustomerResource($customer);
+        $success['customer'] = new CustomerResource($customer);
         return $this->sendResponse($success, "Les informations du client ont été mises à jour avec succès.");
     }
 
@@ -129,7 +129,7 @@ class CustomerController extends BaseController
         }
 
         $customer->license()->update($request->validated());
-        $success = new LicenseResource($customer->license);
+        $success['license'] = new LicenseResource($customer->license);
         return $this->sendResponse($success, "Le permis de conduire a été mis à jour avec succès.");
     }
 
@@ -148,7 +148,7 @@ class CustomerController extends BaseController
             'city_bill' => $request->validated()['city'],
             'country_bill' => $request->validated()['country'],
         ]);
-        $success = new CustomerResource($customer);
+        $success['customer'] = new CustomerResource($customer);
         return $this->sendResponse($success, "L'adresse de facturation a été mise à jour avec succès.");
     }
 }

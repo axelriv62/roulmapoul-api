@@ -32,7 +32,7 @@ class AuthController extends BaseController
         $customer->user_id = $user->id;
         $customer->save();
 
-        $success = (new UserResource($user))->toArray($request);
+        $success['user'] = new UserResource($user);
         $success['token'] = $user->createToken('auth_token')->plainTextToken;
         $success['token_type'] = 'Bearer';
 
@@ -53,7 +53,7 @@ class AuthController extends BaseController
             'password' => Hash::make($request['password']),
         ])->assignRole($agentRole);
 
-        $success = (new UserResource($user))->toArray($request);
+        $success['user'] = new UserResource($user);
         $success['token'] = $user->createToken('auth_token')->plainTextToken;
         $success['token_type'] = 'Bearer';
 
@@ -74,7 +74,7 @@ class AuthController extends BaseController
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        $success = (new UserResource($user))->toArray($request);
+        $success['user'] = new UserResource($user);
         $success['token'] = $token;
         $success['token_type'] = 'Bearer';
 
@@ -83,8 +83,9 @@ class AuthController extends BaseController
 
     public function me(): JsonResponse
     {
-        $user = new UserResource(Auth::user());
-        return $this->sendResponse($user, 'Utilisateur récupéré avec succès');
+        $user = Auth::user();
+        $success['user'] = new UserResource($user);
+        return $this->sendResponse($success, 'Utilisateur récupéré avec succès');
     }
 
     public function logout(): JsonResponse

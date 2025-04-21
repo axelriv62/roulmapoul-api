@@ -18,7 +18,7 @@ class CategoryController extends BaseController
     public function index(Request $request): JsonResponse
     {
         $categories = Category::all();
-        $success = new CategoryCollection($categories);
+        $success['categories'] = new CategoryCollection($categories);
         return $this->sendResponse($success, "Liste des catégories retrouvées avec succès.");
     }
 }

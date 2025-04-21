@@ -1,0 +1,22 @@
+meta {
+  name: store
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{URL}}/api/rentals
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "customer_id": 51,
+    "car_plate": "IT872VQ",
+    "start": "2025-06-23",
+    "end": "2025-07-23",
+    "warranty_id" : 1,
+    "options": [1, 2]
+  }
+}

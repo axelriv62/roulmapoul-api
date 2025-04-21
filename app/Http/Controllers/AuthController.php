@@ -32,9 +32,8 @@ class AuthController extends BaseController
         $customer->user_id = $user->id;
         $customer->save();
 
-        $success = new UserResource($user);
+        $success = (new UserResource($user))->toArray($request);
         $success['token'] = $user->createToken('auth_token')->plainTextToken;
-        $success['name'] = $request->validated()['name'];
         $success['token_type'] = 'Bearer';
 
         return $this->sendResponse($success, 'Utilisateur créé avec succès.');
@@ -54,9 +53,8 @@ class AuthController extends BaseController
             'password' => Hash::make($request['password']),
         ])->assignRole($agentRole);
 
-        $success = new UserResource($user);
+        $success = (new UserResource($user))->toArray($request);
         $success['token'] = $user->createToken('auth_token')->plainTextToken;
-        $success['name'] = $request['name'];
         $success['token_type'] = 'Bearer';
 
         return $this->sendResponse($success, 'Agent créé avec succès.');
@@ -76,7 +74,7 @@ class AuthController extends BaseController
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        $success = new UserResource($user);
+        $success = (new UserResource($user))->toArray($request);
         $success['token'] = $token;
         $success['token_type'] = 'Bearer';
 

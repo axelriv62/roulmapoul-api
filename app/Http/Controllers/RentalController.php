@@ -121,4 +121,22 @@ class RentalController extends BaseController
         $success = new RentalCollection($rentals);
         return $this->sendResponse($success, "Liste des locations retrouvées avec succès.");
     }
+
+    /**
+     * Affiche les détails d'une location.
+     *
+     * @param string $id L'identifiant de la location.
+     * @return JsonResponse
+     */
+    public function show(string $id): JsonResponse
+    {
+        $rental = Rental::findOrFail($id);
+
+        if (Auth::user()->cannot('read', $rental)) {
+            return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
+        }
+
+        $success = new RentalResource($rental);
+        return $this->sendResponse($success, "Location retrouvée avec succès.");
+    }
 }

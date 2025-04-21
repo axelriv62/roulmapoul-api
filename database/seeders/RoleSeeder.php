@@ -38,7 +38,6 @@ class RoleSeeder extends Seeder
 
         $clientRole->givePermissionTo([
             Permission::CREATE_RENTAL,
-            Permission::READ_ALL_RENTAL,
             Permission::READ_CUSTOMER,
         ]);
     }

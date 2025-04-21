@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\RentalState;
 use App\Http\Requests\RentalRequest;
+use App\Http\Resources\RentalCollection;
 use App\Http\Resources\RentalResource;
 use App\Models\Rental;
 use Carbon\Carbon;
@@ -64,6 +65,23 @@ class RentalController extends BaseController
             ->get();
 
         $success = RentalResource::collection($rentals);
+        return $this->sendResponse($success, "Liste des locations retrouvées avec succès.");
+    }
+
+    /**
+     * Liste les locations d'un client.
+     *
+     * @param string $id L'identifiant du client.
+     * @return JsonResponse
+     */
+    public function indexOfCustomer(string $id): JsonResponse
+    {
+        if (Auth::user()->cannot('readAny', Rental::class)) {
+            return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
+        }
+
+        $rentals = Rental::where('customer_id', $id)->get();
+        $success = new RentalCollection($rentals);
         return $this->sendResponse($success, "Liste des locations retrouvées avec succès.");
     }
 

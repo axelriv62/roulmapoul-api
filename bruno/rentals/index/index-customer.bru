@@ -1,17 +1,13 @@
 meta {
-  name: index
+  name: index-customer
   type: http
   seq: 2
 }
 
 get {
-  url: {{URL}}/api/rentals?end=2025-03-17
+  url: {{URL}}/api/rentals/customers/51
   body: none
   auth: bearer
-}
-
-params:query {
-  end: 2025-03-17
 }
 
 auth:bearer {

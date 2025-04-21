@@ -29,6 +29,7 @@ class RentalController extends BaseController
                 'state' => RentalState::PAID,
             ]
         ));
+
         if ($request->has('options')) {
             $rental->options()->attach($request->input('options'));
         }
@@ -138,5 +139,33 @@ class RentalController extends BaseController
 
         $success = new RentalResource($rental);
         return $this->sendResponse($success, "Location retrouvée avec succès.");
+    }
+
+    /**
+     * Met à jour une location.
+     *
+     * @param RentalRequest $request La requête HTTP contenant les données de la location.
+     * @param string $id L'identifiant de la location.
+     * @return JsonResponse
+     */
+    public function update(RentalRequest $request, string $id): JsonResponse
+    {
+        $rental = Rental::findOrFail($id);
+
+        if (Auth::user()->cannot('update', $rental)) {
+            return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
+        }
+
+        $rental->update($request->validated());
+
+        if ($request->has('options')) {
+            $rental->options()->sync($request->input('options'));
+        }
+
+        $rental->total_price = $rental->car->price_day * $rental->nb_days + ($rental->options->sum('price') ?? 0) + ($rental->warranty->price ?? 0);
+        $rental->save();
+
+        $success = new RentalResource($rental);
+        return $this->sendResponse($success, "Location mise à jour avec succès.");
     }
 }

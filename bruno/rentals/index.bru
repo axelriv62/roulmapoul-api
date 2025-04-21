@@ -1,0 +1,19 @@
+meta {
+  name: index
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{URL}}/api/rentals?end=2025-03-17
+  body: none
+  auth: bearer
+}
+
+params:query {
+  end: 2025-03-17
+}
+
+auth:bearer {
+  token: 1|kydh9DIeuGchma31ZsiHTUyEgXEWI0idQM8W7K8Z1f7865cd
+}

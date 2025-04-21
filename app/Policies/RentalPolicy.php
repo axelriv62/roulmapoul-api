@@ -40,6 +40,17 @@ class RentalPolicy
     public function read(User $user, Rental $rental): bool
     {
         return $user->hasPermissionTo(Permission::READ_ALL_RENTAL)
-            && ($user->customer->id === $rental->customer_id);
+            || ($user->customer->id === $rental->customer_id);
+    }
+
+    /**
+     * Détermine si l'utilisateur peut consulter toutes les locations.
+     *
+     * @param User $user l'utilisateur qui effectue la demande.
+     * @return bool true si l'utilisateur a la permission de consulter toutes les locations, sinon false.
+     */
+    public function readAny(User $user): bool
+    {
+        return $user->hasPermissionTo(Permission::READ_ALL_RENTAL);
     }
 }

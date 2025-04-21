@@ -8,6 +8,8 @@ use App\Http\Resources\RentalResource;
 use App\Models\Rental;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RentalController extends BaseController
 {
@@ -29,7 +31,7 @@ class RentalController extends BaseController
         if ($request->has('options')) {
             $rental->options()->attach($request->input('options'));
         }
-        
+
         $rental->total_price += $rental->car->price_day * $rental->nb_days + ($rental->options->sum('price') ?? 0) + ($rental->warranty->price ?? 0);
         $rental->save();
 
@@ -38,4 +40,31 @@ class RentalController extends BaseController
 
         return $this->sendResponse($success, "La location a été créée avec succès.");
     }
+
+    /**
+     * Lister les locations
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function index(Request $request): JsonResponse
+    {
+        if (Auth::user()->cannot('readAny', Rental::class)) {
+            return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
+        }
+
+        $state = $request->query('state', []);
+        $start = $request->query('start', []);
+        $end = $request->query('end', []);
+
+        $rentals = Rental::query()
+            ->when($state, fn($query) => $query->where('state', $state))
+            ->when($start, fn($query) => $query->where('start', '>=', $start))
+            ->when($end, fn($query) => $query->where('end', '<=', $end))
+            ->get();
+
+        $success = RentalResource::collection($rentals);
+        return $this->sendResponse($success, "Liste des locations retrouvées avec succès.");
+    }
+
 }

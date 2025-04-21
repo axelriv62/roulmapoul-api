@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 class RentalController extends BaseController
 {
     /**
-     * Créer une nouvelle location.
+     * Crée une nouvelle location.
      *
      * @param RentalRequest $request
      * @return JsonResponse
@@ -43,7 +43,7 @@ class RentalController extends BaseController
     }
 
     /**
-     * Lister les locations
+     * Liste les locations.
      *
      * @param Request $request
      * @return JsonResponse

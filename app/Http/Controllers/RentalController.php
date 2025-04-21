@@ -85,4 +85,23 @@ class RentalController extends BaseController
         return $this->sendResponse($success, "Liste des locations retrouvées avec succès.");
     }
 
+    /**
+     * Liste les locations d'une agence.
+     *
+     * @param string $id L'identifiant de l'agence.
+     * @return JsonResponse
+     */
+    public function indexOfAgency(string $id): JsonResponse
+    {
+        if (Auth::user()->cannot('readAny', Rental::class)) {
+            return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
+        }
+
+        $rentals = Rental::whereHas('car', function ($query) use ($id) {
+            $query->where('agency_id', $id);
+        })->get();
+
+        $success = new RentalCollection($rentals);
+        return $this->sendResponse($success, "Liste des locations retrouvées avec succès.");
+    }
 }

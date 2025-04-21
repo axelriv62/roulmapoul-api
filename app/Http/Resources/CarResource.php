@@ -22,8 +22,8 @@ class CarResource extends JsonResource
             "plate" => $this->plate,
             "availability" => $this->availability,
             "price_day" => $this->price_day,
-            "category" => $this->category->name,
-            "agency" => $this->agency->name,
+            "category" => new CategoryResource($this->category),
+            "agency" => new AgencyResource($this->agency),
         ];
     }
 }

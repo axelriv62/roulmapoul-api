@@ -32,6 +32,7 @@ class AuthController extends BaseController
         $customer->user_id = $user->id;
         $customer->save();
 
+        $success = new UserResource($user);
         $success['token'] = $user->createToken('auth_token')->plainTextToken;
         $success['name'] = $request->validated()['name'];
         $success['token_type'] = 'Bearer';
@@ -53,6 +54,7 @@ class AuthController extends BaseController
             'password' => Hash::make($request['password']),
         ])->assignRole($agentRole);
 
+        $success = new UserResource($user);
         $success['token'] = $user->createToken('auth_token')->plainTextToken;
         $success['name'] = $request['name'];
         $success['token_type'] = 'Bearer';
@@ -65,33 +67,34 @@ class AuthController extends BaseController
         $user = User::where('email', $request['email'])->first();
 
         if (!$user instanceof User) {
-            return $this->sendError([], 'Cannot find this user', 404);
+            return $this->sendError([], 'Utilisateur non trouvé', 404);
         }
 
         if (!Hash::check($request['password'], $user->password)) {
-            return $this->sendError([], 'Invalid credential', 400);
+            return $this->sendError([], 'Mot de passe incorrect', 401);
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return $this->sendResponse([
-            'token' => $token,
-            'token_type' => 'Bearer',
-        ], 'Token generate with success');
+        $success = new UserResource($user);
+        $success['token'] = $token;
+        $success['token_type'] = 'Bearer';
+
+        return $this->sendResponse($success, 'Token généré avec succès');
     }
 
     public function me(): JsonResponse
     {
         $user = new UserResource(Auth::user());
-        return $this->sendResponse($user, 'User retrieve with success');
+        return $this->sendResponse($user, 'Utilisateur récupéré avec succès');
     }
 
     public function logout(): JsonResponse
     {
         if (!Auth::user()) {
-            return $this->sendResponse([], 'All token are already revoqued');
+            return $this->sendResponse([], 'Tous les tokens ont déjà été révoqués');
         }
         Auth::user()->tokens()->delete();
-        return $this->sendResponse([], 'All token are revoqued');
+        return $this->sendResponse([], 'Tous les tokens ont été révoqués avec succès');
     }
 }

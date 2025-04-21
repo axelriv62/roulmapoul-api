@@ -27,7 +27,7 @@ class UserResource extends JsonResource
                 "name" => $this->name,
                 "email" => $this->email,
                 "role" => $role,
-                "customer" => (new CustomerResource($this->customer))->only(['id', 'first_name', 'last_name', 'phone', 'address', 'billing_address'])
+                "customer" => array_diff_key((new CustomerResource($this->customer))->toArray($request), array_flip(['email'])),
             ];
         } else {
             return [

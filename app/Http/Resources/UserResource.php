@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Enums\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -18,14 +19,23 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
-            "id" => $this->id,
-            "name" => $this->name,
-            "email" => $this->email,
-            "role" => $this->roles->pluck('name')->first(),
+        $role = $this->roles->pluck('name')->first();
 
-            // Afficher l'id du client uniquement si l'utilisateur a le rôle 'client'
-            "customer_id" => $this->when($this->roles->pluck('name')->contains('client') && $this->customer, $this->customer->id ?? null),
-        ];
+        if ($role === Role::CLIENT->value) {
+            return [
+                "id" => $this->id,
+                "name" => $this->name,
+                "email" => $this->email,
+                "role" => $role,
+                "customer" => (new CustomerResource($this->customer))->only(['id', 'first_name', 'last_name', 'phone', 'address', 'billing_address'])
+            ];
+        } else {
+            return [
+                "id" => $this->id,
+                "name" => $this->name,
+                "email" => $this->email,
+                "role" => $role,
+            ];
+        }
     }
 }

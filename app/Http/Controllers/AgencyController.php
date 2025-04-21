@@ -18,12 +18,15 @@ class AgencyController extends BaseController
     public function index(Request $request): JsonResponse
     {
         $filters = $request->query('filter', []);
-        $sorts = $request->query('sort', []);
+        $sort = $request->query('sort');
 
         $agencies = Agency::query()
             ->when(isset($filters['city']), fn($query) => $query->where('city', 'like', '%' . $filters['city'] . '%'))
             ->when(isset($filters['zip']), fn($query) => $query->where('zip', 'like', '%' . $filters['zip'] . '%'))
-            ->when(isset($sorts['name']), fn($query) => $query->orderBy('name', $sorts['name'] === 'desc' ? 'desc' : 'asc'))
+            ->when($sort,
+                fn($query) => $query->orderBy('name', $sort), // Trier par nom s'il y a un paramètre de tri
+                fn($query) => $query->orderBy('id', 'asc') // Trier par ID par défaut
+            )
             ->get();
 
         $success = new AgencyCollection($agencies);

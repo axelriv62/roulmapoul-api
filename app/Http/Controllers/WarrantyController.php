@@ -18,7 +18,7 @@ class WarrantyController extends BaseController
     public function index(Request $request): JsonResponse
     {
         $warranties = Warranty::all();
-        $success = new WarrantyCollection($warranties);
+        $success['warranties'] = new WarrantyCollection($warranties);
         return $this->sendResponse($success, 'Garanties récupérées avec succès.');
     }
 }

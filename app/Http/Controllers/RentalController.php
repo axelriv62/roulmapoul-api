@@ -104,4 +104,21 @@ class RentalController extends BaseController
         $success = new RentalCollection($rentals);
         return $this->sendResponse($success, "Liste des locations retrouvées avec succès.");
     }
+
+    /**
+     * Liste les locations d'une voiture
+     *
+     * @param string $plate La plaque d'immatriculation de la voiture.
+     * @return JsonResponse
+     */
+    public function indexOfCar(string $plate): JsonResponse
+    {
+        if (Auth::user()->cannot('readAny', Rental::class)) {
+            return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
+        }
+
+        $rentals = Rental::where('car_plate', mb_strtoupper($plate))->get();
+        $success = new RentalCollection($rentals);
+        return $this->sendResponse($success, "Liste des locations retrouvées avec succès.");
+    }
 }

@@ -36,6 +36,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::post('/rentals', [RentalController::class, 'store'])->name('rentals.store');
 
 Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/rentals/car/{id}', [RentalController::class, 'indexOfCar'])->name('rentals.index-car');
     Route::get('/rentals/agency/{id}', [RentalController::class, 'indexOfAgency'])->name('rentals.index-agency');
     Route::get('/rentals/customer/{id}', [RentalController::class, 'indexOfCustomer'])->name('rentals.index-customer');
     Route::get('/rentals', [RentalController::class, 'index'])->name('rentals.index');

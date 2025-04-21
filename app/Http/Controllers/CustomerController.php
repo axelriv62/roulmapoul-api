@@ -27,16 +27,21 @@ class CustomerController extends BaseController
             return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
         }
 
-        $filters = $request->query('filter', []);
+        $first_name = $request->query('first_name');
+        $last_name = $request->query('last_name');
+        $email = $request->query('email');
+        $phone = $request->query('phone');
+        $rental_id = $request->query('rental_id');
 
         $customers = Customer::query()
-            ->when(isset($filters['first_name']), fn($query) => $query->where('first_name', 'like', '%' . $filters['first_name'] . '%'))
-            ->when(isset($filters['email']), fn($query) => $query->where('email', 'like', '%' . $filters['email'] . '%'))
-            ->when(isset($filters['phone']), fn($query) => $query->where('phone', 'like', '%' . $filters['phone'] . '%'))
-            ->when(isset($filters['rental_id']), fn($query) => $query->where('rental_id', $filters['rental_id']))
+            ->when($first_name, fn($query) => $query->where('first_name', 'like', '%' . $first_name . '%'))
+            ->when($last_name, fn($query) => $query->where('last_name', 'like', '%' . $last_name . '%'))
+            ->when($email, fn($query) => $query->where('email', 'like', '%' . $email . '%'))
+            ->when($phone, fn($query) => $query->where('phone', 'like', '%' . $phone . '%'))
+            ->when($rental_id, fn($query) => $query->whereHas('rentals', fn($q) => $q->where('id', $rental_id)))
             ->get();
 
-        $success = new CustomerCollection($customers);
+        $success['customers'] = new CustomerCollection($customers);
         return $this->sendResponse($success, "Liste des clients retrouvées avec succès.");
     }
 
@@ -46,7 +51,7 @@ class CustomerController extends BaseController
     public function store(CustomerRequest $request): JsonResponse
     {
         $customer = Customer::create($request->validated());
-        $success = new CustomerResource($customer);
+        $success['customer'] = new CustomerResource($customer);
         return $this->sendResponse($success, "Le client a été créé avec succès.");
     }
 
@@ -111,7 +116,7 @@ class CustomerController extends BaseController
         }
 
         $customer->update($request->validated());
-        $success = new CustomerResource($customer);
+        $success['customer'] = new CustomerResource($customer);
         return $this->sendResponse($success, "Les informations du client ont été mises à jour avec succès.");
     }
 
@@ -124,7 +129,7 @@ class CustomerController extends BaseController
         }
 
         $customer->license()->update($request->validated());
-        $success = new LicenseResource($customer->license);
+        $success['license'] = new LicenseResource($customer->license);
         return $this->sendResponse($success, "Le permis de conduire a été mis à jour avec succès.");
     }
 
@@ -143,7 +148,7 @@ class CustomerController extends BaseController
             'city_bill' => $request->validated()['city'],
             'country_bill' => $request->validated()['country'],
         ]);
-        $success = new CustomerResource($customer);
+        $success['customer'] = new CustomerResource($customer);
         return $this->sendResponse($success, "L'adresse de facturation a été mise à jour avec succès.");
     }
 }

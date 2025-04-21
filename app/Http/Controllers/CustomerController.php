@@ -27,13 +27,18 @@ class CustomerController extends BaseController
             return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
         }
 
-        $filters = $request->query('filter', []);
+        $first_name = $request->query('first_name');
+        $last_name = $request->query('last_name');
+        $email = $request->query('email');
+        $phone = $request->query('phone');
+        $rental_id = $request->query('rental_id');
 
         $customers = Customer::query()
-            ->when(isset($filters['first_name']), fn($query) => $query->where('first_name', 'like', '%' . $filters['first_name'] . '%'))
-            ->when(isset($filters['email']), fn($query) => $query->where('email', 'like', '%' . $filters['email'] . '%'))
-            ->when(isset($filters['phone']), fn($query) => $query->where('phone', 'like', '%' . $filters['phone'] . '%'))
-            ->when(isset($filters['rental_id']), fn($query) => $query->where('rental_id', $filters['rental_id']))
+            ->when($first_name, fn($query) => $query->where('first_name', 'like', '%' . $first_name . '%'))
+            ->when($last_name, fn($query) => $query->where('last_name', 'like', '%' . $last_name . '%'))
+            ->when($email, fn($query) => $query->where('email', 'like', '%' . $email . '%'))
+            ->when($phone, fn($query) => $query->where('phone', 'like', '%' . $phone . '%'))
+            ->when($rental_id, fn($query) => $query->whereHas('rentals', fn($q) => $q->where('id', $rental_id)))
             ->get();
 
         $success = new CustomerCollection($customers);

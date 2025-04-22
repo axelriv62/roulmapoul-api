@@ -29,15 +29,15 @@ class RentalRepository implements RentalRepositoryInterface
      */
     public static function isUpdatable(Rental $rental, Carbon $start, Carbon $end): bool
     {
-        $car_rentals = Rental::where('car_plate', $rental->car_plate)
+        $existingCarRentals = Rental::where('car_plate', $rental->car_plate)
             ->where('id', '!=', $rental->id)
             ->where(function ($query) use ($start, $end) {
                 $query->whereBetween('start', [$start, $end])
                     ->orWhereBetween('end', [$start, $end]);
             })
             ->where('state', '!=', RentalState::CANCELED->value)
-            ->get();
+            ->exists();
 
-        return $car_rentals->isEmpty();
+        return ! $existingCarRentals;
     }
 }

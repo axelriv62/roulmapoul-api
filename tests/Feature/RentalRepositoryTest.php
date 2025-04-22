@@ -76,6 +76,42 @@ class RentalRepositoryTest extends TestCase
         $this->assertEquals($this->rental->total_price, round($this->rental->car->price_day * $this->rental->nb_days + ($options->sum('price') ?? 0) + ($warranty->price ?? 0), 2));
     }
 
+    /**
+     * Vérifie qu'une location est modifiable quand la nouvelle date ne change pas.
+     */
+    public function test_rental_is_updatable_when_new_date_is_equal(): void
+    {
+        $this->assertTrue(RentalRepository::isUpdatable($this->rental, $this->rental->start, $this->rental->end));
+    }
+
+    /**
+     * Vérifie qu'une location est modifiable quand une autre réservation à la nouvelle date est annulée.
+     */
+    public function test_rental_is_updatable_when_other_rental_canceled(): void
+    {
+        $otherRental = Rental::factory()->create([
+            'car_plate' => $this->rental->car_plate,
+            'state' => RentalState::CANCELED->value,
+            'customer_id' => $this->rental->customer_id,
+        ]);
+
+        $this->assertTrue(RentalRepository::isUpdatable($this->rental, $otherRental->start, $otherRental->end));
+    }
+
+    /**
+     * Vérifie qu'une location n'est pas modifiable quand une autre réservation à la nouvelle date est en cours.
+     */
+    public function test_rental_is_not_updatable_when_other_rental_ongoing(): void
+    {
+        $otherRental = Rental::factory()->create([
+            'car_plate' => $this->rental->car_plate,
+            'state' => RentalState::ONGOING->value,
+            'customer_id' => $this->rental->customer_id,
+        ]);
+
+        $this->assertFalse(RentalRepository::isUpdatable($this->rental, $otherRental->start, $otherRental->end));
+    }
+
     protected function setUp(): void
     {
         parent::setUp();

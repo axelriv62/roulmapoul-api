@@ -3,9 +3,9 @@ stages:
 
 unit-test:
   stage: test
-  image: php
+  image: dh-iutl.univ-artois.fr/php
   tags:
-    - qdev_2025
+    - docker
   script:
     - echo "Running PHPUnit tests..."
     - php artisan test

@@ -5,7 +5,7 @@ unit-test:
   stage: test
   image: $IMAGE_TAG
   tags:
-    - qdev
+    - qdev_2025
   script:
     - echo "Running PHPUnit tests..."
     - ./vendor/bin/phpunit

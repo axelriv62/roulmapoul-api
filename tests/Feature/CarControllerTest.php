@@ -18,7 +18,7 @@ class CarControllerTest extends TestCase
      */
     public function test_index(): void
     {
-        $response = $this->get('/api/cars');
+        $response = $this->get(route('cars.index'));
         $response->assertStatus(200);
     }
 
@@ -41,7 +41,7 @@ class CarControllerTest extends TestCase
             'availability' => CarAvailability::AVAILABLE,
         ]);
 
-        $response = $this->get('/api/cars?availability=available&category='.$category1->id);
+        $response = $this->get(route('cars.index').'?availability=available&category='.$category1->id);
         $response->assertJsonCount(1, 'data.cars');
     }
 
@@ -50,7 +50,7 @@ class CarControllerTest extends TestCase
      */
     public function test_index_agency(): void
     {
-        $response = $this->get('/api/cars/agency/1');
+        $response = $this->get(route('cars.index-agency', 1));
         $response->assertStatus(200);
     }
 
@@ -84,7 +84,7 @@ class CarControllerTest extends TestCase
             'availability' => CarAvailability::AVAILABLE,
         ]);
 
-        $response = $this->get('/api/cars/agency/'.$agency1->id.'?availability=available&category='.$category1->id);
+        $response = $this->get(route('cars.index-agency', $agency1->id).'?availability=available&category='.$category1->id);
         $response->assertJsonCount(1, 'data.cars');
     }
 }

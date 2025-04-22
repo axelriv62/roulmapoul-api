@@ -1,5 +1,28 @@
 stages:
+  - build
   - test
+  - linting
+
+cache:
+  paths:
+    - vendor/
+
+before_script:
+  - cp .env.example .env
+  - composer install --no-interaction --prefer-dist --optimize-autoloader
+  - php artisan key:generate
+
+build:
+  stage: build
+  image: dh-iutl.univ-artois.fr/composer
+  tags:
+    - docker
+  script:
+    - echo "Build terminé ! dépendances installées et clé générée."
+  only:
+    - merge_requests
+    - main
+    - dev
 
 phpunit:
   stage: test
@@ -7,11 +30,20 @@ phpunit:
   tags:
     - docker
   script:
-    - cp .env.example .env
-    - composer install --no-interaction --prefer-dist --optimize-autoloader
-    - php artisan key:generate
     - echo "Lancement des tests PHPUnit..."
     - php artisan test
+  only:
+    - merge_requests
+    - main
+    - dev
+
+linting:
+  stage: linting
+  image: dh-iutl.univ-artois.fr/composer
+  tags:
+    - docker
+  script:
+    - ./vendor/bin/pint
   only:
     - merge_requests
     - main

@@ -3,6 +3,7 @@ stages:
 
 unit-test:
   stage: test
+  image: $IMAGE_TAG
   tags:
     - qdev
   script:

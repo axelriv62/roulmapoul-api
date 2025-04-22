@@ -1,31 +1,13 @@
 stages:
-  - build
   - test
 
-variables:
-  IMAGE_TAG: $CI_REGISTRY_IMAGE/php-app:latest
-
-build-image:
-  stage: build
-  image: docker:latest
-  tags:
-    - docker
-  services:
-    - name: docker:dind
-      alias: docker
-  variables:
-    DOCKER_TLS_CERTDIR: ""
-  script:
-    - docker info
-    - docker build -f Dockerfile.dev -t $IMAGE_TAG .
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker push $IMAGE_TAG
 unit-test:
   stage: test
   image: $IMAGE_TAG
   tags:
-    - docker
+    - qdev
   script:
+    - echo "Running PHPUnit tests..."
     - ./vendor/bin/phpunit
   only:
     - main

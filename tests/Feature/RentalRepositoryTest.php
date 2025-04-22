@@ -7,7 +7,9 @@ use App\Models\Agency;
 use App\Models\Car;
 use App\Models\Category;
 use App\Models\Customer;
+use App\Models\Option;
 use App\Models\Rental;
+use App\Models\Warranty;
 use App\Repositories\RentalRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -58,6 +60,22 @@ class RentalRepositoryTest extends TestCase
         $this->assertFalse(RentalRepository::isDeletable($this->rental));
     }
 
+    /**
+     * Vérifie le bon calcul du prix d'une location.
+     */
+    public function test_calculate_price_of_rental(): void
+    {
+        $warranty = Warranty::factory()->create();
+        $options = Option::factory(2)->create();
+
+        $this->rental->warranty_id = $warranty->id;
+        $this->rental->options()->attach($options);
+        $this->rental->total_price = RentalRepository::calculateTotalPrice($this->rental);
+        $this->rental->save();
+
+        $this->assertEquals($this->rental->total_price, round($this->rental->car->price_day * $this->rental->nb_days + ($options->sum('price') ?? 0) + ($warranty->price ?? 0), 2));
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -71,8 +89,6 @@ class RentalRepositoryTest extends TestCase
 
         $this->rental = Rental::factory()->create([
             'car_plate' => $car->plate,
-            'start' => now()->addDay(),
-            'end' => now()->addDays(5),
             'customer_id' => $customer->id,
         ]);
     }

@@ -21,7 +21,7 @@ class RentalRepository implements RentalRepositoryInterface
      */
     public static function calculateTotalPrice(Rental $rental): float
     {
-        return $rental->car->price_day * $rental->nb_days + ($rental->options->sum('price') ?? 0) + ($rental->warranty->price ?? 0);
+        return round($rental->car->price_day * $rental->nb_days + ($rental->options->sum('price') ?? 0) + ($rental->warranty->price ?? 0), 2);
     }
 
     /**

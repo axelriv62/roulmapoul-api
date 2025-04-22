@@ -5,7 +5,7 @@ namespace App\Enums;
 enum RentalState: string
 {
     case PAID = 'paid';
-    case CANCELLED = 'cancelled';
+    case CANCELED = 'canceled';
     case ONGOING = 'ongoing';
     case COMPLETED = 'completed';
 
@@ -18,7 +18,7 @@ enum RentalState: string
     {
         return [
             self::PAID,
-            self::CANCELLED,
+            self::CANCELED,
             self::ONGOING,
             self::COMPLETED
         ];

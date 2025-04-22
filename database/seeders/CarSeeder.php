@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\CarAvailability;
 use App\Models\Agency;
 use App\Models\Car;
 use App\Models\Category;
@@ -23,5 +24,13 @@ class CarSeeder extends Seeder
             $car->category_id = $category_ids->random();
             $car->save();
         }
+
+        Car::factory()->create([
+            'plate' => 'XX000XX',
+            'availability' => CarAvailability::AVAILABLE->value,
+            'price_day' => 10,
+            'agency_id' => 1,
+            'category_id' => 1,
+        ]);
     }
 }

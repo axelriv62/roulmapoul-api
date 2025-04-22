@@ -162,6 +162,10 @@ class RentalController extends BaseController
             return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
         }
 
+        if (!RentalRepository::isUpdatable($rental, Carbon::parse($request->input('start')), Carbon::parse($request->input('end')))) {
+            return $this->sendError([], "La voiture n'est pas disponible à ces dates.");
+        }
+
         $rental->update($request->validated());
 
         if ($request->has('options')) {

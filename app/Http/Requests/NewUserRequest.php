@@ -23,9 +23,9 @@ class NewUserRequest extends FormRequest // Permet aux administrateurs de créer
     public function rules(): array
     {
         return [
-            "name" => "required|string|max:255|unique:users,name",
-            "email" => "required|email|max:255|unique:users,email",
-            "password" => "required|string|min:8"
+            'name' => 'required|string|max:255|unique:users,name',
+            'email' => 'required|email|max:255|unique:users,email',
+            'password' => 'required|string|min:8',
         ];
     }
 
@@ -37,13 +37,13 @@ class NewUserRequest extends FormRequest // Permet aux administrateurs de créer
     public function messages(): array
     {
         return [
-            "required" => "Le champ :attribute est requis.",
-            "string" => "Le champ :attribute doit être une chaîne de caractères.",
-            "max" => "Le champ :attribute ne doit pas dépasser :max caractères.",
-            "email" => "Le champ :attribute doit être une adresse e-mail valide.",
-            "name.unique" => "Ce nom d'utilisateur est déjà pris.",
-            "email.unique" => "Cette adresse e-mail est déjà utilisée.",
-            "min" => "Le champ :attribute doit contenir au moins :min caractères.",
+            'required' => 'Le champ :attribute est requis.',
+            'string' => 'Le champ :attribute doit être une chaîne de caractères.',
+            'max' => 'Le champ :attribute ne doit pas dépasser :max caractères.',
+            'email' => 'Le champ :attribute doit être une adresse e-mail valide.',
+            'name.unique' => "Ce nom d'utilisateur est déjà pris.",
+            'email.unique' => 'Cette adresse e-mail est déjà utilisée.',
+            'min' => 'Le champ :attribute doit contenir au moins :min caractères.',
         ];
     }
 }

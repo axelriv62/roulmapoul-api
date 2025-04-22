@@ -64,11 +64,11 @@ class AuthController extends BaseController
     {
         $user = User::where('email', $request['email'])->first();
 
-        if (!$user instanceof User) {
+        if (! $user instanceof User) {
             return $this->sendError([], 'Utilisateur non trouvé', 404);
         }
 
-        if (!Hash::check($request['password'], $user->password)) {
+        if (! Hash::check($request['password'], $user->password)) {
             return $this->sendError([], 'Mot de passe incorrect', 401);
         }
 
@@ -85,15 +85,17 @@ class AuthController extends BaseController
     {
         $user = Auth::user();
         $success['user'] = new UserResource($user);
+
         return $this->sendResponse($success, 'Utilisateur récupéré avec succès');
     }
 
     public function logout(): JsonResponse
     {
-        if (!Auth::user()) {
+        if (! Auth::user()) {
             return $this->sendResponse([], 'Tous les tokens ont déjà été révoqués');
         }
         Auth::user()->tokens()->delete();
+
         return $this->sendResponse([], 'Tous les tokens ont été révoqués avec succès');
     }
 }

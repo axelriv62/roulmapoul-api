@@ -11,8 +11,8 @@ class CustomerPolicy
     /**
      * Vérifie si l'utilisateur consulte son propre profil.
      *
-     * @param User $user L'utilisateur qui effectue la demande.
-     * @param Customer $customer Le client dont le profil est consulté.
+     * @param  User  $user  L'utilisateur qui effectue la demande.
+     * @param  Customer  $customer  Le client dont le profil est consulté.
      * @return bool true si l'utilisateur consulte son propre profil, sinon false.
      */
     public function read(User $user, Customer $customer): bool
@@ -24,7 +24,7 @@ class CustomerPolicy
     /**
      * Vérifie si l'utilisateur peut lister les clients
      *
-     * @param User $user L'utilisateur qui effectue la demande.
+     * @param  User  $user  L'utilisateur qui effectue la demande.
      * @return bool true si l'utilisateur peut lister les clients, sinon false.
      */
     public function readAny(User $user): bool
@@ -35,8 +35,8 @@ class CustomerPolicy
     /**
      * Vérifie si l'utilisateur peut modifier le profil d'un client.
      *
-     * @param User $user L'utilisateur qui effectue la demande.
-     * @param Customer $customer Le client dont le profil est modifié.
+     * @param  User  $user  L'utilisateur qui effectue la demande.
+     * @param  Customer  $customer  Le client dont le profil est modifié.
      * @return bool true si l'utilisateur peut modifier le profil, sinon false.
      */
     public function update(User $user, Customer $customer): bool
@@ -44,6 +44,7 @@ class CustomerPolicy
         if ($user->hasPermissionTo(Permission::UPDATE_CUSTOMER)) {
             return true;
         }
-        return ($user->id === $customer->user->id);
+
+        return $user->id === $customer->user->id;
     }
 }

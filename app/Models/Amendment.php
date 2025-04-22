@@ -21,6 +21,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Rental $rental
+ *
  * @method static Builder<static>|Amendment newModelQuery()
  * @method static Builder<static>|Amendment newQuery()
  * @method static Builder<static>|Amendment query()
@@ -32,6 +33,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|Amendment whereRentalId($value)
  * @method static Builder<static>|Amendment whereUpdatedAt($value)
  * @method static AmendmentFactory factory($count = null, $state = [])
+ *
  * @mixin Eloquent
  */
 class Amendment extends Model
@@ -62,7 +64,7 @@ class Amendment extends Model
      * @var string[]
      */
     protected $casts = [
-        'price' => 'float'
+        'price' => 'float',
     ];
 
     public function rental(): BelongsTo

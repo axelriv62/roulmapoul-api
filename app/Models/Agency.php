@@ -25,6 +25,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $updated_at
  * @property-read Collection<int, Car> $cars
  * @property-read int|null $cars_count
+ *
  * @method static Builder<static>|Agency newModelQuery()
  * @method static Builder<static>|Agency newQuery()
  * @method static Builder<static>|Agency query()
@@ -38,6 +39,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|Agency whereZip($value)
  * @method static AgencyFactory factory($count = null, $state = [])
  * @method static Builder<static>|Agency whereName($value)
+ *
  * @mixin Eloquent
  */
 class Agency extends Model
@@ -64,7 +66,7 @@ class Agency extends Model
         'street',
         'zip',
         'city',
-        'country'
+        'country',
     ];
 
     /**
@@ -72,7 +74,7 @@ class Agency extends Model
      */
     protected $casts = [
         'num' => 'string',
-        'zip' => 'string'
+        'zip' => 'string',
     ];
 
     public function cars(): HasMany

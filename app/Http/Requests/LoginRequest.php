@@ -23,8 +23,8 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "email" => "required|email",
-            "password" => "required|string|min:6",
+            'email' => 'required|email',
+            'password' => 'required|string|min:6',
         ];
     }
 
@@ -36,10 +36,10 @@ class LoginRequest extends FormRequest
     public function messages(): array
     {
         return [
-            "required" => "Le champ :attribute est requis.",
-            "email" => "Le champ :attribute doit être une adresse e-mail valide.",
-            "string" => "Le champ :attribute doit être une chaîne de caractères.",
-            "min" => "Le champ :attribute doit contenir au moins :min caractères.",
+            'required' => 'Le champ :attribute est requis.',
+            'email' => 'Le champ :attribute doit être une adresse e-mail valide.',
+            'string' => 'Le champ :attribute doit être une chaîne de caractères.',
+            'min' => 'Le champ :attribute doit contenir au moins :min caractères.',
         ];
     }
 }

@@ -20,12 +20,12 @@ class LicenseResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "num" => $this->num,
-            "birthday" => (new Carbon($this->birthday))->format('Y-m-d'),
-            "acquirement_date" => (new Carbon($this->acquirement_date))->format('Y-m-d'),
-            "distribution_date" => (new Carbon($this->distribution_date))->format('Y-m-d'),
-            "country" => $this->country,
-            "customer_id" => $this->customer_id
+            'num' => $this->num,
+            'birthday' => (new Carbon($this->birthday))->format('Y-m-d'),
+            'acquirement_date' => (new Carbon($this->acquirement_date))->format('Y-m-d'),
+            'distribution_date' => (new Carbon($this->distribution_date))->format('Y-m-d'),
+            'country' => $this->country,
+            'customer_id' => $this->customer_id,
         ];
     }
 }

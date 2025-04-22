@@ -23,11 +23,11 @@ class LicenseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "num" => "required|string|between:1,15",
-            "birthday" => "required|date|date_format:Y-m-d",
-            "acquirement_date" => "required|date|date_format:Y-m-d",
-            "distribution_date" => "required|date|date_format:Y-m-d",
-            "country" => "required|string|between:2,50",
+            'num' => 'required|string|between:1,15',
+            'birthday' => 'required|date|date_format:Y-m-d',
+            'acquirement_date' => 'required|date|date_format:Y-m-d',
+            'distribution_date' => 'required|date|date_format:Y-m-d',
+            'country' => 'required|string|between:2,50',
         ];
     }
 
@@ -39,11 +39,11 @@ class LicenseRequest extends FormRequest
     public function messages(): array
     {
         return [
-            "required" => "Le champ :attribute est requis.",
-            "string" => "Le champ :attribute doit être une chaîne de caractères.",
-            "between" => "Le champ :attribute doit contenir entre :min et :max caractères.",
-            "date" => "Le champ :attribute doit être une date valide.",
-            "date_format" => "Le champ :attribute doit être au format :format."
+            'required' => 'Le champ :attribute est requis.',
+            'string' => 'Le champ :attribute doit être une chaîne de caractères.',
+            'between' => 'Le champ :attribute doit contenir entre :min et :max caractères.',
+            'date' => 'Le champ :attribute doit être une date valide.',
+            'date_format' => 'Le champ :attribute doit être au format :format.',
         ];
     }
 }

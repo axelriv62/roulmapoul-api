@@ -17,7 +17,7 @@ class CustomerCollection extends ResourceCollection
         return [
             'data' => $this->collection,
             'links' => [
-                'self' => route('customers.index')
+                'self' => route('customers.index'),
             ],
         ];
     }

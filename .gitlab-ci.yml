@@ -6,6 +6,9 @@ unit-test:
   tags:
     - qdev_2025
   script:
+    - composer --version || echo "❌ Composer non disponible"
+    - php --version || echo "❌ PHP non disponible"
+    - ls -la
     - echo "Running PHPUnit tests..."
     - ./vendor/bin/phpunit
   only:

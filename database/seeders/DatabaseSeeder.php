@@ -80,7 +80,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         License::factory()->create([
-            'num' => '12345',
+            'num' => Hash::make(('12345')),
             'birthday' => '1980-01-01',
             'acquirement_date' => '2000-01-01',
             'distribution_date' => '2000-01-09',

@@ -7,22 +7,27 @@ cache:
   paths:
     - vendor/
 
-before_script:
-  - cp .env.example .env
-  - composer install --no-interaction --prefer-dist --optimize-autoloader
-  - php artisan key:generate
-
 build:
   stage: build
   image: dh-iutl.univ-artois.fr/composer
   tags:
     - docker
   script:
-    - echo "Build terminé ! dépendances installées et clé générée."
+    - touch database/database.sqlite
+    - cp .env.example .env
+    - composer install --no-interaction --prefer-dist --optimize-autoloader
+    - php artisan key:generate
+    - php artisan migrate
   only:
     - merge_requests
     - main
     - dev
+  artifacts:
+    paths:
+      - vendor/
+      - database/database.sqlite
+      - .env
+    expire_in: 1 week
 
 linting:
   stage: linting
@@ -41,6 +46,8 @@ phpunit:
   image: dh-iutl.univ-artois.fr/composer
   tags:
     - docker
+  dependencies:
+    - build
   script:
     - echo "Lancement des tests PHPUnit..."
     - php artisan test

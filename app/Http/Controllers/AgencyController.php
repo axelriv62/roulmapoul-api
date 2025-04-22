@@ -30,7 +30,7 @@ class AgencyController extends BaseController
             )
             ->get();
 
-        $success = new AgencyCollection($agencies);
+        $success['agencies'] = new AgencyCollection($agencies);
         return $this->sendResponse($success, 'Agences récupérées avec succès.');
     }
 }

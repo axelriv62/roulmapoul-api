@@ -18,7 +18,7 @@ class OptionController extends BaseController
     public function index(Request $request): JsonResponse
     {
         $options = Option::all();
-        $success = new OptionCollection($options);
+        $success['options'] = new OptionCollection($options);
         return $this->sendResponse($success, "Liste des options retrouvées avec succès.");
     }
 }

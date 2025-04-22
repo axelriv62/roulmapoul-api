@@ -19,7 +19,7 @@ class CustomerSeeder extends Seeder
         foreach ($customers as $customer) {
             if (rand(0, 100) < 80) {
                 $user = User::factory()->create([
-                    'name' => strtolower($customer->first_name . '.' . $customer->last_name),
+                    'name' => strtolower($customer->first_name.'.'.$customer->last_name),
                     'email' => $customer->email,
                 ]);
                 $user->assignRole(Role::CLIENT->value);
@@ -29,4 +29,3 @@ class CustomerSeeder extends Seeder
         }
     }
 }
-

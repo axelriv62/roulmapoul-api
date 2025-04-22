@@ -8,9 +8,8 @@ use Carbon\Carbon;
 
 class CarRepository implements CarRepositoryInterface
 {
-
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function isRentable(string $car_plate, Carbon $start, Carbon $end): bool
     {

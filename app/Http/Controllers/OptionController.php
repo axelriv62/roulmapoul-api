@@ -12,13 +12,14 @@ class OptionController extends BaseController
     /**
      * Liste les options.
      *
-     * @param Request $request La requête HTTP qui contient les paramètres de filtrage.
+     * @param  Request  $request  La requête HTTP qui contient les paramètres de filtrage.
      * @return JsonResponse La réponse JSON contenant la liste des options.
      */
     public function index(Request $request): JsonResponse
     {
         $options = Option::all();
         $success['options'] = new OptionCollection($options);
-        return $this->sendResponse($success, "Liste des options retrouvées avec succès.");
+
+        return $this->sendResponse($success, 'Liste des options retrouvées avec succès.');
     }
 }

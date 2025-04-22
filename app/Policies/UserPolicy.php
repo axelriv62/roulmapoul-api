@@ -10,7 +10,7 @@ class UserPolicy
     /**
      * Détermine si l'utilisateur peut enregistrer un agent. Seuls les administrateurs peuvent enregistrer un agent.
      *
-     * @param User $user L'utilisateur authentifié.
+     * @param  User  $user  L'utilisateur authentifié.
      * @return bool Vrai si l'utilisateur a la permission de créer un agent, sinon faux.
      */
     public function createAgent(User $user): bool

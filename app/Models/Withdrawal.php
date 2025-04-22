@@ -24,6 +24,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Rental $rental
+ *
  * @method static Builder<static>|Withdrawal newModelQuery()
  * @method static Builder<static>|Withdrawal newQuery()
  * @method static Builder<static>|Withdrawal query()
@@ -38,10 +39,13 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|Withdrawal whereRentalId($value)
  * @method static Builder<static>|Withdrawal whereUpdatedAt($value)
  * @method static Builder<static>|Withdrawal whereUserId($value)
+ *
  * @property int $customer_id
  * @property-read Customer $customer
+ *
  * @method static WithdrawalFactory factory($count = null, $state = [])
  * @method static Builder<static>|Withdrawal whereCustomerId($value)
+ *
  * @mixin Eloquent
  */
 class Withdrawal extends Model
@@ -62,7 +66,7 @@ class Withdrawal extends Model
     /**
      * @var string
      */
-    protected $dateFormat = "Y-m-d H:i:s";
+    protected $dateFormat = 'Y-m-d H:i:s';
 
     /**
      * @var string[]
@@ -84,7 +88,7 @@ class Withdrawal extends Model
     protected $casts = [
         'fuel_level' => 'float',
         'mileage' => 'float',
-        'datetime' => 'datetime'
+        'datetime' => 'datetime',
     ];
 
     public function customer(): BelongsTo

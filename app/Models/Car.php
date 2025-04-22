@@ -27,6 +27,7 @@ use Illuminate\Support\Carbon;
  * @property-read Category $category
  * @property-read Collection<int, Rental> $rentals
  * @property-read int|null $rentals_count
+ *
  * @method static Builder<static>|Car newModelQuery()
  * @method static Builder<static>|Car newQuery()
  * @method static Builder<static>|Car query()
@@ -38,6 +39,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|Car wherePriceDay($value)
  * @method static Builder<static>|Car whereUpdatedAt($value)
  * @method static CarFactory factory($count = null, $state = [])
+ *
  * @mixin Eloquent
  */
 class Car extends Model
@@ -73,14 +75,14 @@ class Car extends Model
         'availability',
         'price_day',
         'category_id',
-        'agency_id'
+        'agency_id',
     ];
 
     /**
      * @var string[]
      */
     protected $casts = [
-        'price_day' => 'float'
+        'price_day' => 'float',
     ];
 
     public function category(): BelongsTo

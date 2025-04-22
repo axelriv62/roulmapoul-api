@@ -21,6 +21,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $updated_at
  * @property-read Collection<int, Rental> $rentals
  * @property-read int|null $rentals_count
+ *
  * @method static Builder<static>|Warranty newModelQuery()
  * @method static Builder<static>|Warranty newQuery()
  * @method static Builder<static>|Warranty query()
@@ -30,6 +31,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|Warranty wherePrice($value)
  * @method static Builder<static>|Warranty whereUpdatedAt($value)
  * @method static WarrantyFactory factory($count = null, $state = [])
+ *
  * @mixin Eloquent
  */
 class Warranty extends Model
@@ -52,7 +54,7 @@ class Warranty extends Model
      */
     protected $fillable = [
         'name',
-        'price'
+        'price',
     ];
 
     /**

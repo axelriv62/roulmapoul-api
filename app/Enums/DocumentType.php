@@ -10,7 +10,7 @@ enum DocumentType: string
 
     public static function toValuesArray(): array
     {
-        return array_map(fn($type) => $type->value, self::toArray());
+        return array_map(fn ($type) => $type->value, self::toArray());
     }
 
     public static function toArray(): array
@@ -18,7 +18,7 @@ enum DocumentType: string
         return [
             self::BILL,
             self::WITHDRAWAL,
-            self::HANDOVER
+            self::HANDOVER,
         ];
     }
 }

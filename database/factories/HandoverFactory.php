@@ -22,7 +22,7 @@ class HandoverFactory extends Factory
             'interior_condition' => $this->faker->text(20),
             'exterior_condition' => $this->faker->text(20),
             'mileage' => $this->faker->randomFloat(2, 0.01, 200000),
-            'comment' => $this->faker->text()
+            'comment' => $this->faker->text(),
         ];
     }
 }

@@ -14,4 +14,9 @@ class RentalRepository implements RentalRepositoryInterface
     {
         return $rental->state == RentalState::PAID->value;
     }
+
+    public static function calculateTotalPrice(Rental $rental): float
+    {
+        return $rental->car->price_day * $rental->nb_days + ($rental->options->sum('price') ?? 0) + ($rental->warranty->price ?? 0);
+    }
 }

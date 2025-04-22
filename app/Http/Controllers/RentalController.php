@@ -27,7 +27,7 @@ class RentalController extends BaseController
         if (!CarRepository::isRentable($request->input('car_plate'), Carbon::parse($request->input('start')), Carbon::parse($request->input('end')))) {
             return $this->sendError([], "La voiture n'est pas disponible à ces dates.");
         }
-        
+
         $rental = Rental::create(array_merge(
             $request->validated(),
             [
@@ -40,7 +40,7 @@ class RentalController extends BaseController
             $rental->options()->attach($request->input('options'));
         }
 
-        $rental->total_price += $rental->car->price_day * $rental->nb_days + ($rental->options->sum('price') ?? 0) + ($rental->warranty->price ?? 0);
+        $rental->total_price = RentalRepository::calculateTotalPrice($rental);
         $rental->save();
 
 
@@ -168,7 +168,7 @@ class RentalController extends BaseController
             $rental->options()->sync($request->input('options'));
         }
 
-        $rental->total_price = $rental->car->price_day * $rental->nb_days + ($rental->options->sum('price') ?? 0) + ($rental->warranty->price ?? 0);
+        $rental->total_price = RentalRepository::calculateTotalPrice($rental);
         $rental->save();
 
         $success = new RentalResource($rental);

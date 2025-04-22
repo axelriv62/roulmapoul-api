@@ -60,7 +60,14 @@ class CustomerController extends BaseController
      */
     public function show(string $id)
     {
-        //
+
+        $customer = Customer::findOrFail($id);
+        if (Auth::user()->cannot('read', $customer)) {
+            return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
+        }
+        $success['customer'] = new CustomerResource($customer);
+        return $this->sendResponse($success, "Client trouvé avec succès.");
+
     }
 
     /**

@@ -8,17 +8,17 @@ use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Rental;
 use App\Repositories\CarRepository;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class CarRepositoryTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     /**
      * Teste si une voiture est louable à une date donnée.
      */
-    public function testCarIsRentable(): void
+    public function test_car_is_rentable(): void
     {
         $agency = Agency::factory()->create();
         $category = Category::factory()->create();

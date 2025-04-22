@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Repositories;
 
 use App\Enums\RentalState;
 use App\Models\Rental;

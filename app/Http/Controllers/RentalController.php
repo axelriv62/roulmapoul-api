@@ -7,7 +7,8 @@ use App\Http\Requests\RentalRequest;
 use App\Http\Resources\RentalCollection;
 use App\Http\Resources\RentalResource;
 use App\Models\Rental;
-use App\RentalRepository;
+use App\Repositories\CarRepository;
+use App\Repositories\RentalRepository;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -23,6 +24,10 @@ class RentalController extends BaseController
      */
     public function store(RentalRequest $request): JsonResponse
     {
+        if (!CarRepository::isRentable($request->input('car_plate'), Carbon::parse($request->input('start')), Carbon::parse($request->input('end')))) {
+            return $this->sendError([], "La voiture n'est pas disponible à ces dates.");
+        }
+        
         $rental = Rental::create(array_merge(
             $request->validated(),
             [

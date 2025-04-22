@@ -20,7 +20,6 @@ build-image:
     - docker build -f Dockerfile.dev -t $IMAGE_TAG .
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker push $IMAGE_TAG
-  privileged: true 
 unit-test:
   stage: test
   image: $IMAGE_TAG

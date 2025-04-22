@@ -17,11 +17,11 @@ class CarController extends BaseController
      */
     public function index(Request $request): JsonResponse
     {
-        $category = $request->query('category');
+        $category_id = $request->query('category_id');
         $availability = $request->query('availability');
 
         $cars = Car::query()
-            ->when($category, fn ($query) => $query->where('category_id', $category))
+            ->when($category_id, fn ($query) => $query->where('category_id', $category_id))
             ->when($availability, fn ($query) => $query->where('availability', $availability))
             ->get();
 
@@ -39,12 +39,12 @@ class CarController extends BaseController
      */
     public function indexAgency(Request $request, string $id): JsonResponse
     {
-        $category = $request->query('category');
+        $category_id = $request->query('category_id');
         $availability = $request->query('availability');
 
         $cars = Car::query()
             ->where('agency_id', $id)
-            ->when($category, fn ($query) => $query->where('category_id', $category))
+            ->when($category_id, fn ($query) => $query->where('category_id', $category_id))
             ->when($availability, fn ($query) => $query->where('availability', $availability))
             ->get();
 

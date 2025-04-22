@@ -25,7 +25,7 @@ class CarControllerTest extends TestCase
     /**
      * Vérifie que les filtres de la liste des voitures fonctionnent.
      */
-    public function test_index_filters(): void
+    public function test_filter_index(): void
     {
         $agency = Agency::factory()->create();
         $category1 = Category::factory()->create();
@@ -41,7 +41,7 @@ class CarControllerTest extends TestCase
             'availability' => CarAvailability::AVAILABLE,
         ]);
 
-        $response = $this->get(route('cars.index').'?availability=available&category='.$category1->id);
+        $response = $this->get(route('cars.index').'?availability=available&category_id='.$category1->id);
         $response->assertJsonCount(1, 'data.cars');
     }
 
@@ -57,7 +57,7 @@ class CarControllerTest extends TestCase
     /**
      * Vérifie que le filtrage de la route de la liste des voitures filtrées par agence fonctionne.
      */
-    public function test_index_agency_filter(): void
+    public function test_filter_index_agency(): void
     {
         $agency1 = Agency::factory()->create();
         $agency2 = Agency::factory()->create();
@@ -84,7 +84,7 @@ class CarControllerTest extends TestCase
             'availability' => CarAvailability::AVAILABLE,
         ]);
 
-        $response = $this->get(route('cars.index-agency', $agency1->id).'?availability=available&category='.$category1->id);
+        $response = $this->get(route('cars.index-agency', $agency1->id).'?availability=available&category_id='.$category1->id);
         $response->assertJsonCount(1, 'data.cars');
     }
 }

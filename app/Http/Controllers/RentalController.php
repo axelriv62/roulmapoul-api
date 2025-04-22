@@ -44,7 +44,7 @@ class RentalController extends BaseController
         $rental->save();
 
 
-        $success = new RentalResource($rental);
+        $success['rental'] = new RentalResource($rental);
 
         return $this->sendResponse($success, "La location a été créée avec succès.");
     }
@@ -71,7 +71,7 @@ class RentalController extends BaseController
             ->when($end, fn($query) => $query->where('end', '<=', $end))
             ->get();
 
-        $success = RentalResource::collection($rentals);
+        $success['rentals'] = new RentalCollection($rentals);
         return $this->sendResponse($success, "Liste des locations retrouvées avec succès.");
     }
 
@@ -88,7 +88,7 @@ class RentalController extends BaseController
         }
 
         $rentals = Rental::where('customer_id', $id)->get();
-        $success = new RentalCollection($rentals);
+        $success[] = new RentalCollection($rentals);
         return $this->sendResponse($success, "Liste des locations retrouvées avec succès.");
     }
 
@@ -108,7 +108,7 @@ class RentalController extends BaseController
             $query->where('agency_id', $id);
         })->get();
 
-        $success = new RentalCollection($rentals);
+        $success['rentals'] = new RentalCollection($rentals);
         return $this->sendResponse($success, "Liste des locations retrouvées avec succès.");
     }
 
@@ -125,7 +125,7 @@ class RentalController extends BaseController
         }
 
         $rentals = Rental::where('car_plate', mb_strtoupper($plate))->get();
-        $success = new RentalCollection($rentals);
+        $success['rentals'] = new RentalCollection($rentals);
         return $this->sendResponse($success, "Liste des locations retrouvées avec succès.");
     }
 
@@ -143,7 +143,7 @@ class RentalController extends BaseController
             return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
         }
 
-        $success = new RentalResource($rental);
+        $success['rental'] = new RentalResource($rental);
         return $this->sendResponse($success, "Location retrouvée avec succès.");
     }
 
@@ -175,7 +175,7 @@ class RentalController extends BaseController
         $rental->total_price = RentalRepository::calculateTotalPrice($rental);
         $rental->save();
 
-        $success = new RentalResource($rental);
+        $success['rental'] = new RentalResource($rental);
         return $this->sendResponse($success, "Location mise à jour avec succès.");
     }
 

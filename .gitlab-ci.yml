@@ -1,7 +1,7 @@
 stages:
   - test
 
-unit-test:
+phpunit:
   stage: test
   image: dh-iutl.univ-artois.fr/composer
   tags:
@@ -10,8 +10,9 @@ unit-test:
     - cp .env.example .env
     - composer install --no-interaction --prefer-dist --optimize-autoloader
     - php artisan key:generate
-    - echo "Running PHPUnit tests..."
+    - echo "Lancement des tests PHPUnit..."
     - php artisan test
   only:
+    - merge_requests
     - main
     - dev

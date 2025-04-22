@@ -22,6 +22,12 @@ build:
     - merge_requests
     - main
     - dev
+  artifacts:
+    paths:
+      - vendor/
+      - database/database.sqlite
+      - .env
+    expire_in: 1 week
 
 linting:
   stage: linting
@@ -40,6 +46,8 @@ phpunit:
   image: dh-iutl.univ-artois.fr/composer
   tags:
     - docker
+  dependencies:
+    - build
   script:
     - echo "Lancement des tests PHPUnit..."
     - php artisan test

@@ -22,7 +22,7 @@ class RentalFactory extends Factory
         $start = Carbon::now()->addDays(rand(-60, 60));
         $end = $start->copy()->addDays(rand(7, 30));
 
-        $state = RentalState::CANCELLED->value;
+        $state = RentalState::CANCELED->value;
         if (Carbon::now()->isBefore($start)) {
             if (rand(0, 100) > 20) {
                 $state = RentalState::PAID->value;

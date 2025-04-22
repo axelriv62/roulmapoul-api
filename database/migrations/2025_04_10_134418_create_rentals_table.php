@@ -15,8 +15,8 @@ return new class extends Migration {
             $table->date('start');
             $table->date('end');
             $table->integer('nb_days');
-            $table->enum('state', RentalState::toValuesArray());
-            $table->float('total_price');
+            $table->enum('state', RentalState::toValuesArray())->default(RentalState::PAID);
+            $table->float('total_price')->default(0);
             $table->string('car_plate');
             $table->foreign('car_plate')->references('plate')->on('cars')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(Customer::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();

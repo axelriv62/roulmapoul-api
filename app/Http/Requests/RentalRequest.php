@@ -12,7 +12,7 @@ class RentalRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; // TODO : Implémenter la logique d'autorisation
+        return true;
     }
 
     /**

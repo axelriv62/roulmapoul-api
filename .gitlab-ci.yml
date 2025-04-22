@@ -1,7 +1,7 @@
 stages:
   - build
-  - test
   - linting
+  - test
 
 cache:
   paths:
@@ -24,6 +24,18 @@ build:
     - main
     - dev
 
+linting:
+  stage: linting
+  image: dh-iutl.univ-artois.fr/composer
+  tags:
+    - docker
+  script:
+    - ./vendor/bin/pint
+  only:
+    - merge_requests
+    - main
+    - dev
+
 phpunit:
   stage: test
   image: dh-iutl.univ-artois.fr/composer
@@ -37,14 +49,3 @@ phpunit:
     - main
     - dev
 
-linting:
-  stage: linting
-  image: dh-iutl.univ-artois.fr/composer
-  tags:
-    - docker
-  script:
-    - ./vendor/bin/pint
-  only:
-    - merge_requests
-    - main
-    - dev

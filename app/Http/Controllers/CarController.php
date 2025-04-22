@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\CarCollection;
+use App\Http\Resources\CarResource;
 use App\Models\Car;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class CarController extends BaseController
             ->when($availability, fn ($query) => $query->where('availability', $availability))
             ->get();
 
-        $success['cars'] = new CarCollection($cars);
+        $success['cars'] = CarResource::collection($cars);
 
         return $this->sendResponse($success, 'Voitures récupérées avec succès.');
     }

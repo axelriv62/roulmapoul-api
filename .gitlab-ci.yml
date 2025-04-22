@@ -8,8 +8,8 @@ unit-test:
     - docker
   script:
     - cp .env.example .env
-    - php artisan key:generate
     - composer install --no-interaction --prefer-dist --optimize-autoloader
+    - php artisan key:generate
     - echo "Running PHPUnit tests..."
     - php artisan test
   only:

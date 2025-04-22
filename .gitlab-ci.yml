@@ -4,7 +4,7 @@ stages:
 unit-test:
   stage: test
   tags:
-    - qdev
+    - qdev2025
   script:
     - echo "Running PHPUnit tests..."
     - ./vendor/bin/phpunit

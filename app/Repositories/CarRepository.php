@@ -19,19 +19,12 @@ class CarRepository implements CarRepositoryInterface
     public static function isRentable(string $car_plate, Carbon $start, Carbon $end): bool
     {
         $existingCarRentals = Rental::where('car_plate', $car_plate)
-            ->where(function ($query) use ($start, $end) {
-                $query->where(function ($query) use ($start, $end) {
-                    $query->whereBetween('start', [$start, $end])
-                        ->orWhereBetween('end', [$start, $end])
-                        ->orWhere(function ($query) use ($start, $end) {
-                            $query->where('start', '<=', $end)
-                                ->where('end', '>=', $start);
-                        });
-                });
-            })
+            ->where('car_plate', $car_plate)
             ->where('state', '!=', RentalState::CANCELED->value)
-            ->get();
+            ->where('start', '<=', $end)
+            ->where('end', '>=', $start)
+            ->exists();
 
-        return $existingCarRentals->isEmpty();
+        return ! $existingCarRentals;
     }
 }

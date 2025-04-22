@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\AgencyCollection;
+use App\Http\Resources\AgencyResource;
 use App\Models\Agency;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -30,7 +30,7 @@ class AgencyController extends BaseController
             )
             ->get();
 
-        $success['agencies'] = new AgencyCollection($agencies);
+        $success['agencies'] = AgencyResource::collection($agencies);
 
         return $this->sendResponse($success, 'Agences récupérées avec succès.');
     }

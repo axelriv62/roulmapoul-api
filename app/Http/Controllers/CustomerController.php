@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BillingAddressRequest;
 use App\Http\Requests\CustomerRequest;
 use App\Http\Requests\LicenseRequest;
-use App\Http\Resources\CustomerCollection;
 use App\Http\Resources\CustomerResource;
 use App\Http\Resources\LicenseResource;
 use App\Models\Customer;
@@ -41,7 +40,7 @@ class CustomerController extends BaseController
             ->when($rental_id, fn ($query) => $query->whereHas('rentals', fn ($q) => $q->where('id', $rental_id)))
             ->get();
 
-        $success['customers'] = new CustomerCollection($customers);
+        $success['customers'] = CustomerResource::collection($customers);
 
         return $this->sendResponse($success, 'Liste des clients retrouvées avec succès.');
     }

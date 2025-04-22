@@ -24,12 +24,13 @@ Route::post('/customers/{id}/driver', [CustomerController::class, 'addLicense'])
 Route::post('/customers/{id}/billing', [CustomerController::class, 'addBillingAddress'])->name('customers.add-billing-addr');
 Route::post('/customers/{id}/auth', [AuthController::class, 'registerCustomer'])->name('customers.register');
 Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
-Route::get('/customer/{id}/', [CustomerController::class, 'show'])->name('customers.show');
+
 
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/customer/{id}/driver', [CustomerController::class, 'updateLicense'])->name('customers.update-license');
     Route::put('/customer/{id}/billing', [CustomerController::class, 'updateBillingAddress'])->name('customers.update-billing-addr');
+    Route::get('/customer/{id}/', [CustomerController::class, 'show'])->name('customers.show');
     Route::put('/customer/{id}', [CustomerController::class, 'updateInfos'])->name('customers.update');
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
 });

@@ -7,6 +7,7 @@ use App\Http\Requests\RentalRequest;
 use App\Http\Resources\RentalCollection;
 use App\Http\Resources\RentalResource;
 use App\Models\Rental;
+use App\RentalRepository;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -167,5 +168,30 @@ class RentalController extends BaseController
 
         $success = new RentalResource($rental);
         return $this->sendResponse($success, "Location mise à jour avec succès.");
+    }
+
+    /**
+     * Supprime une location.
+     *
+     * @param string $id L'identifiant de la location.
+     * @return JsonResponse
+     */
+    public function destroy(string $id): JsonResponse
+    {
+        $rental = Rental::findOrFail($id);
+
+        if (Auth::user()->cannot('delete', $rental)) {
+            return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
+        }
+
+        if (!RentalRepository::isDeleteable($rental)) {
+            return $this->sendError([], "La location ne peut pas être annulée car elle est déjà en cours, finie ou a déjà été annulée.");
+        }
+
+        $rental->state = RentalState::CANCELED;
+        $rental->save();
+
+        $success['rental'] = new RentalResource($rental);
+        return $this->sendResponse($success, "Location annulée avec succès.");
     }
 }

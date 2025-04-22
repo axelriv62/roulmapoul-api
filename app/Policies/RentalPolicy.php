@@ -53,4 +53,15 @@ class RentalPolicy
     {
         return $user->hasPermissionTo(Permission::READ_ALL_RENTAL);
     }
+
+    /**
+     * Détermine si l'utilisateur peut supprimer une location.
+     *
+     * @param User $user l'utilisateur qui effectue la demande.
+     * @return bool true si l'utilisateur a la permission de supprimer une location, sinon false.
+     */
+    public function delete(User $user, Rental $rental): bool
+    {
+        return $user->hasPermissionTo(Permission::DELETE_RENTAL) || $user->customer->id === $rental->customer_id;
+    }
 }

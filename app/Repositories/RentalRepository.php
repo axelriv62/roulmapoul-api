@@ -11,7 +11,7 @@ class RentalRepository implements RentalRepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public static function isDeleteable(Rental $rental): bool
+    public static function isDeletable(Rental $rental): bool
     {
         return $rental->state == RentalState::PAID->value;
     }

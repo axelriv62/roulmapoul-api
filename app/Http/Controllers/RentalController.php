@@ -21,7 +21,7 @@ class RentalController extends BaseController
      */
     public function store(RentalRequest $request): JsonResponse
     {
-        if (! CarRepository::isRentable($request->input('car_plate'), Carbon::parse($request->input('start')), Carbon::parse($request->input('end')))) {
+        if (!CarRepository::isRentable($request->input('car_plate'), Carbon::parse($request->input('start')), Carbon::parse($request->input('end')))) {
             return $this->sendError([], "La voiture n'est pas disponible à ces dates.");
         }
 
@@ -59,9 +59,9 @@ class RentalController extends BaseController
         $end = $request->query('end', []);
 
         $rentals = Rental::query()
-            ->when($state, fn ($query) => $query->where('state', $state))
-            ->when($start, fn ($query) => $query->where('start', '>=', $start))
-            ->when($end, fn ($query) => $query->where('end', '<=', $end))
+            ->when($state, fn($query) => $query->where('state', $state))
+            ->when($start, fn($query) => $query->where('start', '>=', $start))
+            ->when($end, fn($query) => $query->where('end', '<=', $end))
             ->get();
 
         $success['rentals'] = new RentalCollection($rentals);
@@ -72,7 +72,7 @@ class RentalController extends BaseController
     /**
      * Liste les locations d'un client.
      *
-     * @param  string  $id  L'identifiant du client.
+     * @param string $id L'identifiant du client.
      */
     public function indexOfCustomer(string $id): JsonResponse
     {
@@ -89,7 +89,7 @@ class RentalController extends BaseController
     /**
      * Liste les locations d'une agence.
      *
-     * @param  string  $id  L'identifiant de l'agence.
+     * @param string $id L'identifiant de l'agence.
      */
     public function indexOfAgency(string $id): JsonResponse
     {
@@ -109,7 +109,7 @@ class RentalController extends BaseController
     /**
      * Liste les locations d'une voiture
      *
-     * @param  string  $plate  La plaque d'immatriculation de la voiture.
+     * @param string $plate La plaque d'immatriculation de la voiture.
      */
     public function indexOfCar(string $plate): JsonResponse
     {
@@ -126,7 +126,7 @@ class RentalController extends BaseController
     /**
      * Affiche les détails d'une location.
      *
-     * @param  string  $id  L'identifiant de la location.
+     * @param string $id L'identifiant de la location.
      */
     public function show(string $id): JsonResponse
     {
@@ -144,8 +144,8 @@ class RentalController extends BaseController
     /**
      * Met à jour une location.
      *
-     * @param  RentalRequest  $request  La requête HTTP contenant les données de la location.
-     * @param  string  $id  L'identifiant de la location.
+     * @param RentalRequest $request La requête HTTP contenant les données de la location.
+     * @param string $id L'identifiant de la location.
      */
     public function update(RentalRequest $request, string $id): JsonResponse
     {
@@ -155,7 +155,7 @@ class RentalController extends BaseController
             return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
         }
 
-        if (! RentalRepository::isUpdatable($rental, Carbon::parse($request->input('start')), Carbon::parse($request->input('end')))) {
+        if (!RentalRepository::isUpdatable($rental, Carbon::parse($request->input('start')), Carbon::parse($request->input('end')))) {
             return $this->sendError([], "La voiture n'est pas disponible à ces dates.");
         }
 
@@ -176,7 +176,7 @@ class RentalController extends BaseController
     /**
      * Supprime une location.
      *
-     * @param  string  $id  L'identifiant de la location.
+     * @param string $id L'identifiant de la location.
      */
     public function destroy(string $id): JsonResponse
     {
@@ -186,7 +186,7 @@ class RentalController extends BaseController
             return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
         }
 
-        if (! RentalRepository::isDeleteable($rental)) {
+        if (!RentalRepository::isDeletable($rental)) {
             return $this->sendError([], 'La location ne peut pas être annulée car elle est déjà en cours, finie ou a déjà été annulée.');
         }
 

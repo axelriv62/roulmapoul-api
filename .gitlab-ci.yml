@@ -3,12 +3,12 @@ stages:
 
 unit-test:
   stage: test
-  image: $IMAGE_TAG
+  image: php
   tags:
     - qdev_2025
   script:
     - echo "Running PHPUnit tests..."
-    - ./vendor/bin/phpunit
+    - php artisan test
   only:
     - main
     - dev

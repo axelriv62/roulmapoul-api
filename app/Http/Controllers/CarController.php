@@ -49,7 +49,7 @@ class CarController extends BaseController
             ->when($availability, fn ($query) => $query->where('availability', $availability))
             ->get();
 
-        $success['cars'] = new CarCollection($cars);
+        $success['cars'] = CarResource::collection($cars);
 
         return $this->sendResponse($success, 'Voitures récupérées avec succès.');
     }

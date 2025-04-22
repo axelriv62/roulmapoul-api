@@ -7,6 +7,8 @@ unit-test:
   tags:
     - docker
   script:
+    - cp .env.example .env
+    - php artisan key:generate
     - composer install --no-interaction --prefer-dist --optimize-autoloader
     - echo "Running PHPUnit tests..."
     - php artisan test

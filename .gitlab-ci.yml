@@ -8,9 +8,11 @@ cache:
     - vendor/
 
 before_script:
+  - touch database/database.sqlite
   - cp .env.example .env
   - composer install --no-interaction --prefer-dist --optimize-autoloader
   - php artisan key:generate
+  - php artisan migrate
 
 build:
   stage: build

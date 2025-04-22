@@ -3,7 +3,7 @@ stages:
 
 unit-test:
   stage: test
-  image: dh-iutl.univ-artois.fr/php
+  image: dh-iutl.univ-artois.fr/composer
   tags:
     - docker
   script:

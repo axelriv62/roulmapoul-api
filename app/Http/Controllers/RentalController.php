@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Enums\RentalState;
 use App\Http\Requests\RentalRequest;
-use App\Http\Resources\RentalCollection;
 use App\Http\Resources\RentalResource;
 use App\Models\Rental;
 use App\Repositories\CarRepository;
@@ -64,7 +63,7 @@ class RentalController extends BaseController
             ->when($end, fn ($query) => $query->where('end', '<=', $end))
             ->get();
 
-        $success['rentals'] = new RentalCollection($rentals);
+        $success['rentals'] = RentalResource::collection($rentals);
 
         return $this->sendResponse($success, 'Liste des locations retrouvées avec succès.');
     }
@@ -81,7 +80,7 @@ class RentalController extends BaseController
         }
 
         $rentals = Rental::where('customer_id', $id)->get();
-        $success[] = new RentalCollection($rentals);
+        $success[] = RentalResource::collection($rentals);
 
         return $this->sendResponse($success, 'Liste des locations retrouvées avec succès.');
     }
@@ -101,7 +100,7 @@ class RentalController extends BaseController
             $query->where('agency_id', $id);
         })->get();
 
-        $success['rentals'] = new RentalCollection($rentals);
+        $success['rentals'] = RentalResource::collection($rentals);
 
         return $this->sendResponse($success, 'Liste des locations retrouvées avec succès.');
     }
@@ -118,7 +117,7 @@ class RentalController extends BaseController
         }
 
         $rentals = Rental::where('car_plate', mb_strtoupper($plate))->get();
-        $success['rentals'] = new RentalCollection($rentals);
+        $success['rentals'] = RentalResource::collection($rentals);
 
         return $this->sendResponse($success, 'Liste des locations retrouvées avec succès.');
     }

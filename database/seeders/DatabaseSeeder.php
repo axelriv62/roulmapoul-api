@@ -6,7 +6,6 @@ use App\Enums\Role;
 use App\Models\Customer;
 use App\Models\License;
 use App\Models\User;
-use Database\Factories\LicenseFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -80,7 +79,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         License::factory()->create([
-            'num' => Hash::make(('12345')),
+            'num' => '12345678912',
             'birthday' => '1980-01-01',
             'acquirement_date' => '2000-01-01',
             'distribution_date' => '2000-01-09',

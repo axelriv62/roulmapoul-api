@@ -15,7 +15,7 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        $clientRole = SpatieRole::create(['name' => Role::CLIENT->value]);
+        $customerRole = SpatieRole::create(['name' => Role::CUSTOMER->value]);
         $agentRole = SpatieRole::create(['name' => Role::AGENT->value]);
         $adminRole = SpatieRole::create(['name' => Role::ADMIN->value]);
 
@@ -37,7 +37,7 @@ class RoleSeeder extends Seeder
             Permission::DELETE_RENTAL,
         ]);
 
-        $clientRole->givePermissionTo([
+        $customerRole->givePermissionTo([
             Permission::CREATE_RENTAL,
             Permission::READ_CUSTOMER,
         ]);

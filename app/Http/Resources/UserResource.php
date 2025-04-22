@@ -21,7 +21,7 @@ class UserResource extends JsonResource
     {
         $role = $this->roles->pluck('name')->first();
 
-        if ($role === Role::CLIENT->value) {
+        if ($role === Role::CUSTOMER->value) {
             return [
                 'id' => $this->id,
                 'name' => $this->name,

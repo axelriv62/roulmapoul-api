@@ -22,7 +22,7 @@ class CustomerSeeder extends Seeder
                     'name' => strtolower($customer->first_name.'.'.$customer->last_name),
                     'email' => $customer->email,
                 ]);
-                $user->assignRole(Role::CLIENT->value);
+                $user->assignRole(Role::CUSTOMER->value);
                 $customer->user_id = $user->id;
             }
             $customer->save();

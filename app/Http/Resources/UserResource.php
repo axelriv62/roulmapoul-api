@@ -23,18 +23,18 @@ class UserResource extends JsonResource
 
         if ($role === Role::CLIENT->value) {
             return [
-                "id" => $this->id,
-                "name" => $this->name,
-                "email" => $this->email,
-                "role" => $role,
-                "customer" => array_diff_key((new CustomerResource($this->customer))->toArray($request), array_flip(['email', 'user_id'])),
+                'id' => $this->id,
+                'name' => $this->name,
+                'email' => $this->email,
+                'role' => $role,
+                'customer' => array_diff_key((new CustomerResource($this->customer))->toArray($request), array_flip(['email', 'user_id'])),
             ];
         } else {
             return [
-                "id" => $this->id,
-                "name" => $this->name,
-                "email" => $this->email,
-                "role" => $role,
+                'id' => $this->id,
+                'name' => $this->name,
+                'email' => $this->email,
+                'role' => $role,
             ];
         }
     }

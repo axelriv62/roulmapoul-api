@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read Customer $customer
+ *
  * @method static Builder<static>|License newModelQuery()
  * @method static Builder<static>|License newQuery()
  * @method static Builder<static>|License query()
@@ -34,6 +35,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder<static>|License whereUpdatedAt($value)
  * @method static LicenseFactory factory($count = null, $state = [])
  * @method static Builder<static>|License whereBirthday($value)
+ *
  * @mixin Eloquent
  */
 class License extends Model
@@ -75,7 +77,7 @@ class License extends Model
         'acquirement_date',
         'distribution_date',
         'country',
-        'customer_id'
+        'customer_id',
     ];
 
     /**
@@ -84,7 +86,7 @@ class License extends Model
     protected $casts = [
         'birthday' => 'date',
         'acquirement_date' => 'date',
-        'distribution_date' => 'date'
+        'distribution_date' => 'date',
     ];
 
     public function customer(): BelongsTo

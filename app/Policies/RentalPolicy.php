@@ -11,7 +11,7 @@ class RentalPolicy
     /**
      * Détermine si l'utilisateur peut créer une location.
      *
-     * @param User $user l'utilisateur qui effectue la demande.
+     * @param  User  $user  l'utilisateur qui effectue la demande.
      * @return bool true si l'utilisateur a la permission de créer une location, sinon false.
      */
     public function create(User $user): bool
@@ -22,7 +22,7 @@ class RentalPolicy
     /**
      * Détermine si l'utilisateur peut mettre à jour une location.
      *
-     * @param User $user l'utilisateur qui effectue la demande.
+     * @param  User  $user  l'utilisateur qui effectue la demande.
      * @return bool true si l'utilisateur a la permission de mettre à jour une location, sinon false.
      */
     public function update(User $user): bool
@@ -33,8 +33,8 @@ class RentalPolicy
     /**
      * Détermine si l'utilisateur peut consulter une location.
      *
-     * @param User $user l'utilisateur qui effectue la demande.
-     * @param Rental $rental la location à consulter.
+     * @param  User  $user  l'utilisateur qui effectue la demande.
+     * @param  Rental  $rental  la location à consulter.
      * @return bool true si l'utilisateur a la permission de consulter une location, sinon false.
      */
     public function read(User $user, Rental $rental): bool
@@ -46,7 +46,7 @@ class RentalPolicy
     /**
      * Détermine si l'utilisateur peut consulter toutes les locations.
      *
-     * @param User $user l'utilisateur qui effectue la demande.
+     * @param  User  $user  l'utilisateur qui effectue la demande.
      * @return bool true si l'utilisateur a la permission de consulter toutes les locations, sinon false.
      */
     public function readAny(User $user): bool
@@ -57,7 +57,7 @@ class RentalPolicy
     /**
      * Détermine si l'utilisateur peut supprimer une location.
      *
-     * @param User $user l'utilisateur qui effectue la demande.
+     * @param  User  $user  l'utilisateur qui effectue la demande.
      * @return bool true si l'utilisateur a la permission de supprimer une location, sinon false.
      */
     public function delete(User $user, Rental $rental): bool

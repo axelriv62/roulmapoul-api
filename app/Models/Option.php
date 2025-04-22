@@ -22,6 +22,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $updated_at
  * @property-read Collection<int, Rental> $rentals
  * @property-read int|null $rentals_count
+ *
  * @method static Builder<static>|Option newModelQuery()
  * @method static Builder<static>|Option newQuery()
  * @method static Builder<static>|Option query()
@@ -32,6 +33,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|Option wherePrice($value)
  * @method static Builder<static>|Option whereUpdatedAt($value)
  * @method static OptionFactory factory($count = null, $state = [])
+ *
  * @mixin Eloquent
  */
 class Option extends Model
@@ -55,7 +57,7 @@ class Option extends Model
     protected $fillable = [
         'name',
         'description',
-        'price'
+        'price',
     ];
 
     /**

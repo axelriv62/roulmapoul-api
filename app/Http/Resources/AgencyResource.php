@@ -19,13 +19,13 @@ class AgencyResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "id" => $this->id,
-            "name" => $this->name, // TODO À ajouter dans l'entité Agency
-            "num" => $this->num,
-            "street" => $this->street,
-            "zip" => $this->zip,
-            "city" => $this->city,
-            "country" => $this->country,
+            'id' => $this->id,
+            'name' => $this->name, // TODO À ajouter dans l'entité Agency
+            'num' => $this->num,
+            'street' => $this->street,
+            'zip' => $this->zip,
+            'city' => $this->city,
+            'country' => $this->country,
         ];
     }
 }

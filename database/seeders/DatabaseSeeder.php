@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             RentalSeeder::class,
             HandoverSeeder::class,
             LicenseSeeder::class,
-            WithdrawalSeeder::class
+            WithdrawalSeeder::class,
         ]);
 
         $robert = User::factory()->create([
@@ -75,7 +75,7 @@ class DatabaseSeeder extends Seeder
         $gerard = Customer::factory()->create([
             'first_name' => 'Gérard',
             'last_name' => 'Martin',
-            'email' => 'gerard.martin@domain.fr'
+            'email' => 'gerard.martin@domain.fr',
         ]);
 
         License::factory()->create([
@@ -89,7 +89,7 @@ class DatabaseSeeder extends Seeder
 
         $gerardUser = User::factory()->create([
             'name' => 'gerard.martin',
-            'email' => $gerard->email
+            'email' => $gerard->email,
         ])->assignRole(Role::CLIENT->value);
         $gerard->user_id = $gerardUser->id;
         $gerard->save();

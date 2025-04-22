@@ -19,6 +19,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Rental $rental
+ *
  * @method static Builder<static>|Document newModelQuery()
  * @method static Builder<static>|Document newQuery()
  * @method static Builder<static>|Document query()
@@ -28,6 +29,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|Document whereType($value)
  * @method static Builder<static>|Document whereUpdatedAt($value)
  * @method static Builder<static>|Document whereUrl($value)
+ *
  * @mixin Eloquent
  */
 class Document extends Model
@@ -48,14 +50,14 @@ class Document extends Model
     protected $fillable = [
         'type',
         'url',
-        'rental_id'
+        'rental_id',
     ];
 
     /**
      * @var string[]
      */
     protected $casts = [
-        'url' => 'string'
+        'url' => 'string',
     ];
 
     public function rental(): BelongsTo

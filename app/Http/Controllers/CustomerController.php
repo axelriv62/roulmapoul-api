@@ -19,7 +19,7 @@ class CustomerController extends BaseController
      * Liste les clients.
      * Seuls les agents et les administrateurs peuvent accéder à cette méthode.
      *
-     * @param Request $request La requête HTTP qui contient les paramètres de filtrage.
+     * @param  Request  $request  La requête HTTP qui contient les paramètres de filtrage.
      */
     public function index(Request $request): JsonResponse
     {
@@ -34,15 +34,16 @@ class CustomerController extends BaseController
         $rental_id = $request->query('rental_id');
 
         $customers = Customer::query()
-            ->when($first_name, fn($query) => $query->where('first_name', 'like', '%' . $first_name . '%'))
-            ->when($last_name, fn($query) => $query->where('last_name', 'like', '%' . $last_name . '%'))
-            ->when($email, fn($query) => $query->where('email', 'like', '%' . $email . '%'))
-            ->when($phone, fn($query) => $query->where('phone', 'like', '%' . $phone . '%'))
-            ->when($rental_id, fn($query) => $query->whereHas('rentals', fn($q) => $q->where('id', $rental_id)))
+            ->when($first_name, fn ($query) => $query->where('first_name', 'like', '%'.$first_name.'%'))
+            ->when($last_name, fn ($query) => $query->where('last_name', 'like', '%'.$last_name.'%'))
+            ->when($email, fn ($query) => $query->where('email', 'like', '%'.$email.'%'))
+            ->when($phone, fn ($query) => $query->where('phone', 'like', '%'.$phone.'%'))
+            ->when($rental_id, fn ($query) => $query->whereHas('rentals', fn ($q) => $q->where('id', $rental_id)))
             ->get();
 
         $success['customers'] = new CustomerCollection($customers);
-        return $this->sendResponse($success, "Liste des clients retrouvées avec succès.");
+
+        return $this->sendResponse($success, 'Liste des clients retrouvées avec succès.');
     }
 
     /**
@@ -52,7 +53,8 @@ class CustomerController extends BaseController
     {
         $customer = Customer::create($request->validated());
         $success['customer'] = new CustomerResource($customer);
-        return $this->sendResponse($success, "Le client a été créé avec succès.");
+
+        return $this->sendResponse($success, 'Le client a été créé avec succès.');
     }
 
     /**
@@ -74,21 +76,22 @@ class CustomerController extends BaseController
     /**
      * Associe le client à son permis de conduire.
      *
-     * @param LicenseRequest $request La requête HTTP contenant les données du permis de conduire.
-     * @param string $id L'identifiant du client.
+     * @param  LicenseRequest  $request  La requête HTTP contenant les données du permis de conduire.
+     * @param  string  $id  L'identifiant du client.
      */
     public function addLicense(LicenseRequest $request, string $id): JsonResponse
     {
         $customer = Customer::findOrFail($id);
         $customer->license()->create($request->validated());
-        return $this->sendResponse([], "Le permis de conduire a été associé au client " . $id . " avec succès.");
+
+        return $this->sendResponse([], 'Le permis de conduire a été associé au client '.$id.' avec succès.');
     }
 
     /**
      * Ajoute les informations de facturation du client.
      *
-     * @param BillingAddressRequest $request La requête HTTP contenant les informations de facturation.
-     * @param string $id L'identifiant du client.
+     * @param  BillingAddressRequest  $request  La requête HTTP contenant les informations de facturation.
+     * @param  string  $id  L'identifiant du client.
      */
     public function addBillingAddress(BillingAddressRequest $request, string $id): JsonResponse
     {
@@ -117,7 +120,8 @@ class CustomerController extends BaseController
 
         $customer->update($request->validated());
         $success['customer'] = new CustomerResource($customer);
-        return $this->sendResponse($success, "Les informations du client ont été mises à jour avec succès.");
+
+        return $this->sendResponse($success, 'Les informations du client ont été mises à jour avec succès.');
     }
 
     public function updateLicense(LicenseRequest $request, string $id): JsonResponse
@@ -130,7 +134,8 @@ class CustomerController extends BaseController
 
         $customer->license()->update($request->validated());
         $success['license'] = new LicenseResource($customer->license);
-        return $this->sendResponse($success, "Le permis de conduire a été mis à jour avec succès.");
+
+        return $this->sendResponse($success, 'Le permis de conduire a été mis à jour avec succès.');
     }
 
     public function updateBillingAddress(BillingAddressRequest $request, string $id): JsonResponse
@@ -149,6 +154,7 @@ class CustomerController extends BaseController
             'country_bill' => $request->validated()['country'],
         ]);
         $success['customer'] = new CustomerResource($customer);
+
         return $this->sendResponse($success, "L'adresse de facturation a été mise à jour avec succès.");
     }
 }

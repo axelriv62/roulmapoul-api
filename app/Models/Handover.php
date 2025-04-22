@@ -22,13 +22,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $comment
  * @property int $rental_id
  * @property-read Rental|null $rental
+ *
  * @method static Builder<static>|Handover newModelQuery()
  * @method static Builder<static>|Handover newQuery()
  * @method static Builder<static>|Handover query()
+ *
  * @property int $customer_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read Customer $customer
+ *
  * @method static HandoverFactory factory($count = null, $state = [])
  * @method static Builder<static>|Handover whereComment($value)
  * @method static Builder<static>|Handover whereCreatedAt($value)
@@ -41,6 +44,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder<static>|Handover whereMileage($value)
  * @method static Builder<static>|Handover whereRentalId($value)
  * @method static Builder<static>|Handover whereUpdatedAt($value)
+ *
  * @mixin Eloquent
  */
 class Handover extends Model
@@ -61,7 +65,7 @@ class Handover extends Model
     /**
      * @var string
      */
-    protected $dateFormat = "Y-m-d H:i:s";
+    protected $dateFormat = 'Y-m-d H:i:s';
 
     /**
      * @var string[]
@@ -83,7 +87,7 @@ class Handover extends Model
     protected $casts = [
         'fuel_level' => 'float',
         'mileage' => 'float',
-        'datetime' => 'datetime'
+        'datetime' => 'datetime',
     ];
 
     public function customer(): BelongsTo

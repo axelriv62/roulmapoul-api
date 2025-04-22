@@ -23,7 +23,7 @@ class CustomerFactory extends Factory
         return [
             'first_name' => $firstName,
             'last_name' => $lastName,
-            'email' => strtolower($firstName . '.' . $lastName) . '@domain.fr',
+            'email' => strtolower($firstName.'.'.$lastName).'@domain.fr',
             'phone' => $this->faker->phoneNumber(),
             'num' => $this->faker->buildingNumber(),
             'street' => $this->faker->streetName(),

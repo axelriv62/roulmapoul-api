@@ -30,9 +30,9 @@ class HandoverSeeder extends Seeder
 
             if ($handover->datetime > $rental->end) {
                 $amendment = AmendmentFactory::new()->create([
-                    'name' => "Retard",
+                    'name' => 'Retard',
                     'price' => intval($rental->end->diffInHours($handover->datetime)) * 10, // 10€ par heure de retard
-                    'content' => "Véhicule retourné après la date de retour prévue",
+                    'content' => 'Véhicule retourné après la date de retour prévue',
                     'rental_id' => $rental->id,
                 ]);
 

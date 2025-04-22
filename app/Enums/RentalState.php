@@ -11,7 +11,7 @@ enum RentalState: string
 
     public static function toValuesArray(): array
     {
-        return array_map(fn(self $state) => $state->value, self::toArray());
+        return array_map(fn (self $state) => $state->value, self::toArray());
     }
 
     public static function toArray(): array
@@ -20,7 +20,7 @@ enum RentalState: string
             self::PAID,
             self::CANCELED,
             self::ONGOING,
-            self::COMPLETED
+            self::COMPLETED,
         ];
     }
 }

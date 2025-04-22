@@ -19,11 +19,11 @@ class BillingAddressResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "num_bill" => $this->num_bill,
-            "street_bill" => $this->street_bill,
-            "zip_bill" => $this->zip_bill,
-            "city_bill" => $this->city_bill,
-            "country_bill" => $this->country_bill
+            'num_bill' => $this->num_bill,
+            'street_bill' => $this->street_bill,
+            'zip_bill' => $this->zip_bill,
+            'city_bill' => $this->city_bill,
+            'country_bill' => $this->country_bill,
         ];
     }
 }

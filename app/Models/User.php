@@ -93,6 +93,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+
     public function customer(): HasOne
     {
         return $this->hasOne(Customer::class);

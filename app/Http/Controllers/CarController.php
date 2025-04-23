@@ -53,8 +53,8 @@ class CarController extends BaseController
             ->get();
 
         if ($start && $end) {
-            $start = Carbon::createFromFormat('d-m-Y', $start)->startOfDay();
-            $end = Carbon::createFromFormat('d-m-Y', $end)->endOfDay();
+            $start = Carbon::createFromFormat('Y-m-d', $start)->startOfDay();
+            $end = Carbon::createFromFormat('Y-m-d', $end)->endOfDay();
 
             $cars = $cars->filter(function ($car) use ($start, $end) {
                 return CarRepository::isRentable($car->plate, $start, $end);

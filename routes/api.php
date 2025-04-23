@@ -26,8 +26,6 @@ Route::post('/customers/{id}/auth', [AuthController::class, 'registerCustomer'])
 Route::middleware('auth:api')->get('/customer', [CustomerController::class, 'getCustomer']);
 Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
 
-
-
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/customer/{id}/driver', [CustomerController::class, 'updateLicense'])->name('customers.update-license');
     Route::put('/customer/{id}/billing', [CustomerController::class, 'updateBillingAddress'])->name('customers.update-billing-addr');

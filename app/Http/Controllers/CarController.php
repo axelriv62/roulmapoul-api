@@ -14,7 +14,7 @@ class CarController extends BaseController
     /**
      * Liste les voitures.
      *
-     * @param  Request  $request  La requête HTTP qui contient les paramètres de filtrage.
+     * @param Request $request La requête HTTP qui contient les paramètres de filtrage.
      * @return JsonResponse La réponse JSON contenant la liste des voitures.
      */
     public function index(Request $request): JsonResponse
@@ -23,8 +23,8 @@ class CarController extends BaseController
         $availability = $request->query('availability');
 
         $cars = Car::query()
-            ->when($category_id, fn ($query) => $query->where('category_id', $category_id))
-            ->when($availability, fn ($query) => $query->where('availability', $availability))
+            ->when($category_id, fn($query) => $query->where('category_id', $category_id))
+            ->when($availability, fn($query) => $query->where('availability', $availability))
             ->get();
 
         $success['cars'] = CarResource::collection($cars);
@@ -35,8 +35,8 @@ class CarController extends BaseController
     /**
      * Liste les voitures d'une agence spécifique.
      *
-     * @param  Request  $request  La requête HTTP qui contient les paramètres de filtrage.
-     * @param  string  $id  L'identifiant de l'agence.
+     * @param Request $request La requête HTTP qui contient les paramètres de filtrage.
+     * @param string $id L'identifiant de l'agence.
      * @return JsonResponse La réponse JSON contenant la liste des voitures de l'agence.
      */
     public function indexAgency(Request $request, string $id): JsonResponse
@@ -48,13 +48,13 @@ class CarController extends BaseController
 
         $cars = Car::query()
             ->where('agency_id', $id)
-            ->when($category_id, fn ($query) => $query->where('category_id', $category_id))
-            ->when($availability, fn ($query) => $query->where('availability', $availability))
+            ->when($category_id, fn($query) => $query->where('category_id', $category_id))
+            ->when($availability, fn($query) => $query->where('availability', $availability))
             ->get();
 
         if ($start && $end) {
-            $start = Carbon::createFromFormat('d-m-Y', $start)->startOfDay();
-            $end = Carbon::createFromFormat('d-m-Y', $end)->endOfDay();
+            $start = Carbon::createFromFormat('m-d-Y', $start)->startOfDay();
+            $end = Carbon::createFromFormat('m-d-Y', $end)->endOfDay();
 
             $cars = $cars->filter(function ($car) use ($start, $end) {
                 return CarRepository::isRentable($car->plate, $start, $end);

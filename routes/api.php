@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\HandoverController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\WarrantyController;
@@ -54,6 +55,9 @@ Route::get('/cars/agency/{id}', [CarController::class, 'indexAgency'])->name('ca
 
 // Withdrawal route
 Route::post('/rentals/{id}/withdrawal', [WithdrawalController::class, 'store'])->name('withdrawals.store')->middleware('auth:sanctum');
+
+// Handover route
+Route::post('/rentals/{id}/handover', [HandoverController::class, 'store'])->name('handovers.store')->middleware('auth:sanctum');
 
 Route::get('/agencies', [AgencyController::class, 'index'])->name('agencies.index');
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');

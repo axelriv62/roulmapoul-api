@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class HandoverRequest extends FormRequest
 {
@@ -12,7 +13,7 @@ class HandoverRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; // TODO changer pour que seuls les agents puissent le faire
+        return Auth::user()->can('create', \App\Models\Handover::class);
     }
 
     /**

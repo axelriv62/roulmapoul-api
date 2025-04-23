@@ -59,11 +59,27 @@ class RentalControllerTest extends TestCase
     public function test_index_rental(): void{
         //Se connecter en tant qu'agent avant
         $this->actingAs($this->agent);
+        //Executer la requete
         $response = $this->withHeader('Accept', 'application/json')->get(route('rentals.index'));
-
+        //Verifier qu'on récupère bien 200 (accepted) en status
         $response->assertStatus(200);
     }
 
+    public function test_indexOfCustomer(): void
+    {
+        //Se connecter en tant qu'agent
+        $this->actingAs($this->agent);
+
+        //Utiliser l'ID du client existant créé dans setUp()
+        $customerId = $this->customerUser->customer->id;
+
+        //Executer la requete
+        $response = $this->withHeader('Accept', 'application/json')
+            ->get(route('rentals.index-customer', ['id' => $customerId]));
+
+        //Verifier qu'on récupère bien 200 (accepted) en status
+        $response->assertStatus(200);
+    }
     protected function setUp(): void
     {
         parent::setUp();

@@ -7,10 +7,10 @@ use App\Mail\MailWithdrawal;
 use App\Models\Customer;
 use App\Models\Document;
 use App\Models\Withdrawal;
+use Dompdf\Dompdf;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Mail;
-use Dompdf\Dompdf;
 use Illuminate\Support\Facades\Storage;
 
 class MailWithdrawalJob implements ShouldQueue
@@ -30,7 +30,7 @@ class MailWithdrawalJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $dompdf = new Dompdf();
+        $dompdf = new Dompdf;
         $dompdf->loadHtml(view('pdf.withdrawal', ['withdrawal' => $this->withdrawal]));
         $dompdf->setPaper('A4');
         $dompdf->render();
@@ -46,7 +46,7 @@ class MailWithdrawalJob implements ShouldQueue
         ]);
 
         try {
-            print_r("Envoi de l'email de retrait à {$this->customer->user->email} pour le retrait {$this->withdrawal->id}.");
+            print_r("Envoi de l'email de retrait à {$this->customer->user->email} pour le retrait {$this->withdrawal->id}.\n");
 
             $success = Mail::to($this->customer->user->email)->send(new MailWithdrawal($this->customer, $filePath));
 

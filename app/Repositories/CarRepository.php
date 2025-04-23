@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Enums\CarAvailability;
 use App\Enums\RentalState;
+use App\Models\Car;
 use App\Models\Rental;
 use Carbon\Carbon;
 
@@ -19,12 +21,14 @@ class CarRepository implements CarRepositoryInterface
     public static function isRentable(string $car_plate, Carbon $start, Carbon $end): bool
     {
         $existingCarRentals = Rental::where('car_plate', $car_plate)
-            ->where('car_plate', $car_plate)
             ->where('state', '!=', RentalState::CANCELED->value)
             ->where('start', '<=', $end)
             ->where('end', '>=', $start)
             ->exists();
 
-        return ! $existingCarRentals;
+        $car = Car::where('plate', $car_plate)->first();
+
+        return ! $existingCarRentals && $car->state !== CarAvailability::UNDER_MAINTENANCE->value
+            && $car->state !== CarAvailability::UNDER_REPAIR->value;
     }
 }

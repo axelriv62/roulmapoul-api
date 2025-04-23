@@ -11,7 +11,7 @@ class RentalRepository implements RentalRepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public static function isDeleteable(Rental $rental): bool
+    public static function isDeletable(Rental $rental): bool
     {
         return $rental->state == RentalState::PAID->value;
     }
@@ -21,7 +21,7 @@ class RentalRepository implements RentalRepositoryInterface
      */
     public static function calculateTotalPrice(Rental $rental): float
     {
-        return $rental->car->price_day * $rental->nb_days + ($rental->options->sum('price') ?? 0) + ($rental->warranty->price ?? 0);
+        return round($rental->car->price_day * $rental->nb_days + ($rental->options->sum('price') ?? 0) + ($rental->warranty->price ?? 0), 2);
     }
 
     /**
@@ -29,15 +29,15 @@ class RentalRepository implements RentalRepositoryInterface
      */
     public static function isUpdatable(Rental $rental, Carbon $start, Carbon $end): bool
     {
-        $car_rentals = Rental::where('car_plate', $rental->car_plate)
+        $existingCarRentals = Rental::where('car_plate', $rental->car_plate)
             ->where('id', '!=', $rental->id)
             ->where(function ($query) use ($start, $end) {
                 $query->whereBetween('start', [$start, $end])
                     ->orWhereBetween('end', [$start, $end]);
             })
             ->where('state', '!=', RentalState::CANCELED->value)
-            ->get();
+            ->exists();
 
-        return $car_rentals->isEmpty();
+        return ! $existingCarRentals;
     }
 }

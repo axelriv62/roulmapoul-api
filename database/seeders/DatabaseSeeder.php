@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Enums\Role;
 use App\Models\Customer;
 use App\Models\License;
+use App\Models\Rental;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -90,8 +91,23 @@ class DatabaseSeeder extends Seeder
         $gerardUser = User::factory()->create([
             'name' => 'gerard.martin',
             'email' => $gerard->email,
-        ])->assignRole(Role::CLIENT->value);
+        ])->assignRole(Role::CUSTOMER->value);
         $gerard->user_id = $gerardUser->id;
         $gerard->save();
+
+        $gerard = Customer::where('email', 'gerard.martin@domain.fr')->first();
+        if ($gerard) {
+            Rental::factory()->create([
+                'start' => '2023-12-01 10:00:00',
+                'end' => '2023-12-10 10:00:00',
+                'nb_days' => 9,
+                'state' => 'paid',
+                'total_price' => 450.00,
+                'car_plate' => 'XX000XX',
+                'customer_id' => $gerard->id, // Utilisation de l'ID de Gérard
+            ]);
+        } else {
+            $this->command->warn('Le client Gérard Martin n\'existe pas.');
+        }
     }
 }

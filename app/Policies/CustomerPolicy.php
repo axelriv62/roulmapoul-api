@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Enums\Permission;
 use App\Models\Customer;
 use App\Models\User;
+use Cassandra\Custom;
 
 class CustomerPolicy
 {
@@ -45,6 +46,17 @@ class CustomerPolicy
             return true;
         }
 
-        return $user->id === $customer->user->id;
+        return $customer->user?->id === $user->id ?? false;
+    }
+
+    /**
+     * Vérifie qu'un client consulte ses propres locations.
+     *
+     * @param  User  $user  l'utilisateur qui effectue la demande.
+     * @param  Customer $customer  Le client dont les locations sont demandées.
+     */
+    public function readOwnRentals(User $user, Customer $customer): bool
+    {
+        return $user->hasPermissionTo(Permission::READ_ALL_RENTAL) || $user->customer->id === $customer->id;
     }
 }

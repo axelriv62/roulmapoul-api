@@ -13,7 +13,7 @@ interface RentalRepositoryInterface
      * @param  Rental  $rental  La location à vérifier.
      * @return bool true si la location est annulable, sinon false.
      */
-    public static function isDeleteable(Rental $rental): bool;
+    public static function isDeletable(Rental $rental): bool;
 
     /**
      * Vérifie si la location est modifiable à une date donnée.

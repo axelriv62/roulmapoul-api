@@ -122,6 +122,89 @@ class RentalControllerTest extends TestCase
             'id' => $rental->id
         ]);
     }
+    public function test_indexOfCar(): void
+    {
+        // Se connecter en tant qu'agent
+        $this->actingAs($this->agent);
+
+        // Créer une agence
+        $agency = Agency::factory()->create();
+
+        // Créer une catégorie
+        $category = Category::factory()->create();
+
+        // Créer une voiture
+        $car = Car::factory()->create([
+            'agency_id' => $agency->id,
+            'category_id' => $category->id,
+            'plate' => 'AB123CD' // Plaque d'immatriculation spécifique pour le test
+        ]);
+
+        // Créer un client
+        $customer = Customer::factory()->create([
+            'first_name' => 'Pierre',
+            'last_name' => 'Martin',
+            'email' => 'pierre.martin@example.com',
+        ]);
+
+        // Créer plusieurs locations pour cette voiture
+        $rental1 = Rental::factory()->create([
+            'car_plate' => $car->plate,
+            'customer_id' => $customer->id
+        ]);
+
+        $rental2 = Rental::factory()->create([
+            'car_plate' => $car->plate,
+            'customer_id' => $customer->id
+        ]);
+
+        // Créer une location pour une autre voiture (ne devrait pas apparaître dans les résultats)
+        $otherCar = Car::factory()->create([
+            'agency_id' => $agency->id,
+            'category_id' => $category->id
+        ]);
+
+        Rental::factory()->create([
+            'car_plate' => $otherCar->plate,
+            'customer_id' => $customer->id
+        ]);
+
+        // Exécuter la requête
+        $response = $this->withHeader('Accept', 'application/json')
+            ->get("/api/rentals/car/{$car->plate}");
+
+        // Vérifier le statut de la réponse
+        $response->assertStatus(200);
+
+        // Vérifier que la réponse contient les bonnes locations
+        $response->assertJsonCount(2, 'data.rentals');
+
+        // Vérifier que les IDs des locations correspondent
+        $response->assertJsonFragment(['id' => $rental1->id]);
+        $response->assertJsonFragment(['id' => $rental2->id]);
+
+        // Test avec une plaque en minuscules (devrait fonctionner grâce à mb_strtoupper)
+        $response = $this->withHeader('Accept', 'application/json')
+            ->get("/api/rentals/car/" . strtolower($car->plate));
+
+        $response->assertStatus(200);
+        $response->assertJsonCount(2, 'data.rentals');
+    }
+
+    public function test_indexOfCar_unauthorized(): void
+    {
+        // Créer et se connecter en tant qu'utilisateur sans permissions
+        $unauthorizedUser = User::factory()->create();
+        $this->actingAs($unauthorizedUser);
+
+        // Exécuter la requête
+        $response = $this->withHeader('Accept', 'application/json')
+            ->get("/api/rentals/car/AB123CD");
+
+        // Vérifier que l'accès est refusé
+        $response->assertStatus(403);
+    }
+
     protected function setUp(): void
     {
         parent::setUp();

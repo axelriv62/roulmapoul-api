@@ -6,6 +6,7 @@ use App\Enums\Role;
 use App\Http\Requests\LinkUserCustomerRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\NewUserRequest;
+use App\Http\Resources\CustomerResource;
 use App\Http\Resources\UserResource;
 use App\Models\Customer;
 use App\Models\User;
@@ -97,5 +98,15 @@ class AuthController extends BaseController
         Auth::user()->tokens()->delete();
 
         return $this->sendResponse([], 'Tous les tokens ont été révoqués avec succès');
+    }
+
+    public function myCustomer(): JsonResponse
+    {
+        $user = Auth::user();
+        $customer = Customer::where('user_id', $user->id)->first();
+
+        $success['customer'] = new CustomerResource($customer);
+
+        return $this->sendResponse($success, 'Client récupéré avec succès');
     }
 }

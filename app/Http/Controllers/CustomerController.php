@@ -58,25 +58,6 @@ class CustomerController extends BaseController
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        $customer = Customer::findOrFail($id);
-        if (Auth::user()->cannot('read', $customer)) {
-            return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
-        }
-        $success['customer'] = new CustomerResource($customer);
-        return $this->sendResponse($success, "Client trouvé avec succès.");
-
-    }
-
-    public function getCustomer(Request $request)
-    {
-        return response()->json(Auth::user());
-    }
-
-    /**
      * Associe le client à son permis de conduire.
      *
      * @param  LicenseRequest  $request  La requête HTTP contenant les données du permis de conduire.

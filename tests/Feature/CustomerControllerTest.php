@@ -3,13 +3,18 @@
 namespace Tests\Feature;
 
 use App\Enums\Role;
+use App\Models\Agency;
+use App\Models\Car;
+use App\Models\Category;
 use App\Models\Customer;
 use App\Models\License;
+use App\Models\Rental;
 use App\Models\User;
+use App\Models\Warranty;
+use Cassandra\Custom;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
-
 use function PHPUnit\Framework\isEmpty;
 
 class CustomerControllerTest extends TestCase
@@ -18,7 +23,7 @@ class CustomerControllerTest extends TestCase
 
     protected User $agent;
 
-    protected User $customer;
+    protected User $customerUser;
 
     /**
      * Vérifie que la liste des clients est accessible en étant agent.
@@ -45,16 +50,80 @@ class CustomerControllerTest extends TestCase
      */
     public function test_index_inaccessible_as_customer(): void
     {
-        $this->actingAs($this->customer);
+        $this->actingAs($this->customerUser);
         $response = $this->get(route('customers.index'));
         $response->assertStatus(403);
+    }
+
+    /**
+     * Vérifie que la liste des clients est inaccessible sans authentification.
+     */
+    public function test_index_inaccessible_without_authentication(): void
+    {
+        $response = $this->get(route('customers.index'));
+        $response->assertStatus(302);
+    }
+
+    /**
+     * Vérifie que les filtres fonctionnent correctement.
+     */
+    public function test_filter_index(): void
+    {
+        $this->actingAs($this->agent);
+        Customer::factory()->create([
+            'first_name' => 'Test',
+            'last_name' => 'Test',
+            'email' => 'test@domain.fr',
+            'phone' => '0606060606',
+        ]);
+        $response = $this->get(route('customers.index', [
+            'first_name' => 'Test',
+            'last_name' => 'Test',
+            'email' => 'test@domain.fr',
+            'phone' => '0606060606',
+        ]));
+        $response->assertJsonCount(1, 'data.customers');
+    }
+
+    /**
+     * Vérifie que la récupération de client par identifiant de location fonctionne.
+     */
+    public function test_filter_index_by_rental():void
+    {
+        $this->actingAs($this->agent);
+        $customer = Customer::factory()->create([
+            'first_name' => 'Test',
+            'last_name' => 'Test',
+            'email' => 'test@domain.fr',
+            'phone' => '0606060606',
+        ]);
+
+        $agency = Agency::factory()->create();
+        $category = Category::factory()->create();
+        $car = Car::factory()->create([
+            'agency_id' => $agency->id,
+            'category_id' => $category->id,
+        ]);
+        Rental::factory()->create([
+            'customer_id' => $this->customerUser->customer->id,
+            'car_plate' => $car->plate,
+        ]);
+        Rental::factory()->create([
+            'customer_id' => $customer->id,
+            'car_plate' => $car->plate,
+        ]);
+
+        $response = $this->get(route('customers.index', [
+            'rental_id' => $customer->rentals->first->id,
+        ]));
+
+        $response->assertJsonCount(1, 'data.customers');
     }
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->artisan('migrate:fresh');
         if (isEmpty(DB::select('SELECT * FROM roles'))) {
             $this->seed(RoleSeeder::class);
         }
@@ -78,11 +147,11 @@ class CustomerControllerTest extends TestCase
             'customer_id' => $customer->id,
         ]);
 
-        $this->customer = User::factory()->create([
+        $this->customerUser = User::factory()->create([
             'name' => 'gerard.martin',
             'email' => $customer->email,
         ])->assignRole(Role::CUSTOMER->value);
-        $customer->user_id = $this->customer->id;
+        $customer->user_id = $this->customerUser->id;
         $customer->save();
     }
 }

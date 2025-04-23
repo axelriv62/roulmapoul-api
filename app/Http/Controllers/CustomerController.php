@@ -77,14 +77,6 @@ class CustomerController extends BaseController
     }
 
     /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-
-    /**
      * Associe le client à son permis de conduire.
      *
      * @param  LicenseRequest  $request  La requête HTTP contenant les données du permis de conduire.

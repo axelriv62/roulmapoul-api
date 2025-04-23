@@ -20,7 +20,7 @@ class AuthController extends BaseController
     {
         $customer = Customer::findOrFail($id);
 
-        $customerRole = SpatieRole::where('name', Role::CLIENT->value)->first();
+        $customerRole = SpatieRole::where('name', Role::CUSTOMER->value)->first();
 
         $user = User::create([
             'name' => $request->validated()['name'],

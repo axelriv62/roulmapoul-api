@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\CarCollection;
 use App\Http\Resources\CarResource;
 use App\Models\Car;
+use App\Repositories\CarRepository;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -18,11 +19,11 @@ class CarController extends BaseController
      */
     public function index(Request $request): JsonResponse
     {
-        $category = $request->query('category');
+        $category_id = $request->query('category_id');
         $availability = $request->query('availability');
 
         $cars = Car::query()
-            ->when($category, fn ($query) => $query->where('category_id', $category))
+            ->when($category_id, fn ($query) => $query->where('category_id', $category_id))
             ->when($availability, fn ($query) => $query->where('availability', $availability))
             ->get();
 
@@ -40,14 +41,25 @@ class CarController extends BaseController
      */
     public function indexAgency(Request $request, string $id): JsonResponse
     {
-        $category = $request->query('category');
+        $category_id = $request->query('category_id');
         $availability = $request->query('availability');
+        $start = $request->query('start');
+        $end = $request->query('end');
 
         $cars = Car::query()
             ->where('agency_id', $id)
-            ->when($category, fn ($query) => $query->where('category_id', $category))
+            ->when($category_id, fn ($query) => $query->where('category_id', $category_id))
             ->when($availability, fn ($query) => $query->where('availability', $availability))
             ->get();
+
+        if ($start && $end) {
+            $start = Carbon::createFromFormat('Y-m-d', $start)->startOfDay();
+            $end = Carbon::createFromFormat('Y-m-d', $end)->endOfDay();
+
+            $cars = $cars->filter(function ($car) use ($start, $end) {
+                return CarRepository::isRentable($car->plate, $start, $end);
+            });
+        }
 
         $success['cars'] = CarResource::collection($cars);
 

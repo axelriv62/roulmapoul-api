@@ -62,5 +62,6 @@ class RentalSeeder extends Seeder
 
             $rental->update(['total_price' => $rental->total_price]);
         }
+
     }
 }

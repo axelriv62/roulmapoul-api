@@ -21,6 +21,10 @@ class AgencyController extends BaseController
         $zip = $request->query('zip');
         $sort = $request->query('sort');
 
+        if ($sort && ! ($sort === 'asc' || $sort === 'desc')) {
+            $sort = 'asc';
+        }
+
         $agencies = Agency::query()
             ->when($city, fn ($query) => $query->where('city', 'like', '%'.$city.'%'))
             ->when($zip, fn ($query) => $query->where('zip', 'like', '%'.$zip.'%'))

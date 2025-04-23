@@ -13,8 +13,8 @@ return new class extends Migration
         Schema::create('withdrawals', function (Blueprint $table) {
             $table->id();
             $table->float('fuel_level');
-            $table->string('interior_condition');
-            $table->string('exterior_condition');
+            $table->enum('interior_condition', \App\Enums\CarCondition::toValuesArray());
+            $table->enum('exterior_condition', \App\Enums\CarCondition::toValuesArray());
             $table->float('mileage');
             $table->datetime('datetime');
             $table->string('comment')->nullable();

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\CarCondition;
 use App\Enums\Role;
 use App\Models\Agency;
 use App\Models\Car;
@@ -62,8 +63,8 @@ class WithdrawalControllerTest extends TestCase
             'car_plate' => $car->plate,
             'mileage' => 102,
             'fuel_level' => 50,
-            'interior_condition' => 'Clean',
-            'exterior_condition' => 'Clean',
+            'interior_condition' => CarCondition::GOOD->value,
+            'exterior_condition' => CarCondition::GOOD->value,
             'comment' => 'Roule that poule',
         ]);
 
@@ -122,8 +123,8 @@ class WithdrawalControllerTest extends TestCase
             'car_plate' => $car->plate,
             'mileage' => 102,
             'fuel_level' => 50,
-            'interior_condition' => 'Clean',
-            'exterior_condition' => 'Clean',
+            'interior_condition' => CarCondition::GOOD->value,
+            'exterior_condition' => CarCondition::GOOD->value,
             'comment' => 'Roule that poule',
         ]);
 

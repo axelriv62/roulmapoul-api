@@ -11,6 +11,7 @@ use App\Models\Customer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class CustomerController extends BaseController
 {
@@ -68,6 +69,11 @@ class CustomerController extends BaseController
         $success['customer'] = new CustomerResource($customer);
         return $this->sendResponse($success, "Client trouvé avec succès.");
 
+    }
+
+    public function getCustomer(Request $request)
+    {
+        return response()->json(Auth::user());
     }
 
     /**

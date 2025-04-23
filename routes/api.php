@@ -23,6 +23,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::post('/customers/{id}/driver', [CustomerController::class, 'addLicense'])->name('customers.add-license');
 Route::post('/customers/{id}/billing', [CustomerController::class, 'addBillingAddress'])->name('customers.add-billing-addr');
 Route::post('/customers/{id}/auth', [AuthController::class, 'registerCustomer'])->name('customers.register');
+Route::middleware('auth:api')->get('/customer', [CustomerController::class, 'getCustomer']);
 Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
 
 

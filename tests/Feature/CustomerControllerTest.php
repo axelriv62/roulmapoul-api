@@ -343,4 +343,24 @@ class CustomerControllerTest extends TestCase
         $response->assertJsonCount(1, 'data');
         $this->assertTrue(License::where('num', '12345678912')->exists());
     }
+
+    /**
+     * Vérifie que la mise à jour des informations de facturation d'un client fonctionne.
+     */
+    public function test_update_billing_address(): void
+    {
+        $this->actingAs($this->customerUser);
+
+        $response = $this->withHeader('Accept', 'application/json')->put(route('customers.update-billing-addr', $this->customerUser->customer->id), [
+            'num' => '2',
+            'street' => 'Rue de la Liberté',
+            'zip' => '00001',
+            'city' => 'Lyon',
+            'country' => 'France',
+        ]);
+        $response->assertStatus(200);
+
+        $response->assertJsonCount(1, 'data');
+        $this->assertTrue(Customer::where('city_bill', 'Lyon')->exists());
+    }
 }

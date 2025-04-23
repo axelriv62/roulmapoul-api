@@ -23,21 +23,21 @@ class BillingAddressRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "num" => "required|string|between:1,5",
-            "street" => "required|string|between:4,50",
-            "zip" => "required|string|size:5",
-            "city" => "required|string|between:2,50",
-            "country" => "required|string|between:2,50"
+            'num' => 'required|string|between:1,5',
+            'street' => 'required|string|between:4,50',
+            'zip' => 'required|string|size:5',
+            'city' => 'required|string|between:2,50',
+            'country' => 'required|string|between:2,50',
         ];
     }
 
     public function messages(): array
     {
         return [
-            "required" => "Le champ :attribute est requis.",
-            "string" => "Le champ :attribute doit être une chaîne de caractères.",
-            "between" => "Le champ :attribute doit contenir entre :min et :max caractères.",
-            "size" => "Le champ :attribute doit contenir exactement :size caractères."
+            'required' => 'Le champ :attribute est requis.',
+            'string' => 'Le champ :attribute doit être une chaîne de caractères.',
+            'between' => 'Le champ :attribute doit contenir entre :min et :max caractères.',
+            'size' => 'Le champ :attribute doit contenir exactement :size caractères.',
         ];
     }
 }

@@ -41,6 +41,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property-read int|null $options_count
  * @property-read Warranty $warranty
  * @property-read Withdrawal|null $withdrawal
+ *
  * @method static Builder<static>|Rental newModelQuery()
  * @method static Builder<static>|Rental newQuery()
  * @method static Builder<static>|Rental query()
@@ -56,6 +57,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static Builder<static>|Rental whereUpdatedAt($value)
  * @method static Builder<static>|Rental whereWarrantyId($value)
  * @method static RentalFactory factory($count = null, $state = [])
+ *
  * @mixin Eloquent
  */
 class Rental extends Model
@@ -84,7 +86,7 @@ class Rental extends Model
         'total_price',
         'customer_id',
         'car_plate',
-        'warranty_id'
+        'warranty_id',
     ];
 
     /**
@@ -101,7 +103,7 @@ class Rental extends Model
     /**
      * @var string
      */
-    protected $dateFormat = "Y-m-d";
+    protected $dateFormat = 'Y-m-d';
 
     public function options(): BelongsToMany
     {

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Enums\Role;
 use App\Models\Customer;
+use App\Models\License;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -28,7 +29,7 @@ class DatabaseSeeder extends Seeder
             RentalSeeder::class,
             HandoverSeeder::class,
             LicenseSeeder::class,
-            WithdrawalSeeder::class
+            WithdrawalSeeder::class,
         ]);
 
         $robert = User::factory()->create([
@@ -74,11 +75,21 @@ class DatabaseSeeder extends Seeder
         $gerard = Customer::factory()->create([
             'first_name' => 'Gérard',
             'last_name' => 'Martin',
-            'email' => 'gerard.martin@domain.fr'
+            'email' => 'gerard.martin@domain.fr',
         ]);
+
+        License::factory()->create([
+            'num' => '12345678912',
+            'birthday' => '1980-01-01',
+            'acquirement_date' => '2000-01-01',
+            'distribution_date' => '2000-01-09',
+            'country' => 'Belgium',
+            'customer_id' => $gerard->id,
+        ]);
+
         $gerardUser = User::factory()->create([
             'name' => 'gerard.martin',
-            'email' => $gerard->email
+            'email' => $gerard->email,
         ])->assignRole(Role::CLIENT->value);
         $gerard->user_id = $gerardUser->id;
         $gerard->save();

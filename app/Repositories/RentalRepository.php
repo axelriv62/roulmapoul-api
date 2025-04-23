@@ -9,7 +9,7 @@ use Carbon\Carbon;
 class RentalRepository implements RentalRepositoryInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function isDeleteable(Rental $rental): bool
     {
@@ -17,7 +17,7 @@ class RentalRepository implements RentalRepositoryInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function calculateTotalPrice(Rental $rental): float
     {
@@ -25,7 +25,7 @@ class RentalRepository implements RentalRepositoryInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function isUpdatable(Rental $rental, Carbon $start, Carbon $end): bool
     {

@@ -20,7 +20,7 @@ class OptionFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'description' => $this->faker->text(),
-            'price' => $this->faker->randomFloat(2, 10, 200)
+            'price' => $this->faker->randomFloat(2, 10, 200),
         ];
     }
 }

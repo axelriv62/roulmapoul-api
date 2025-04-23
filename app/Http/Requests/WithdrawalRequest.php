@@ -23,13 +23,13 @@ class WithdrawalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "datetime" => "required|date|date_format:Y-m-d H:i:s",
-            "car_plate" => "required|exists:cars,plate",
-            "mileage" => "required|numeric|min:0",
-            "fuel_level" => "required|numeric|min:0",
-            "interior_condition" => "nullable|string|between:0,500",
-            "exterior_condition" => "nullable|string|between:0,500",
-            "comment" => "nullable|string|between:0,500",
+            'datetime' => 'required|date|date_format:Y-m-d H:i:s',
+            'car_plate' => 'required|exists:cars,plate',
+            'mileage' => 'required|numeric|min:0',
+            'fuel_level' => 'required|numeric|min:0',
+            'interior_condition' => 'nullable|string|between:0,500',
+            'exterior_condition' => 'nullable|string|between:0,500',
+            'comment' => 'nullable|string|between:0,500',
         ];
     }
 
@@ -41,12 +41,12 @@ class WithdrawalRequest extends FormRequest
     public function messages(): array
     {
         return [
-            "required" => "Le champ :attribute est requis.",
-            "string" => "Le champ :attribute doit être une chaîne de caractères.",
-            "integer" => "Le champ :attribute doit être un entier.",
-            "numeric" => "Le champ :attribute doit être un nombre.",
-            "between" => "Le champ :attribute doit contenir entre :min et :max caractères.",
-            "date_format" => "Le champ :attribute doit être au format :format."
+            'required' => 'Le champ :attribute est requis.',
+            'string' => 'Le champ :attribute doit être une chaîne de caractères.',
+            'integer' => 'Le champ :attribute doit être un entier.',
+            'numeric' => 'Le champ :attribute doit être un nombre.',
+            'between' => 'Le champ :attribute doit contenir entre :min et :max caractères.',
+            'date_format' => 'Le champ :attribute doit être au format :format.',
         ];
     }
 }

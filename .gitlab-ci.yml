@@ -1,14 +1,58 @@
 stages:
+  - build
+  - linting
   - test
 
-unit-test:
-  stage: test
-  image: $IMAGE_TAG
+cache:
+  paths:
+    - vendor/
+
+build:
+  stage: build
+  image: dh-iutl.univ-artois.fr/composer
   tags:
-    - qdev_2025
+    - docker
   script:
-    - echo "Running PHPUnit tests..."
-    - ./vendor/bin/phpunit
+    - touch database/database.sqlite
+    - cp .env.example .env
+    - composer install --no-interaction --prefer-dist --optimize-autoloader
+    - php artisan key:generate
+    - php artisan migrate
   only:
+    - merge_requests
     - main
     - dev
+  artifacts:
+    paths:
+      - vendor/
+      - database/database.sqlite
+      - .env
+    expire_in: 1 week
+
+linting:
+  stage: linting
+  image: dh-iutl.univ-artois.fr/composer
+  tags:
+    - docker
+  script:
+    - ./vendor/bin/pint
+  only:
+    - merge_requests
+    - main
+    - dev
+
+phpunit:
+  stage: test
+  image: dh-iutl.univ-artois.fr/composer
+  tags:
+    - docker
+  dependencies:
+    - build
+  script:
+    - echo "Lancement des tests PHPUnit..."
+    - php artisan test
+  only:
+    - merge_requests
+    - main
+    - dev
+

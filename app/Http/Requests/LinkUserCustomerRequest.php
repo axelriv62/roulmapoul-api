@@ -23,8 +23,8 @@ class LinkUserCustomerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => "required|string|max:255|unique:users,name",
-            "password" => "required|string|min:8"
+            'name' => 'required|string|max:255|unique:users,name',
+            'password' => 'required|string|min:8',
         ];
     }
 
@@ -36,11 +36,11 @@ class LinkUserCustomerRequest extends FormRequest
     public function messages(): array
     {
         return [
-            "required" => "Le champ :attribute est requis.",
-            "string" => "Le champ :attribute doit être une chaîne de caractères.",
-            "max" => "Le champ :attribute ne doit pas dépasser :max caractères.",
-            "name.unique" => "Ce nom d'utilisateur est déjà pris.",
-            "min" => "Le champ :attribute doit contenir au moins :min caractères.",
+            'required' => 'Le champ :attribute est requis.',
+            'string' => 'Le champ :attribute doit être une chaîne de caractères.',
+            'max' => 'Le champ :attribute ne doit pas dépasser :max caractères.',
+            'name.unique' => "Ce nom d'utilisateur est déjà pris.",
+            'min' => 'Le champ :attribute doit contenir au moins :min caractères.',
         ];
     }
 }

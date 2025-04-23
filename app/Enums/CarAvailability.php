@@ -12,7 +12,7 @@ enum CarAvailability: string
 
     public static function toValuesArray(): array
     {
-        return array_map(fn($case) => $case->value, self::toArray());
+        return array_map(fn ($case) => $case->value, self::toArray());
     }
 
     public static function toArray(): array
@@ -22,7 +22,7 @@ enum CarAvailability: string
             self::AVAILABLE,
             self::RENTED,
             self::UNDER_MAINTENANCE,
-            self::UNDER_REPAIR
+            self::UNDER_REPAIR,
         ];
     }
 }

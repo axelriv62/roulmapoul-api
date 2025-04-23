@@ -6,12 +6,10 @@ use App\Enums\CarAvailability;
 use App\Models\Agency;
 use App\Models\Car;
 use App\Models\Category;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class CarControllerTest extends TestCase
 {
-    use RefreshDatabase;
 
     /**
      * Vérifie que la route de la liste des voitures est accessible.

@@ -11,13 +11,10 @@ use App\Models\Option;
 use App\Models\Rental;
 use App\Models\Warranty;
 use App\Repositories\RentalRepository;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class RentalRepositoryTest extends TestCase
 {
-    use RefreshDatabase;
-
     private Rental $rental;
 
     /**

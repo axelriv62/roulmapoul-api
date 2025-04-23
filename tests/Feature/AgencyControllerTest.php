@@ -3,12 +3,10 @@
 namespace Tests\Feature;
 
 use App\Models\Agency;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class AgencyControllerTest extends TestCase
 {
-    use RefreshDatabase;
 
     /**
      * Vérifie que la liste des agences est accessible.

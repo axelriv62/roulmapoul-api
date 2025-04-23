@@ -3,12 +3,10 @@
 namespace Tests\Feature;
 
 use App\Models\Option;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class OptionControllerTest extends TestCase
 {
-    use RefreshDatabase;
 
     /**
      * Vérifie que la route de la liste des catégories fonctionne.

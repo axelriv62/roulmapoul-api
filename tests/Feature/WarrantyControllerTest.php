@@ -3,13 +3,10 @@
 namespace Tests\Feature;
 
 use App\Models\Warranty;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class WarrantyControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     /**
      * Vérifie que la route de la liste des catégories fonctionne.
      */

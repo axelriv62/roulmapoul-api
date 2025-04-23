@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\RentalState;
 use App\Http\Requests\RentalRequest;
 use App\Http\Resources\RentalResource;
+use App\Models\Customer;
 use App\Models\Rental;
 use App\Repositories\CarRepository;
 use App\Repositories\RentalRepository;
@@ -71,11 +72,13 @@ class RentalController extends BaseController
     /**
      * Liste les locations d'un client.
      *
-     * @param  int  $id  L'identifiant du client.
+     * @param  string  $id  L'identifiant du client.
      */
-    public function indexOfCustomer(int $id): JsonResponse
+    public function indexOfCustomer(string $id): JsonResponse
     {
-        if (Auth::user()->cannot('readOwn', $id)) {
+        $customer = Customer::findOrFail($id);
+
+        if (Auth::user()->cannot('readOwnRentals', $customer)) {
             return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
         }
 

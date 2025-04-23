@@ -7,7 +7,6 @@ use Tests\TestCase;
 
 class AgencyControllerTest extends TestCase
 {
-
     /**
      * Vérifie que la liste des agences est accessible.
      */

@@ -10,11 +10,10 @@ use App\Models\Customer;
 use App\Models\License;
 use App\Models\Rental;
 use App\Models\User;
-use App\Models\Warranty;
-use Cassandra\Custom;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
+
 use function PHPUnit\Framework\isEmpty;
 
 class CustomerControllerTest extends TestCase
@@ -88,7 +87,7 @@ class CustomerControllerTest extends TestCase
     /**
      * Vérifie que la récupération de client par identifiant de location fonctionne.
      */
-    public function test_filter_index_by_rental():void
+    public function test_filter_index_by_rental(): void
     {
         $this->actingAs($this->agent);
         $customer = Customer::factory()->create([
@@ -118,6 +117,48 @@ class CustomerControllerTest extends TestCase
         ]));
 
         $response->assertJsonCount(1, 'data.customers');
+    }
+
+    /**
+     * Vérifie que la création d'un client fonctionne.
+     */
+    public function test_create_valide_customer(): void
+    {
+        $this->actingAs($this->agent);
+
+        $this->post(route('customers.store'), [
+            'first_name' => 'Test',
+            'last_name' => 'Test',
+            'email' => 'test@domain.fr',
+            'phone' => '0606060606',
+            'num' => '1',
+            'street' => 'Rue de la Paix',
+            'zip' => '00000',
+            'city' => 'Paris',
+            'country' => 'France',
+        ]);
+
+        $customer = Customer::where('first_name', 'Test')->first();
+
+        $this->post(route('customers.add-license', $customer->id), [
+            'num' => '12345678912',
+            'birthday' => '1980-01-01',
+            'acquirement_date' => '2000-01-01',
+            'distribution_date' => '2000-01-02',
+            'country' => 'France',
+        ]);
+
+        $this->post(route('customers.add-billing-addr', $customer->id), [
+            'num' => '2',
+            'street' => 'Rue de la Liberté',
+            'zip' => '00001',
+            'city' => 'Lyon',
+            'country' => 'France',
+        ]);
+
+        $response = $this->get(route('customers.index'));
+        $response->assertJsonCount(2, 'data.customers');
+        $this->assertTrue(Customer::where('first_name', 'Test')->exists());
     }
 
     protected function setUp(): void

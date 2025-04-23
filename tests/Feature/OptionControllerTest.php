@@ -7,7 +7,6 @@ use Tests\TestCase;
 
 class OptionControllerTest extends TestCase
 {
-
     /**
      * Vérifie que la route de la liste des catégories fonctionne.
      */

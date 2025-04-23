@@ -14,7 +14,6 @@ use Tests\TestCase;
 
 class CarRepositoryTest extends TestCase
 {
-
     protected Car $car;
 
     protected Carbon $now;

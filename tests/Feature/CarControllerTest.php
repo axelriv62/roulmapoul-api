@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class CarControllerTest extends TestCase
 {
-
     /**
      * Vérifie que la route de la liste des voitures est accessible.
      */

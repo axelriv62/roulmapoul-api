@@ -53,7 +53,7 @@ class MailWithdrawal extends Mailable
     public function attachments(): array
     {
         return [
-            Attachment::fromPath(Storage::path($this->filePath)),
+            Attachment::fromPath($this->filePath),
         ];
     }
 }

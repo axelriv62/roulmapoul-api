@@ -56,6 +56,14 @@ class RentalControllerTest extends TestCase
         ]);
     }
 
+    public function test_index_rental(): void{
+        //Se connecter en tant qu'agent avant
+        $this->actingAs($this->agent);
+        $response = $this->withHeader('Accept', 'application/json')->get(route('rentals.index'));
+
+        $response->assertStatus(200);
+    }
+
     protected function setUp(): void
     {
         parent::setUp();

@@ -122,7 +122,7 @@ class CustomerControllerTest extends TestCase
     /**
      * Vérifie que la création d'un client fonctionne.
      */
-    public function test_create_valide_customer(): void
+    public function test_create_valid_customer(): void
     {
         $this->actingAs($this->agent);
 

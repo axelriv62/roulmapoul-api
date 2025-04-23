@@ -219,6 +219,91 @@ class HandoverControllerTest extends TestCase
         $this->assertEquals(CarAvailability::RESERVED->value, Car::findOrFail($car->plate)->availability);
     }
 
+    /**
+     * Vérifie que la voiture est marquée comme en maintenance si elle a des réparations à faire.
+     */
+    public function test_handover_updates_car_availability_maintenance(): void
+    {
+        $this->actingAs($this->agent);
+
+        $agency = Agency::factory()->create();
+        $category = Category::factory()->create();
+        $car = Car::factory()->create([
+            'availability' => CarAvailability::RENTED,
+            'category_id' => $category->id,
+            'agency_id' => $agency->id,
+        ]);
+
+        $rental = Rental::factory()->create([
+            'car_plate' => $car->plate,
+            'start' => now(),
+            'end' => now()->addDays(3),
+            'nb_days' => 3,
+            'customer_id' => $this->customerUser->customer->id,
+        ]);
+        $rental->save();
+
+        Withdrawal::factory()->create([
+            'rental_id' => $rental->id,
+            'customer_id' => $rental->customer_id,
+        ]);
+
+        $response = $this->withHeader('Accept', 'application/json')->post(route('handovers.store', $rental->id), [
+            'datetime' => now()->format('Y-m-d H:i:s'),
+            'car_plate' => 'ABC123',
+            'mileage' => 102,
+            'fuel_level' => 50,
+            'interior_condition' => CarCondition::NEEDS_MAINTENANCE->value,
+            'exterior_condition' => CarCondition::GOOD->value,
+            'comment' => 'Roule that poule',
+        ]);
+        $response->assertStatus(200);
+
+        $this->assertEquals(CarAvailability::UNDER_MAINTENANCE->value, Car::findOrFail($car->plate)->availability);
+    }
+
+    /**
+     * Vérifie que la voiture est marquée comme en réparation si elle a des réparations à faire.
+     */
+    public function test_handover_updates_car_availability_repair(): void
+    {
+        $this->actingAs($this->agent);
+
+        $agency = Agency::factory()->create();
+        $category = Category::factory()->create();
+        $car = Car::factory()->create([
+            'availability' => CarAvailability::RENTED,
+            'category_id' => $category->id,
+            'agency_id' => $agency->id,
+        ]);
+
+        $rental = Rental::factory()->create([
+            'car_plate' => $car->plate,
+            'start' => now(),
+            'end' => now()->addDays(3),
+            'nb_days' => 3,
+            'customer_id' => $this->customerUser->customer->id,
+        ]);
+        $rental->save();
+
+        Withdrawal::factory()->create([
+            'rental_id' => $rental->id,
+            'customer_id' => $rental->customer_id,
+        ]);
+
+        $response = $this->withHeader('Accept', 'application/json')->post(route('handovers.store', $rental->id), [
+            'datetime' => now()->format('Y-m-d H:i:s'),
+            'car_plate' => 'ABC123',
+            'mileage' => 102,
+            'fuel_level' => 50,
+            'interior_condition' => CarCondition::NEEDS_REPAIR->value,
+            'exterior_condition' => CarCondition::GOOD->value,
+            'comment' => 'Roule that poule',
+        ]);
+        $response->assertStatus(200);
+
+        $this->assertEquals(CarAvailability::UNDER_REPAIR->value, Car::findOrFail($car->plate)->availability);
+    }
     protected function setUp(): void
     {
         parent::setUp();

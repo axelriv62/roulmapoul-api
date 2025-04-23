@@ -15,7 +15,7 @@ build:
   script:
     - touch database/database.sqlite
     - cp .env.example .env
-    - composer install --no-interaction --prefer-dist --optimize-autoloader
+    - composer install --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-req=ext-gd
     - php artisan key:generate
     - php artisan migrate
   only:

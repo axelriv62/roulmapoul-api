@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Withdrawal;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class WithdrawalRequest extends FormRequest
 {
@@ -12,7 +14,7 @@ class WithdrawalRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; // TODO Implémenter la logique d'autorisation
+        return Auth::user()->can('create', Withdrawal::class);
     }
 
     /**

@@ -8,6 +8,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\WarrantyController;
+use App\Http\Controllers\WithdrawalController;
 use Illuminate\Support\Facades\Route;
 
 // Auth routes
@@ -50,6 +51,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 // Car routes
 Route::get('/cars', [CarController::class, 'index'])->name('cars.index');
 Route::get('/cars/agency/{id}', [CarController::class, 'indexAgency'])->name('cars.index-agency');
+
+// Withdrawal route
+Route::post('/rentals/{id}/withdrawal', [WithdrawalController::class, 'store'])->name('withdrawals.store')->middleware('auth:sanctum');
 
 Route::get('/agencies', [AgencyController::class, 'index'])->name('agencies.index');
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');

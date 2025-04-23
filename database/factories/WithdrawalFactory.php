@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Withdrawal;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,6 +19,7 @@ class WithdrawalFactory extends Factory
     public function definition(): array
     {
         return [
+            'datetime' => Carbon::now(),
             'fuel_level' => $this->faker->randomFloat(2, 0.01, 50),
             'interior_condition' => $this->faker->text(20),
             'exterior_condition' => $this->faker->text(20),

@@ -161,6 +161,54 @@ class CustomerControllerTest extends TestCase
         $this->assertTrue(Customer::where('first_name', 'Test')->exists());
     }
 
+    /**
+     * Vérifie que la liaison entre un client et un user fonctionne.
+     */
+    public function test_create_customer_user(): void
+    {
+        $this->actingAs($this->agent);
+
+        $this->post(route('customers.store'), [
+            'first_name' => 'Test',
+            'last_name' => 'Test',
+            'email' => 'test@domain.fr',
+            'phone' => '0606060606',
+            'num' => '1',
+            'street' => 'Rue de la Paix',
+            'zip' => '00000',
+            'city' => 'Paris',
+            'country' => 'France',
+        ]);
+
+        $customer = Customer::where('first_name', 'Test')->first();
+
+        $this->post(route('customers.add-license', $customer->id), [
+            'num' => '12345678912',
+            'birthday' => '1980-01-01',
+            'acquirement_date' => '2000-01-01',
+            'distribution_date' => '2000-01-02',
+            'country' => 'France',
+        ]);
+
+        $this->post(route('customers.add-billing-addr', $customer->id), [
+            'num' => '2',
+            'street' => 'Rue de la Liberté',
+            'zip' => '00001',
+            'city' => 'Lyon',
+            'country' => 'France',
+        ]);
+
+        $this->post(route('customers.register', $customer->id), [
+            'name' => 'test',
+            'password' => 'password',
+        ]);
+
+        $customer = Customer::where('first_name', 'Test')->first();
+        $user = User::where('name', 'test')->first();
+
+        $this->assertTrue($customer->user_id === $user->id);
+    }
+
     protected function setUp(): void
     {
         parent::setUp();

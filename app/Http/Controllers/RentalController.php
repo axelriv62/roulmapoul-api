@@ -19,7 +19,7 @@ class RentalController extends BaseController
     /**
      * Crée une nouvelle location.
      */
-    public function store(RentalRequest $request): JsonResponse
+    public function store(RentalRequest $request): JsonResponse // TODO Ajouter l'état réservé à la voiture si elle est actuellement available
     {
         if (! CarRepository::isRentable($request->input('car_plate'), Carbon::parse($request->input('start')), Carbon::parse($request->input('end')))) {
             return $this->sendError([], "La voiture n'est pas disponible à ces dates.");
@@ -188,7 +188,7 @@ class RentalController extends BaseController
             return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
         }
 
-        if (! RentalRepository::isDeleteable($rental)) {
+        if (! RentalRepository::isDeletable($rental)) {
             return $this->sendError([], 'La location ne peut pas être annulée car elle est déjà en cours, finie ou a déjà été annulée.');
         }
 

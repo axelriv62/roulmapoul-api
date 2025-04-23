@@ -90,7 +90,7 @@ class DatabaseSeeder extends Seeder
         $gerardUser = User::factory()->create([
             'name' => 'gerard.martin',
             'email' => $gerard->email,
-        ])->assignRole(Role::CLIENT->value);
+        ])->assignRole(Role::CUSTOMER->value);
         $gerard->user_id = $gerardUser->id;
         $gerard->save();
     }

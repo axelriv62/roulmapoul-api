@@ -55,6 +55,17 @@ class RentalPolicy
     }
 
     /**
+     * Vérifie qu'un utilisateur consulte ses propres locations.
+     *
+     * @param  User  $user  l'utilisateur qui effectue la demande.
+     * @param  int  $id  L'identifiant du client qui consulte ses locations.
+     */
+    public function readOwn(User $user, int $id): bool
+    {
+        return $user->hasPermissionTo(Permission::READ_ALL_RENTAL) || $user->customer->id === $id;
+    }
+
+    /**
      * Détermine si l'utilisateur peut supprimer une location.
      *
      * @param  User  $user  l'utilisateur qui effectue la demande.

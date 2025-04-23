@@ -71,11 +71,11 @@ class RentalController extends BaseController
     /**
      * Liste les locations d'un client.
      *
-     * @param  string  $id  L'identifiant du client.
+     * @param  int  $id  L'identifiant du client.
      */
-    public function indexOfCustomer(string $id): JsonResponse
+    public function indexOfCustomer(int $id): JsonResponse
     {
-        if (Auth::user()->cannot('readAny', Rental::class)) {
+        if (Auth::user()->cannot('readOwn', $id)) {
             return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
         }
 

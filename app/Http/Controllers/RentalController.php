@@ -18,7 +18,7 @@ class RentalController extends BaseController
     /**
      * Crée une nouvelle location.
      */
-    public function store(RentalRequest $request): JsonResponse
+    public function store(RentalRequest $request): JsonResponse // TODO Ajouter l'état réservé à la voiture si elle est actuellement available
     {
         if (! CarRepository::isRentable($request->input('car_plate'), Carbon::parse($request->input('start')), Carbon::parse($request->input('end')))) {
             return $this->sendError([], "La voiture n'est pas disponible à ces dates.");

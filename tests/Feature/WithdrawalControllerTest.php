@@ -114,6 +114,7 @@ class WithdrawalControllerTest extends TestCase
 
         Withdrawal::factory()->create([
             'rental_id' => $rental->id,
+            'customer_id' => $rental->customer->id,
         ]);
 
         $response = $this->withHeader('Accept', 'application/json')->post(route('withdrawals.store', $rental->id), [

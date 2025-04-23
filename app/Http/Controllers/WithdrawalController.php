@@ -6,6 +6,7 @@ use App\Enums\CarAvailability;
 use App\Enums\RentalState;
 use App\Http\Requests\WithdrawalRequest;
 use App\Http\Resources\WithdrawalResource;
+use App\Jobs\MailWithdrawalJob;
 use App\Models\Rental;
 use App\Models\Withdrawal;
 use Illuminate\Http\JsonResponse;
@@ -43,6 +44,7 @@ class WithdrawalController extends BaseController
         $rental->car->availability = CarAvailability::RENTED;
         $rental->car->save();
 
+        MailWithdrawalJob::dispatch($withdrawal, $rental->customer);
         $success['withdrawal'] = new WithdrawalResource($withdrawal);
 
         return $this->sendResponse($success, 'Le retrait a été créé avec succès.');

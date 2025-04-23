@@ -3,7 +3,6 @@
 namespace App\Http\Resources;
 
 use App\Models\Customer;
-use App\Models\License;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

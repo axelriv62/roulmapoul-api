@@ -80,6 +80,48 @@ class RentalControllerTest extends TestCase
         //Verifier qu'on récupère bien 200 (accepted) en status
         $response->assertStatus(200);
     }
+    public function test_indexOfAgencies(): void
+    {
+        //Se connecter en tant qu'agent
+        $this->actingAs($this->agent);
+
+        //Créer une agence pour le test
+        $agency = Agency::factory()->create();
+
+        //Créer d'abord une catégorie de voiture
+        $category = Category::factory()->create();
+
+        //réer une voiture avec tous les champs requis
+        $car = Car::factory()->create([
+            'agency_id' => $agency->id,
+            'category_id' => $category->id
+        ]);
+
+        //Créer un client pour la location
+        $customer = Customer::factory()->create([
+            'first_name' => 'Jean',
+            'last_name' => 'Dupont',
+            'email' => 'jean.dupont@example.com',
+        ]);
+
+        //Créer une location associée à cette voiture et ce client
+        $rental = Rental::factory()->create([
+            'car_plate' => $car->plate,
+            'customer_id' => $customer->id
+        ]);
+
+        //Exécuter la requête
+        $response = $this->withHeader('Accept', 'application/json')
+            ->get(route('rentals.index-agency', ['id' => $agency->id]));
+
+        //Vérifier qu'on récupère bien 200 (accepted) en status
+        $response->assertStatus(200);
+
+        //vérifier que la réponse contient bien la location
+        $response->assertJsonFragment([
+            'id' => $rental->id
+        ]);
+    }
     protected function setUp(): void
     {
         parent::setUp();

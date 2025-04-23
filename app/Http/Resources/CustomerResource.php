@@ -27,6 +27,7 @@ class CustomerResource extends JsonResource
             'address' => $this->num.' '.$this->street.', '.$this->zip.' '.$this->city.', '.$this->country,
             'billing_address' => $this->num_bill.' '.$this->street_bill.', '.$this->zip_bill.' '.$this->city_bill.', '.$this->country_bill,
             'user_id' => $this->user_id ?: null,
+            'license' => $this->license ? array_diff_key((new LicenseResource($this->license))->toArray($request), array_flip(['customer_id'])) : null,
         ];
     }
 }

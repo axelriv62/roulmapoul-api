@@ -45,6 +45,6 @@ class CustomerPolicy
             return true;
         }
 
-        return $user->id === $customer->user->id;
+        return $customer->user?->id === $user->id ?? false;
     }
 }

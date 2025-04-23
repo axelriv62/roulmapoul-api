@@ -30,7 +30,7 @@ class CustomerControllerTest extends TestCase
     public function test_index_accessible_as_agent(): void
     {
         $this->actingAs($this->agent);
-        $response = $this->get(route('customers.index'));
+        $response = $this->withHeader('Accept', 'application/json')->get(route('customers.index'));
         $response->assertStatus(200);
     }
 
@@ -40,7 +40,7 @@ class CustomerControllerTest extends TestCase
     public function test_index_accessible_as_admin(): void
     {
         $this->actingAs($this->admin);
-        $response = $this->get(route('customers.index'));
+        $response = $this->withHeader('Accept', 'application/json')->get(route('customers.index'));
         $response->assertStatus(200);
     }
 
@@ -50,7 +50,7 @@ class CustomerControllerTest extends TestCase
     public function test_index_inaccessible_as_customer(): void
     {
         $this->actingAs($this->customerUser);
-        $response = $this->get(route('customers.index'));
+        $response = $this->withHeader('Accept', 'application/json')->get(route('customers.index'));
         $response->assertStatus(403);
     }
 
@@ -59,8 +59,8 @@ class CustomerControllerTest extends TestCase
      */
     public function test_index_inaccessible_without_authentication(): void
     {
-        $response = $this->get(route('customers.index'));
-        $response->assertStatus(302);
+        $response = $this->withHeader('Accept', 'application/json')->get(route('customers.index'));
+        $response->assertStatus(401);
     }
 
     /**
@@ -75,7 +75,7 @@ class CustomerControllerTest extends TestCase
             'email' => 'test@domain.fr',
             'phone' => '0606060606',
         ]);
-        $response = $this->get(route('customers.index', [
+        $response = $this->withHeader('Accept', 'application/json')->get(route('customers.index', [
             'first_name' => 'Test',
             'last_name' => 'Test',
             'email' => 'test@domain.fr',
@@ -112,7 +112,7 @@ class CustomerControllerTest extends TestCase
             'car_plate' => $car->plate,
         ]);
 
-        $response = $this->get(route('customers.index', [
+        $response = $this->withHeader('Accept', 'application/json')->get(route('customers.index', [
             'rental_id' => $customer->rentals->first->id,
         ]));
 
@@ -126,7 +126,7 @@ class CustomerControllerTest extends TestCase
     {
         $this->actingAs($this->agent);
 
-        $this->post(route('customers.store'), [
+        $this->withHeader('Accept', 'application/json')->post(route('customers.store'), [
             'first_name' => 'Test',
             'last_name' => 'Test',
             'email' => 'test@domain.fr',
@@ -140,7 +140,7 @@ class CustomerControllerTest extends TestCase
 
         $customer = Customer::where('first_name', 'Test')->first();
 
-        $this->post(route('customers.add-license', $customer->id), [
+        $this->withHeader('Accept', 'application/json')->post(route('customers.add-license', $customer->id), [
             'num' => '12345678912',
             'birthday' => '1980-01-01',
             'acquirement_date' => '2000-01-01',
@@ -148,7 +148,7 @@ class CustomerControllerTest extends TestCase
             'country' => 'France',
         ]);
 
-        $this->post(route('customers.add-billing-addr', $customer->id), [
+        $this->withHeader('Accept', 'application/json')->post(route('customers.add-billing-addr', $customer->id), [
             'num' => '2',
             'street' => 'Rue de la Liberté',
             'zip' => '00001',
@@ -168,7 +168,7 @@ class CustomerControllerTest extends TestCase
     {
         $this->actingAs($this->agent);
 
-        $this->post(route('customers.store'), [
+        $response = $this->withHeader('Accept', 'application/json')->post(route('customers.store'), [
             'first_name' => 'Test',
             'last_name' => 'Test',
             'email' => 'test@domain.fr',
@@ -179,29 +179,33 @@ class CustomerControllerTest extends TestCase
             'city' => 'Paris',
             'country' => 'France',
         ]);
+        $response->assertStatus(200);
 
         $customer = Customer::where('first_name', 'Test')->first();
 
-        $this->post(route('customers.add-license', $customer->id), [
-            'num' => '12345678912',
+        $response = $this->withHeader('Accept', 'application/json')->post(route('customers.add-license', $customer->id), [
+            'num' => '111111111111',
             'birthday' => '1980-01-01',
             'acquirement_date' => '2000-01-01',
             'distribution_date' => '2000-01-02',
             'country' => 'France',
         ]);
+        $response->assertStatus(200);
 
-        $this->post(route('customers.add-billing-addr', $customer->id), [
+        $response = $this->withHeader('Accept', 'application/json')->post(route('customers.add-billing-addr', $customer->id), [
             'num' => '2',
             'street' => 'Rue de la Liberté',
             'zip' => '00001',
             'city' => 'Lyon',
             'country' => 'France',
         ]);
+        $response->assertStatus(200);
 
-        $this->post(route('customers.register', $customer->id), [
+        $response = $this->withHeader('Accept', 'application/json')->post(route('customers.register', $customer->id), [
             'name' => 'test',
             'password' => 'password',
         ]);
+        $response->assertStatus(200);
 
         $customer = Customer::where('first_name', 'Test')->first();
         $user = User::where('name', 'test')->first();
@@ -242,5 +246,101 @@ class CustomerControllerTest extends TestCase
         ])->assignRole(Role::CUSTOMER->value);
         $customer->user_id = $this->customerUser->id;
         $customer->save();
+    }
+
+    /**
+     * Vérifie que la mise à jour des infos d'un client fonctionne.
+     */
+    public function test_update_customer_infos_with_valid_mail(): void
+    {
+        $this->actingAs($this->customerUser);
+
+        $response = $this->withHeader('Accept', 'application/json')->put(route('customers.update', $this->customerUser->customer->id), [
+            'first_name' => 'Test',
+            'last_name' => 'Test',
+            'email' => 'gerard.martin@domain.fr',
+            'phone' => '0606060606',
+            'num' => '1',
+            'street' => 'Rue de la Paix',
+            'zip' => '00000',
+            'city' => 'Paris',
+            'country' => 'France',
+        ]);
+        $response->assertStatus(200);
+
+        $response->assertJsonCount(1, 'data');
+        $this->assertTrue(Customer::where('first_name', 'Test')->exists());
+    }
+
+    /**
+     * Vérifie que la mise à jour des infos d'un client échoue si l'email existe déjà.
+     */
+    public function test_update_customer_infos_with_invalid_mail(): void
+    {
+        $this->actingAs($this->customerUser);
+
+        Customer::factory()->create([
+            'email' => 'test@domain.fr',
+        ]);
+
+        $response = $this->withHeader('Accept', 'application/json')->put(route('customers.update', $this->customerUser->customer->id), [
+            'first_name' => 'Test',
+            'last_name' => 'Test',
+            'email' => 'test@domain.fr',
+            'phone' => '0606060606',
+            'num' => '1',
+            'street' => 'Rue de la Paix',
+            'zip' => '00000',
+            'city' => 'Paris',
+            'country' => 'France',
+        ]);
+        $response->assertStatus(422);
+
+        $this->assertFalse(Customer::where('first_name', 'Test')->exists());
+        $this->assertTrue(Customer::where('first_name', 'Gérard')->exists());
+    }
+
+    /**
+     * Vérifie qu'un client ne peut pas modifier les infos d'un autre client.
+     */
+    public function test_update_other_customer_infos(): void
+    {
+        $this->actingAs($this->customerUser);
+
+        $customer = Customer::factory()->create();
+
+        $response = $this->withHeader('Accept', 'application/json')->put(route('customers.update', $customer->id), [
+            'first_name' => 'Test',
+            'last_name' => 'Test',
+            'email' => 'test@domain.fr',
+            'phone' => '0606060606',
+            'num' => '1',
+            'street' => 'Rue de la Paix',
+            'zip' => '00000',
+            'city' => 'Paris',
+            'country' => 'France',
+        ]);
+
+        $response->assertStatus(403);
+    }
+
+    /**
+     * Vérifie que la mise à jour du permis d'un client fonctionne.
+     */
+    public function test_update_license(): void
+    {
+        $this->actingAs($this->customerUser);
+
+        $response = $this->withHeader('Accept', 'application/json')->put(route('customers.update-license', $this->customerUser->customer->id), [
+            'num' => '12345678912',
+            'birthday' => '1980-01-01',
+            'acquirement_date' => '2000-01-01',
+            'distribution_date' => '2000-01-02',
+            'country' => 'France',
+        ]);
+        $response->assertStatus(200);
+
+        $response->assertJsonCount(1, 'data');
+        $this->assertTrue(License::where('num', '12345678912')->exists());
     }
 }

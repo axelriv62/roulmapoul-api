@@ -45,22 +45,18 @@ class HandoverController extends BaseController
         $rental->state = RentalState::COMPLETED;
         $rental->save();
 
-        if ($rental->car->rentals()->exists()) {
-            $rental->car->availability = CarAvailability::RESERVED;
-        } else {
-            $interiorCondition = $handover->interior_condition;
-            $exteriorCondition = $handover->exterior_condition;
+        $conditions = [$handover->interior_condition, $handover->exterior_condition];
 
-            if ($interiorCondition || $exteriorCondition) {
-                if (in_array(CarCondition::NEEDS_REPAIR->value, [$interiorCondition, $exteriorCondition])) {
-                    $rental->car->availability = CarAvailability::UNDER_REPAIR;
-                } elseif (in_array(CarCondition::NEEDS_MAINTENANCE->value, [$interiorCondition, $exteriorCondition])) {
-                    $rental->car->availability = CarAvailability::UNDER_MAINTENANCE;
-                } else {
-                    $rental->car->availability = CarAvailability::AVAILABLE;
-                }
-            }
+        if (in_array(CarCondition::NEEDS_REPAIR->value, $conditions)) {
+            $rental->car->availability = CarAvailability::UNDER_REPAIR;
+        } elseif (in_array(CarCondition::NEEDS_MAINTENANCE->value, $conditions)) {
+            $rental->car->availability = CarAvailability::UNDER_MAINTENANCE;
+        } else {
+            $rental->car->availability = $rental->car->rentals()->where('state', RentalState::PAID)->exists()
+                ? CarAvailability::RESERVED
+                : CarAvailability::AVAILABLE;
         }
+
         $rental->car->save();
 
         $success['handover'] = new HandoverResource($handover);

@@ -12,7 +12,7 @@ class OptionControllerTest extends TestCase
      */
     public function test_index(): void
     {
-        $response = $this->get(route('options.index'));
+        $response = $this->withHeader('Accept', 'application/json')->get(route('options.index'));
         $response->assertStatus(200);
     }
 
@@ -22,7 +22,7 @@ class OptionControllerTest extends TestCase
     public function test_get_index(): void
     {
         Option::factory(2)->create();
-        $response = $this->get(route('options.index'));
+        $response = $this->withHeader('Accept', 'application/json')->get(route('options.index'));
         $response->assertJsonCount(2, 'data.options');
     }
 }

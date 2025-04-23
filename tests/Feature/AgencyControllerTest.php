@@ -12,7 +12,7 @@ class AgencyControllerTest extends TestCase
      */
     public function test_index(): void
     {
-        $response = $this->get(route('agencies.index'));
+        $response = $this->withHeader('Accept', 'application/json')->get(route('agencies.index'));
 
         $response->assertStatus(200);
     }
@@ -35,7 +35,7 @@ class AgencyControllerTest extends TestCase
             ]
         );
 
-        $response = $this->get(route('agencies.index', ['city' => 'Paris', 'zip' => '75000']));
+        $response = $this->withHeader('Accept', 'application/json')->get(route('agencies.index', ['city' => 'Paris', 'zip' => '75000']));
 
         $response->assertJsonCount(1, 'data.agencies');
     }
@@ -56,7 +56,7 @@ class AgencyControllerTest extends TestCase
             ]
         );
 
-        $response = $this->get(route('agencies.index', ['sort' => 'asc']));
+        $response = $this->withHeader('Accept', 'application/json')->get(route('agencies.index', ['sort' => 'asc']));
 
         $response->assertJsonPath('data.agencies.0.name', 'Agence');
     }
@@ -77,7 +77,7 @@ class AgencyControllerTest extends TestCase
             ]
         );
 
-        $response = $this->get(route('agencies.index', ['sort' => 'desc']));
+        $response = $this->withHeader('Accept', 'application/json')->get(route('agencies.index', ['sort' => 'desc']));
 
         $response->assertJsonPath('data.agencies.0.name', 'Zoo');
     }

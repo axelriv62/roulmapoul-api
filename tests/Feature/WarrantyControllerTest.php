@@ -12,7 +12,7 @@ class WarrantyControllerTest extends TestCase
      */
     public function test_index(): void
     {
-        $response = $this->get(route('warranties.index'));
+        $response = $this->withHeader('Accept', 'application/json')->get(route('warranties.index'));
         $response->assertStatus(200);
     }
 
@@ -22,7 +22,7 @@ class WarrantyControllerTest extends TestCase
     public function test_get_index(): void
     {
         Warranty::factory(2)->create();
-        $response = $this->get(route('warranties.index'));
+        $response = $this->withHeader('Accept', 'application/json')->get(route('warranties.index'));
         $response->assertJsonCount(2, 'data.warranties');
     }
 }

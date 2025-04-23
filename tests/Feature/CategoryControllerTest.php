@@ -12,7 +12,7 @@ class CategoryControllerTest extends TestCase
      */
     public function test_index(): void
     {
-        $response = $this->get(route('categories.index'));
+        $response = $this->withHeader('Accept', 'application/json')->get(route('categories.index'));
         $response->assertStatus(200);
     }
 
@@ -22,7 +22,7 @@ class CategoryControllerTest extends TestCase
     public function test_get_index(): void
     {
         Category::factory(2)->create();
-        $response = $this->get(route('categories.index'));
+        $response = $this->withHeader('Accept', 'application/json')->get(route('categories.index'));
         $response->assertJsonCount(2, 'data.categories');
     }
 }

@@ -38,7 +38,7 @@ class AgencyControllerTest extends TestCase
             ]
         );
 
-        $response = $this->get(route('agencies.index').'?city=Paris&zip=75000');
+        $response = $this->get(route('agencies.index', ['city' => 'Paris', 'zip' => '75000']));
 
         $response->assertJsonCount(1, 'data.agencies');
     }
@@ -59,7 +59,7 @@ class AgencyControllerTest extends TestCase
             ]
         );
 
-        $response = $this->get(route('agencies.index').'?sort=asc');
+        $response = $this->get(route('agencies.index', ['sort' => 'asc']));
 
         $response->assertJsonPath('data.agencies.0.name', 'Agence');
     }
@@ -80,7 +80,7 @@ class AgencyControllerTest extends TestCase
             ]
         );
 
-        $response = $this->get(route('agencies.index').'?sort=desc');
+        $response = $this->get(route('agencies.index', ['sort' => 'desc']));
 
         $response->assertJsonPath('data.agencies.0.name', 'Zoo');
     }

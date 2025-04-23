@@ -41,7 +41,11 @@ class CarControllerTest extends TestCase
             'availability' => CarAvailability::AVAILABLE,
         ]);
 
-        $response = $this->get(route('cars.index').'?availability=available&category_id='.$category1->id);
+        $response = $this->get(route('cars.index', [
+            'availability' => 'available',
+            'category_id' => $category1->id,
+        ]));
+
         $response->assertJsonCount(1, 'data.cars');
     }
 

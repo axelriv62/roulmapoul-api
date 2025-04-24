@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\RentalState;
 use App\Enums\Role;
 use App\Models\Agency;
 use App\Models\Car;
@@ -300,6 +301,43 @@ class RentalControllerTest extends TestCase
 
     }
 
+
+    public function test_destroy_rental(): void
+    {
+        $this->actingAs($this->admin);
+
+        $agency = Agency::factory()->create();
+        $category = Category::factory()->create();
+        $car = Car::factory()->create([
+            'category_id' => $category->id,
+            'agency_id' => $agency->id,
+        ]);
+
+        $options = Option::factory(2)->create();
+        $warranty = Warranty::factory()->create();
+
+        $rental = Rental::factory()->create([
+            'car_plate' => $car->plate,
+            'customer_id' => $this->customerUser->customer->id,
+            'warranty_id' => $warranty->id,
+            'state' => RentalState::PAID,
+            'start' => now()->addDays(2)->format('Y-m-d'), // Date de début dans le futur
+            'end' => now()->addDays(5)->format('Y-m-d'),
+        ]);
+
+        $rental->options()->attach($options->pluck('id'));
+
+        $response = $this->withHeader('Accept', 'application/json')
+            ->delete(route('rentals.delete', ['id' => $rental->id]));
+
+        $response->assertStatus(200);
+
+        // Vérifier que l'état a été changé à CANCELED au lieu de vérifier la suppression
+        $this->assertDatabaseHas('rentals', [
+            'id' => $rental->id,
+            'state' => RentalState::CANCELED,
+        ]);
+    }
     protected function setUp(): void
     {
         parent::setUp();

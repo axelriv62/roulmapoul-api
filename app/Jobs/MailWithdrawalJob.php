@@ -35,9 +35,8 @@ class MailWithdrawalJob implements ShouldQueue
         $dompdf->setPaper('A4');
         $dompdf->render();
 
-        $filename = 'withdrawal_'.$this->customer->id.'_'.$this->withdrawal->id.'.pdf';
-        Storage::put('docs/'.$filename, $dompdf->output());
-        $filePath = Storage::path('docs/'.$filename);
+        $filePath = 'docs/withdrawal_'.$this->customer->id.'_'.$this->withdrawal->id.'.pdf';
+        Storage::put('docs/'.$filePath, $dompdf->output());
 
         Document::create([
             'type' => DocumentType::WITHDRAWAL,
@@ -48,7 +47,7 @@ class MailWithdrawalJob implements ShouldQueue
         try {
             print_r("Envoi de l'email de retrait à {$this->customer->email} pour le retrait {$this->withdrawal->id}.\n");
 
-            $success = Mail::to($this->customer->email)->send(new MailWithdrawal($this->customer, $filePath));
+            $success = Mail::to($this->customer->email)->send(new MailWithdrawal($this->customer, Storage::path($filePath)));
 
             print_r($this->customer->email.'  : '.($success ? 'Email envoyé' : 'Email non envoyé'));
         } catch (\Exception $e) {

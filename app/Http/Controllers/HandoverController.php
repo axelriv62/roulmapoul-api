@@ -40,7 +40,9 @@ class HandoverController extends BaseController
             return $this->sendError('Erreur', 'Un retour a déjà été effectué pour cette réservation.', 422);
         }
 
-        // TODO Vérifier que le retour est effectué après le retrait en terme de date
+        if ($rental->withdrawal->datetime->diffInDays($request->input('datetime')) < 0) {
+            return $this->sendError('Erreur', 'La date de retour ne peut pas être antérieure à la date de retrait.', 422);
+        }
 
         $handover = Handover::create(array_merge($request->validated(), [
             'rental_id' => $rental->id,

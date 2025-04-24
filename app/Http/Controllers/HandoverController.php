@@ -7,6 +7,7 @@ use App\Enums\CarCondition;
 use App\Enums\RentalState;
 use App\Http\Requests\AmendmentsRequest;
 use App\Http\Requests\HandoverRequest;
+use App\Http\Resources\AmendmentResource;
 use App\Http\Resources\HandoverResource;
 use App\Jobs\MailHandoverJob;
 use App\Models\Amendment;
@@ -92,7 +93,18 @@ class HandoverController extends BaseController
 
         if (! $request->has('amendments')) {
             MailHandoverJob::dispatch($rental->handover, $rental->customer);
+
             return $this->sendResponse([], 'Aucun avenant à ajouter.');
         }
+
+        foreach ($request->input('amendments') as $amendment) {
+            $rental->amendments()->create($amendment);
+        }
+
+        MailHandoverJob::dispatch($rental->handover, $rental->customer);
+
+        $success['amendments'] = AmendmentResource::collection($rental->amendments);
+
+        return $this->sendResponse($success, 'Avenants ajoutés avec succès.');
     }
 }

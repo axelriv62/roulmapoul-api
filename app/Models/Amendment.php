@@ -56,7 +56,7 @@ class Amendment extends Model
      */
     protected $fillable = [
         'name',
-        'description',
+        'content',
         'price',
     ];
 

@@ -27,8 +27,7 @@ class AmendmentsRequest extends FormRequest
             "amendments" => "nullable|array",
             "amendments.*.name" => "required|string|between:4,50",
             "amendments.*.price" => "required|numeric|min:0",
-            "amendments.*.description" => "nullable|string|between:4,50",
-            "amendments.*.rental_id" => "required|exists:rentals,id",
+            "amendments.*.content" => "nullable|string|between:4,50",
         ];
     }
 
@@ -45,7 +44,6 @@ class AmendmentsRequest extends FormRequest
             'between' => 'Le champ :attribute doit contenir entre :min et :max caractères.',
             'numeric' => 'Le champ :attribute doit être un nombre.',
             'min' => 'Le champ :attribute doit être supérieur ou égal à :min.',
-            'exists' => 'La valeur sélectionnée pour le champ :attribute n\'existe pas.',
         ];
     }
 }

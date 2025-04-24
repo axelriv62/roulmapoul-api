@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\RentalState;
 use App\Models\Rental;
 use App\Models\Withdrawal;
 use Illuminate\Database\Seeder;
@@ -16,14 +17,15 @@ class WithdrawalSeeder extends Seeder
         $rentals = Rental::all();
 
         foreach ($rentals as $rental) {
-            $rental = Rental::find($rental->id);
-            $customer = $rental->customer;
+            if ($rental->start->isNowOrPast() && $rental->state !== RentalState::CANCELED) {
+                $customer = $rental->customer;
 
-            $withdrawal = Withdrawal::factory()->make();
-            $withdrawal->rental_id = $rental->id;
-            $withdrawal->customer_id = $customer->id;
-            $withdrawal->datetime = $rental->start->addMinutes(rand(30, 1440)); // date de retrait entre 30 minutes et 24 heures après le début de la location
-            $withdrawal->save();
+                $withdrawal = Withdrawal::factory()->make();
+                $withdrawal->rental_id = $rental->id;
+                $withdrawal->customer_id = $customer->id;
+                $withdrawal->datetime = $rental->start->addMinutes(rand(0, 1440));
+                $withdrawal->save();
+            }
         }
     }
 }

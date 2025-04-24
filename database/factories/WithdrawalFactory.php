@@ -22,8 +22,8 @@ class WithdrawalFactory extends Factory
         return [
             'datetime' => Carbon::now(),
             'fuel_level' => $this->faker->randomFloat(2, 0.01, 50),
-            'interior_condition' => $this->faker->randomElement(CarCondition::toValuesArray()),
-            'exterior_condition' => $this->faker->randomElement(CarCondition::toValuesArray()),
+            'interior_condition' => CarCondition::GOOD->value,
+            'exterior_condition' => CarCondition::GOOD->value,
             'mileage' => $this->faker->randomFloat(2, 0.01, 200000),
             'comment' => $this->faker->text(),
         ];

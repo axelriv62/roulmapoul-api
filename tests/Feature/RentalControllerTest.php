@@ -22,7 +22,7 @@ use function PHPUnit\Framework\isEmpty;
 class RentalControllerTest extends TestCase
 {
     /**
-     * Vérifier le bon fonctionnement de la création d'une réservation.
+     * Vérifier le bon fonctionnement de la création d'une réservations.
      */
     public function test_create_valid_rental(): void
     {

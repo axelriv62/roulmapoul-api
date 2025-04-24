@@ -57,73 +57,76 @@ class RentalControllerTest extends TestCase
         ]);
     }
 
-    public function test_index_rental(): void{
-        //Se connecter en tant qu'agent avant
+    public function test_index_rental(): void
+    {
+        // Se connecter en tant qu'agent avant
         $this->actingAs($this->agent);
-        //Executer la requete
+        // Executer la requete
         $response = $this->withHeader('Accept', 'application/json')->get(route('rentals.index'));
-        //Verifier qu'on récupère bien 200 (accepted) en status
+        // Verifier qu'on récupère bien 200 (accepted) en status
         $response->assertStatus(200);
     }
 
-    public function test_indexOfCustomer(): void
+    public function test_index_of_customer(): void
     {
-        //Se connecter en tant qu'agent
+        // Se connecter en tant qu'agent
         $this->actingAs($this->agent);
 
-        //Utiliser l'ID du client existant créé dans setUp()
+        // Utiliser l'ID du client existant créé dans setUp()
         $customerId = $this->customerUser->customer->id;
 
-        //Executer la requete
+        // Executer la requete
         $response = $this->withHeader('Accept', 'application/json')
             ->get(route('rentals.index-customer', ['id' => $customerId]));
 
-        //Verifier qu'on récupère bien 200 (accepted) en status
+        // Verifier qu'on récupère bien 200 (accepted) en status
         $response->assertStatus(200);
     }
-    public function test_indexOfAgencies(): void
+
+    public function test_index_of_agencies(): void
     {
-        //Se connecter en tant qu'agent
+        // Se connecter en tant qu'agent
         $this->actingAs($this->agent);
 
-        //Créer une agence pour le test
+        // Créer une agence pour le test
         $agency = Agency::factory()->create();
 
-        //Créer d'abord une catégorie de voiture
+        // Créer d'abord une catégorie de voiture
         $category = Category::factory()->create();
 
-        //réer une voiture avec tous les champs requis
+        // réer une voiture avec tous les champs requis
         $car = Car::factory()->create([
             'agency_id' => $agency->id,
-            'category_id' => $category->id
+            'category_id' => $category->id,
         ]);
 
-        //Créer un client pour la location
+        // Créer un client pour la location
         $customer = Customer::factory()->create([
             'first_name' => 'Jean',
             'last_name' => 'Dupont',
             'email' => 'jean.dupont@example.com',
         ]);
 
-        //Créer une location associée à cette voiture et ce client
+        // Créer une location associée à cette voiture et ce client
         $rental = Rental::factory()->create([
             'car_plate' => $car->plate,
-            'customer_id' => $customer->id
+            'customer_id' => $customer->id,
         ]);
 
-        //Exécuter la requête
+        // Exécuter la requête
         $response = $this->withHeader('Accept', 'application/json')
             ->get(route('rentals.index-agency', ['id' => $agency->id]));
 
-        //Vérifier qu'on récupère bien 200 (accepted) en status
+        // Vérifier qu'on récupère bien 200 (accepted) en status
         $response->assertStatus(200);
 
-        //vérifier que la réponse contient bien la location
+        // vérifier que la réponse contient bien la location
         $response->assertJsonFragment([
-            'id' => $rental->id
+            'id' => $rental->id,
         ]);
     }
-    public function test_indexOfCar(): void
+
+    public function test_index_of_car(): void
     {
         // Se connecter en tant qu'agent
         $this->actingAs($this->agent);
@@ -138,7 +141,7 @@ class RentalControllerTest extends TestCase
         $car = Car::factory()->create([
             'agency_id' => $agency->id,
             'category_id' => $category->id,
-            'plate' => 'AB123CD'
+            'plate' => 'AB123CD',
         ]);
 
         // Créer un client
@@ -151,24 +154,24 @@ class RentalControllerTest extends TestCase
         // Créer plusieurs locations pour cette voiture
         $rental1 = Rental::factory()->create([
             'car_plate' => $car->plate,
-            'customer_id' => $customer->id
+            'customer_id' => $customer->id,
         ]);
 
         $rental2 = Rental::factory()->create([
             'car_plate' => $car->plate,
-            'customer_id' => $customer->id
+            'customer_id' => $customer->id,
         ]);
 
         // Créer une location pour une autre voiture (ne devrait pas apparaître dans les résultats)
         $otherCar = Car::factory()->create([
             'agency_id' => $agency->id,
-            'category_id' => $category->id
+            'category_id' => $category->id,
         ]);
 
         //
         Rental::factory()->create([
             'car_plate' => $otherCar->plate,
-            'customer_id' => $customer->id
+            'customer_id' => $customer->id,
         ]);
 
         // Exécuter la requête
@@ -187,13 +190,13 @@ class RentalControllerTest extends TestCase
 
         // Test avec une plaque en minuscules (devrait fonctionner grâce à mb_strtoupper)
         $response = $this->withHeader('Accept', 'application/json')
-            ->get("/api/rentals/car/" . strtolower($car->plate));
+            ->get('/api/rentals/car/'.strtolower($car->plate));
 
         $response->assertStatus(200);
         $response->assertJsonCount(2, 'data.rentals');
     }
 
-    public function test_indexOfCar_unauthorized(): void
+    public function test_index_of_car_unauthorized(): void
     {
         // Créer et se connecter en tant qu'utilisateur
         $unauthorizedUser = User::factory()->create();
@@ -201,44 +204,14 @@ class RentalControllerTest extends TestCase
 
         // Exécuter la requête
         $response = $this->withHeader('Accept', 'application/json')
-            ->get("/api/rentals/car/AB123CD");
+            ->get('/api/rentals/car/AB123CD');
 
         // Vérifier que l'accès est refusé
         $response->assertStatus(403);
     }
 
-    public function test_show_rental(): void{
-        // Se connecter en tant qu'agent
-        $this->actingAs($this->agent);
-
-        // Créer une agence
-        $agency = Agency::factory()->create();
-
-        // Créer une catégorie
-        $category = Category::factory()->create();
-
-        // Créer une voiture
-        $car = Car::factory()->create([
-            'agency_id' => $agency->id,
-            'category_id' => $category->id
-        ]);
-
-        // Créer une location
-        $rental = Rental::factory()->create([
-            'car_plate' => $car->plate,
-            'customer_id' => $this->customerUser->customer->id
-        ]);
-
-        // Exécuter la requête
-        $response = $this->withHeader('Accept', 'application/json')
-            ->get(route('rentals.show', ['id' => $rental->id]));
-
-        // Vérifier que le status vaut 200 (accepted)
-        $response->assertStatus(200);
-
-    }
-
-    public function test_update_rental(): void{
+    public function test_show_rental(): void
+    {
         // Se connecter en tant qu'agent
         $this->actingAs($this->agent);
 
@@ -252,7 +225,39 @@ class RentalControllerTest extends TestCase
         $car = Car::factory()->create([
             'agency_id' => $agency->id,
             'category_id' => $category->id,
-            'plate' => 'AB123CD'
+        ]);
+
+        // Créer une location
+        $rental = Rental::factory()->create([
+            'car_plate' => $car->plate,
+            'customer_id' => $this->customerUser->customer->id,
+        ]);
+
+        // Exécuter la requête
+        $response = $this->withHeader('Accept', 'application/json')
+            ->get(route('rentals.show', ['id' => $rental->id]));
+
+        // Vérifier que le status vaut 200 (accepted)
+        $response->assertStatus(200);
+
+    }
+
+    public function test_update_rental(): void
+    {
+        // Se connecter en tant qu'agent
+        $this->actingAs($this->agent);
+
+        // Créer une agence
+        $agency = Agency::factory()->create();
+
+        // Créer une catégorie
+        $category = Category::factory()->create();
+
+        // Créer une voiture
+        $car = Car::factory()->create([
+            'agency_id' => $agency->id,
+            'category_id' => $category->id,
+            'plate' => 'AB123CD',
         ]);
 
         // Créer un client
@@ -265,27 +270,27 @@ class RentalControllerTest extends TestCase
         // Créer plusieurs locations pour cette voiture
         $rental1 = Rental::factory()->create([
             'car_plate' => $car->plate,
-            'customer_id' => $customer->id
+            'customer_id' => $customer->id,
         ]);
 
         $rental2 = Rental::factory()->create([
             'car_plate' => $car->plate,
-            'customer_id' => $customer->id
+            'customer_id' => $customer->id,
         ]);
 
         // Créer une location pour une autre voiture (ne devrait pas apparaître dans les résultats)
         $otherCar = Car::factory()->create([
             'agency_id' => $agency->id,
-            'category_id' => $category->id
+            'category_id' => $category->id,
         ]);
 
         //
         Rental::factory()->create([
             'car_plate' => $otherCar->plate,
-            'customer_id' => $customer->id
+            'customer_id' => $customer->id,
         ]);
 
-        //Modifier la location
+        // Modifier la location
         $response = $this->withHeader('Accept', 'application/json')
             ->put(route('rentals.update', ['id' => $rental1->id]), [
                 'customer_id' => $customer->id,
@@ -296,11 +301,10 @@ class RentalControllerTest extends TestCase
                 'options' => $rental1->options->pluck('id')->toArray(),
             ]);
 
-        //Vérifier que le status vaut 200 (accepted)
+        // Vérifier que le status vaut 200 (accepted)
         $response->assertStatus(200);
 
     }
-
 
     public function test_destroy_rental(): void
     {
@@ -338,6 +342,7 @@ class RentalControllerTest extends TestCase
             'state' => RentalState::CANCELED,
         ]);
     }
+
     protected function setUp(): void
     {
         parent::setUp();

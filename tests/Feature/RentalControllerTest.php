@@ -164,6 +164,7 @@ class RentalControllerTest extends TestCase
             'category_id' => $category->id
         ]);
 
+        //
         Rental::factory()->create([
             'car_plate' => $otherCar->plate,
             'customer_id' => $customer->id
@@ -232,6 +233,69 @@ class RentalControllerTest extends TestCase
             ->get(route('rentals.show', ['id' => $rental->id]));
 
         // Vérifier que le status vaut 200 (accepted)
+        $response->assertStatus(200);
+
+    }
+
+    public function test_update_rental(): void{
+        // Se connecter en tant qu'agent
+        $this->actingAs($this->agent);
+
+        // Créer une agence
+        $agency = Agency::factory()->create();
+
+        // Créer une catégorie
+        $category = Category::factory()->create();
+
+        // Créer une voiture
+        $car = Car::factory()->create([
+            'agency_id' => $agency->id,
+            'category_id' => $category->id,
+            'plate' => 'AB123CD'
+        ]);
+
+        // Créer un client
+        $customer = Customer::factory()->create([
+            'first_name' => 'Pierre',
+            'last_name' => 'Martin',
+            'email' => 'pierre.martin@example.com',
+        ]);
+
+        // Créer plusieurs locations pour cette voiture
+        $rental1 = Rental::factory()->create([
+            'car_plate' => $car->plate,
+            'customer_id' => $customer->id
+        ]);
+
+        $rental2 = Rental::factory()->create([
+            'car_plate' => $car->plate,
+            'customer_id' => $customer->id
+        ]);
+
+        // Créer une location pour une autre voiture (ne devrait pas apparaître dans les résultats)
+        $otherCar = Car::factory()->create([
+            'agency_id' => $agency->id,
+            'category_id' => $category->id
+        ]);
+
+        //
+        Rental::factory()->create([
+            'car_plate' => $otherCar->plate,
+            'customer_id' => $customer->id
+        ]);
+
+        //Modifier la location
+        $response = $this->withHeader('Accept', 'application/json')
+            ->put(route('rentals.update', ['id' => $rental1->id]), [
+                'customer_id' => $customer->id,
+                'car_plate' => $car->plate,
+                'start' => now()->addDay()->format('Y-m-d'),
+                'end' => now()->addDays(5)->format('Y-m-d'),
+                'warranty_id' => $rental1->warranty_id,
+                'options' => $rental1->options->pluck('id')->toArray(),
+            ]);
+
+        //Vérifier que le status vaut 200 (accepted)
         $response->assertStatus(200);
 
     }

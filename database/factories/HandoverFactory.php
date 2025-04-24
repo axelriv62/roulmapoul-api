@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\CarCondition;
 use App\Models\Handover;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,8 +20,8 @@ class HandoverFactory extends Factory
     {
         return [
             'fuel_level' => $this->faker->randomFloat(2, 0.01, 50),
-            'interior_condition' => $this->faker->text(20),
-            'exterior_condition' => $this->faker->text(20),
+            'interior_condition' => $this->faker->randomElement(CarCondition::toValuesArray()),
+            'exterior_condition' => $this->faker->randomElement(CarCondition::toValuesArray()),
             'mileage' => $this->faker->randomFloat(2, 0.01, 200000),
             'comment' => $this->faker->text(),
         ];

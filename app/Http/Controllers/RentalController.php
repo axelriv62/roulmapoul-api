@@ -195,6 +195,8 @@ class RentalController extends BaseController
         $rental->state = RentalState::CANCELED;
         $rental->save();
 
+        // TODO Changer l'état de la voiture
+
         $success['rental'] = new RentalResource($rental);
 
         return $this->sendResponse($success, 'Location annulée avec succès.');

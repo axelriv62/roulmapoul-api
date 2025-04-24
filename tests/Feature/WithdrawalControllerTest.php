@@ -2,18 +2,16 @@
 
 namespace Tests\Feature;
 
+use App\Enums\CarCondition;
 use App\Enums\Role;
 use App\Models\Agency;
 use App\Models\Car;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\License;
-use App\Models\Option;
 use App\Models\Rental;
 use App\Models\User;
-use App\Models\Warranty;
 use App\Models\Withdrawal;
-use App\Repositories\RentalRepository;
 use Carbon\Carbon;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Support\Facades\DB;
@@ -43,27 +41,21 @@ class WithdrawalControllerTest extends TestCase
             'agency_id' => $agency->id,
         ]);
 
-        $options = Option::factory(2)->create();
-        $warranty = Warranty::factory()->create();
         $rental = Rental::factory()->create([
             'car_plate' => $car->plate,
             'start' => now(),
             'end' => now()->addDays(3),
             'nb_days' => 3,
             'customer_id' => $this->customerUser->customer->id,
-            'warranty_id' => $warranty->id,
         ]);
-        $rental->options()->attach($options->pluck('id')->toArray());
-        $rental->total_price = RentalRepository::calculateTotalPrice($rental);
-        $rental->save();
 
         $response = $this->withHeader('Accept', 'application/json')->post(route('withdrawals.store', $rental->id), [
             'datetime' => Carbon::createFromFormat('Y-m-d H:i:s', $rental->start)->format('Y-m-d H:i:s'),
             'car_plate' => $car->plate,
             'mileage' => 102,
             'fuel_level' => 50,
-            'interior_condition' => 'Clean',
-            'exterior_condition' => 'Clean',
+            'interior_condition' => CarCondition::GOOD->value,
+            'exterior_condition' => CarCondition::GOOD->value,
             'comment' => 'Roule that poule',
         ]);
 
@@ -98,19 +90,13 @@ class WithdrawalControllerTest extends TestCase
             'agency_id' => $agency->id,
         ]);
 
-        $options = Option::factory(2)->create();
-        $warranty = Warranty::factory()->create();
         $rental = Rental::factory()->create([
             'car_plate' => $car->plate,
             'start' => now(),
             'end' => now()->addDays(3),
             'nb_days' => 3,
             'customer_id' => $this->customerUser->customer->id,
-            'warranty_id' => $warranty->id,
         ]);
-        $rental->options()->attach($options->pluck('id')->toArray());
-        $rental->total_price = RentalRepository::calculateTotalPrice($rental);
-        $rental->save();
 
         Withdrawal::factory()->create([
             'rental_id' => $rental->id,
@@ -122,8 +108,8 @@ class WithdrawalControllerTest extends TestCase
             'car_plate' => $car->plate,
             'mileage' => 102,
             'fuel_level' => 50,
-            'interior_condition' => 'Clean',
-            'exterior_condition' => 'Clean',
+            'interior_condition' => CarCondition::GOOD->value,
+            'exterior_condition' => CarCondition::GOOD->value,
             'comment' => 'Roule that poule',
         ]);
 

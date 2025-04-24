@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
             HandoverSeeder::class,
             LicenseSeeder::class,
             WithdrawalSeeder::class,
+            DocumentSeeder::class,
         ]);
 
         $robert = User::factory()->create([
@@ -110,19 +111,6 @@ class DatabaseSeeder extends Seeder
             ]);
             $rental->total_price = RentalRepository::calculateTotalPrice($rental);
             $rental->save();
-
-            $dompdf = new Dompdf;
-            $dompdf->loadHtml(view('pdf.bill', compact('rental')));
-            $dompdf->setPaper('A4');
-            $dompdf->render();
-
-            $filePath = 'docs/'.DocumentType::BILL->value.'_'.$gerard->id.'_'.$rental->id.'.pdf';
-            Storage::put($filePath, $dompdf->output());
-
-            $rental->documents()->create([
-                'type' => DocumentType::BILL,
-                'url' => $filePath,
-            ]);
         } else {
             $this->command->warn('Le client Gérard Martin n\'existe pas.');
         }

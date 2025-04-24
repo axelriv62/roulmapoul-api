@@ -140,4 +140,15 @@ class CustomerController extends BaseController
 
         return $this->sendResponse($success, "L'adresse de facturation a été mise à jour avec succès.");
     }
+
+    public function show(string $id): JsonResponse
+    {
+        if (Auth::user()->cannot('readAny', Customer::class)) {
+            return $this->sendError('Non autorisé.', 'Vous n\'êtes pas autorisé à effectuer cette opération.', 403);
+        }
+
+        $customer = Customer::findOrFail($id);
+        $success['customer'] = new CustomerResource($customer);
+        return $this->sendResponse($success, 'Client retrouvé avec succès.');
+    }
 }

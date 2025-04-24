@@ -46,11 +46,11 @@ class MailWithdrawalJob implements ShouldQueue
         ]);
 
         try {
-            print_r("Envoi de l'email de retrait à {$this->customer->user->email} pour le retrait {$this->withdrawal->id}.\n");
+            print_r("Envoi de l'email de retrait à {$this->customer->email} pour le retrait {$this->withdrawal->id}.\n");
 
-            $success = Mail::to($this->customer->user->email)->send(new MailWithdrawal($this->customer, $filePath));
+            $success = Mail::to($this->customer->email)->send(new MailWithdrawal($this->customer, $filePath));
 
-            print_r($this->customer->user->email.'  : '.($success ? 'Email envoyé' : 'Email non envoyé'));
+            print_r($this->customer->email.'  : '.($success ? 'Email envoyé' : 'Email non envoyé'));
         } catch (\Exception $e) {
             print_r('Erreur lors de l\'envoi de l\'email : '.$e->getMessage());
         }

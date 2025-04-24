@@ -87,7 +87,7 @@ class RentalController extends BaseController
         }
 
         $rentals = Rental::where('customer_id', $id)->get();
-        $success[] = RentalResource::collection($rentals);
+        $success['rentals'] = RentalResource::collection($rentals);
 
         return $this->sendResponse($success, 'Liste des locations retrouvées avec succès.');
     }

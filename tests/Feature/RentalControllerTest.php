@@ -137,7 +137,7 @@ class RentalControllerTest extends TestCase
         $car = Car::factory()->create([
             'agency_id' => $agency->id,
             'category_id' => $category->id,
-            'plate' => 'AB123CD' // Plaque d'immatriculation spécifique pour le test
+            'plate' => 'AB123CD'
         ]);
 
         // Créer un client
@@ -193,7 +193,7 @@ class RentalControllerTest extends TestCase
 
     public function test_indexOfCar_unauthorized(): void
     {
-        // Créer et se connecter en tant qu'utilisateur sans permissions
+        // Créer et se connecter en tant qu'utilisateur
         $unauthorizedUser = User::factory()->create();
         $this->actingAs($unauthorizedUser);
 
@@ -203,6 +203,37 @@ class RentalControllerTest extends TestCase
 
         // Vérifier que l'accès est refusé
         $response->assertStatus(403);
+    }
+
+    public function test_show_rental(): void{
+        // Se connecter en tant qu'agent
+        $this->actingAs($this->agent);
+
+        // Créer une agence
+        $agency = Agency::factory()->create();
+
+        // Créer une catégorie
+        $category = Category::factory()->create();
+
+        // Créer une voiture
+        $car = Car::factory()->create([
+            'agency_id' => $agency->id,
+            'category_id' => $category->id
+        ]);
+
+        // Créer une location
+        $rental = Rental::factory()->create([
+            'car_plate' => $car->plate,
+            'customer_id' => $this->customerUser->customer->id
+        ]);
+
+        // Exécuter la requête
+        $response = $this->withHeader('Accept', 'application/json')
+            ->get(route('rentals.show', ['id' => $rental->id]));
+
+        // Vérifier que le status vaut 200 (accepted)
+        $response->assertStatus(200);
+
     }
 
     protected function setUp(): void

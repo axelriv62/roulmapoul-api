@@ -2,8 +2,10 @@
 
 namespace App\Jobs;
 
+use App\Enums\DocumentType;
 use App\Mail\MailHandover;
 use App\Models\Customer;
+use App\Models\Document;
 use App\Models\Handover;
 use Dompdf\Dompdf;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -34,6 +36,12 @@ class MailHandoverJob implements ShouldQueue
         $dompdf->render();
         $filePath = 'docs/handover_'.$this->customer->id.'_'.$this->handover->id.'.pdf';
         Storage::put($filePath, $dompdf->output());
+
+        Document::create([
+            'type' => DocumentType::HANDOVER,
+            'url' => $filePath,
+            'rental_id' => $this->handover->rental->id,
+        ]);
 
         try {
             print_r("Envoi de l'email de retour à {$this->customer->email} pour le retour {$this->handover->id}.\n");

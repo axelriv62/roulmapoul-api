@@ -17,6 +17,12 @@ use Spatie\Permission\Models\Role as SpatieRole;
 
 class AuthController extends BaseController
 {
+    /**
+     * Enregistre un client en tant qu'utilisateur.
+     *
+     * @param  LinkUserCustomerRequest  $request  La requête de création de l'utilisateur.
+     * @param  string  $id  L'identifiant du client.
+     */
     public function registerCustomer(LinkUserCustomerRequest $request, string $id): JsonResponse
     {
         $customer = Customer::findOrFail($id);
@@ -40,6 +46,11 @@ class AuthController extends BaseController
         return $this->sendResponse($success, 'Utilisateur créé avec succès.');
     }
 
+    /**
+     * Enregistre un utilisateur agent.
+     *
+     * @param  NewUserRequest  $request  La requête de création de l'utilisateur.
+     */
     public function registerAgent(NewUserRequest $request): JsonResponse
     {
         if (Auth::user()->cannot('createAgent', User::class)) {
@@ -61,6 +72,11 @@ class AuthController extends BaseController
         return $this->sendResponse($success, 'Agent créé avec succès.');
     }
 
+    /**
+     * Connecte l'utilisateur.
+     *
+     * @param  LoginRequest  $request  La requête de connexion.
+     */
     public function login(LoginRequest $request): JsonResponse
     {
         $user = User::where('email', $request['email'])->first();
@@ -82,6 +98,9 @@ class AuthController extends BaseController
         return $this->sendResponse($success, 'Token généré avec succès');
     }
 
+    /**
+     * Récupère les infos du client connecté.
+     */
     public function me(): JsonResponse
     {
         $user = Auth::user();
@@ -90,6 +109,9 @@ class AuthController extends BaseController
         return $this->sendResponse($success, 'Utilisateur récupéré avec succès');
     }
 
+    /**
+     * Déconnecte l'utilisateur connecté.
+     */
     public function logout(): JsonResponse
     {
         if (! Auth::user()) {
@@ -100,6 +122,9 @@ class AuthController extends BaseController
         return $this->sendResponse([], 'Tous les tokens ont été révoqués avec succès');
     }
 
+    /**
+     * Récupère le client associé à l'utilisateur connecté
+     */
     public function myCustomer(): JsonResponse
     {
         $user = Auth::user();

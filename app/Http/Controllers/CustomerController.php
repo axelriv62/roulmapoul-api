@@ -16,7 +16,6 @@ class CustomerController extends BaseController
 {
     /**
      * Liste les clients.
-     * Seuls les agents et les administrateurs peuvent accéder à cette méthode.
      *
      * @param  Request  $request  La requête HTTP qui contient les paramètres de filtrage.
      */
@@ -46,7 +45,9 @@ class CustomerController extends BaseController
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Crée un nouveau client
+     *
+     * @param  CustomerRequest  $request  requête de création du client.
      */
     public function store(CustomerRequest $request): JsonResponse
     {
@@ -91,7 +92,10 @@ class CustomerController extends BaseController
     }
 
     /**
-     * Update the specified resource in storage.
+     * Met à jour les informations du client.
+     *
+     * @param  CustomerRequest  $request  La requête de mise à jour du client.
+     * @param  string  $id  L'identifiant du client à modifier.
      */
     public function updateInfos(CustomerRequest $request, string $id): JsonResponse
     {
@@ -107,6 +111,12 @@ class CustomerController extends BaseController
         return $this->sendResponse($success, 'Les informations du client ont été mises à jour avec succès.');
     }
 
+    /**
+     * Met à jour le permis du client.
+     *
+     * @param  LicenseRequest  $request  La requête de modification du permis.
+     * @param  string  $id  Le client dont le permis est modifié
+     */
     public function updateLicense(LicenseRequest $request, string $id): JsonResponse
     {
         $customer = Customer::findOrFail($id);
@@ -121,6 +131,12 @@ class CustomerController extends BaseController
         return $this->sendResponse($success, 'Le permis de conduire a été mis à jour avec succès.');
     }
 
+    /**
+     * Met à jour les informations de facturation du client.
+     *
+     * @param  BillingAddressRequest  $request  La requête de modification des informations de facturation.
+     * @param  string  $id  Le client dont les informations de facturation sont modifiées.
+     */
     public function updateBillingAddress(BillingAddressRequest $request, string $id): JsonResponse
     {
         $customer = Customer::findOrFail($id);
@@ -141,6 +157,11 @@ class CustomerController extends BaseController
         return $this->sendResponse($success, "L'adresse de facturation a été mise à jour avec succès.");
     }
 
+    /**
+     * Détails les informations du client
+     *
+     * @param  string  $id  L'identifiant du client demandé.
+     */
     public function show(string $id): JsonResponse
     {
         if (Auth::user()->cannot('readAny', Customer::class)) {

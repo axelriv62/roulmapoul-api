@@ -304,6 +304,7 @@ class HandoverControllerTest extends TestCase
 
         $this->assertEquals(CarAvailability::UNDER_REPAIR->value, Car::findOrFail($car->plate)->availability);
     }
+
     protected function setUp(): void
     {
         parent::setUp();

@@ -75,8 +75,8 @@ class HandoverController extends BaseController
     /**
      * Ajoute les avenants à la réservation.
      *
-     * @param AmendmentsRequest $request Les informations des avenants.
-     * @param string $id L'identifiant de la réservation.
+     * @param  AmendmentsRequest  $request  Les informations des avenants.
+     * @param  string  $id  L'identifiant de la réservation.
      * @return JsonResponse La réponse contenant les informations des avenants ajoutés.
      */
     public function addAmendments(AmendmentsRequest $request, string $id): JsonResponse

@@ -5,7 +5,6 @@ namespace App\Jobs;
 use App\Mail\MailHandover;
 use App\Models\Customer;
 use App\Models\Handover;
-use App\Models\Rental;
 use Dompdf\Dompdf;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
@@ -29,7 +28,7 @@ class MailHandoverJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $dompdf = new Dompdf();
+        $dompdf = new Dompdf;
         $dompdf->loadHtml(view('pdf.handover', ['handover' => $this->handover]));
         $dompdf->setPaper('A4');
         $dompdf->render();

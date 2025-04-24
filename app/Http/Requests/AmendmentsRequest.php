@@ -24,10 +24,10 @@ class AmendmentsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "amendments" => "nullable|array",
-            "amendments.*.name" => "required|string|between:4,50",
-            "amendments.*.price" => "required|numeric|min:0",
-            "amendments.*.content" => "nullable|string|between:4,50",
+            'amendments' => 'nullable|array',
+            'amendments.*.name' => 'required|string|between:4,50',
+            'amendments.*.price' => 'required|numeric|min:0',
+            'amendments.*.content' => 'nullable|string|between:4,50',
         ];
     }
 

@@ -149,6 +149,7 @@ class CustomerController extends BaseController
 
         $customer = Customer::findOrFail($id);
         $success['customer'] = new CustomerResource($customer);
+
         return $this->sendResponse($success, 'Client retrouvé avec succès.');
     }
 }

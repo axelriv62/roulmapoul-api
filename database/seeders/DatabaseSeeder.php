@@ -2,13 +2,17 @@
 
 namespace Database\Seeders;
 
+use App\Enums\DocumentType;
 use App\Enums\Role;
 use App\Models\Customer;
 use App\Models\License;
 use App\Models\Rental;
 use App\Models\User;
+use App\Repositories\RentalRepository;
+use Dompdf\Dompdf;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -97,7 +101,7 @@ class DatabaseSeeder extends Seeder
 
         $gerard = Customer::where('email', 'gerard.martin@domain.fr')->first();
         if ($gerard) {
-            Rental::factory()->create([
+            $rental = Rental::factory()->create([
                 'start' => '2023-12-01 10:00:00',
                 'end' => '2023-12-10 10:00:00',
                 'nb_days' => 9,
@@ -105,6 +109,21 @@ class DatabaseSeeder extends Seeder
                 'total_price' => 450.00,
                 'car_plate' => 'XX000XX',
                 'customer_id' => $gerard->id, // Utilisation de l'ID de Gérard
+            ]);
+            $rental->total_price = RentalRepository::calculateTotalPrice($rental);
+            $rental->save();
+
+            $dompdf = new Dompdf;
+            $dompdf->loadHtml(view('pdf.bill', compact('rental')));
+            $dompdf->setPaper('A4');
+            $dompdf->render();
+
+            $filePath = 'docs/'.DocumentType::BILL->value.'_'.$gerard->id.'_'.$rental->id.'.pdf';
+            Storage::put($filePath, $dompdf->output());
+
+            $rental->documents()->create([
+                'type' => DocumentType::BILL,
+                'url' => $filePath,
             ]);
         } else {
             $this->command->warn('Le client Gérard Martin n\'existe pas.');

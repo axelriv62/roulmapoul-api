@@ -95,6 +95,7 @@ class HandoverController extends BaseController
         if (! $request->has('amendments')) {
             MailHandoverJob::dispatch($rental->handover, $rental->customer);
             MailBillJob::dispatch($rental, $rental->customer);
+
             return $this->sendResponse([], 'Aucun avenant à ajouter.');
         }
 

@@ -24,7 +24,7 @@ class WithdrawalController extends BaseController
     public function store(WithdrawalRequest $request, string $id): JsonResponse
     {
         if (Auth::user()->cannot('create', Withdrawal::class)) {
-            $this->sendError('Non autorisé', 'Vous n\'êtes pas autorisé à effectuer cette opération', 403);
+            return $this->sendError('Non autorisé', 'Vous n\'êtes pas autorisé à effectuer cette opération', 403);
         }
 
         $rental = Rental::findOrFail($id);

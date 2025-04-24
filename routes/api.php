@@ -58,7 +58,7 @@ Route::post('/rentals/{id}/withdrawal', [WithdrawalController::class, 'store'])-
 
 // Handover route
 Route::post('/rentals/{id}/handover', [HandoverController::class, 'store'])->name('handovers.store')->middleware('auth:sanctum');
-
+Route::post('/rentals/{id}/handover/amendments', [HandoverController::class, 'addAmendments'])->name('handovers.add-amendments')->middleware('auth:sanctum');
 Route::get('/agencies', [AgencyController::class, 'index'])->name('agencies.index');
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 Route::get('/options', [OptionController::class, 'index'])->name('options.index');

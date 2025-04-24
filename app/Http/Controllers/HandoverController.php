@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Enums\CarAvailability;
 use App\Enums\CarCondition;
 use App\Enums\RentalState;
+use App\Http\Requests\AmendmentsRequest;
 use App\Http\Requests\HandoverRequest;
 use App\Http\Resources\HandoverResource;
+use App\Jobs\MailHandoverJob;
+use App\Models\Amendment;
 use App\Models\Handover;
 use App\Models\Rental;
 use Illuminate\Http\JsonResponse;
@@ -37,6 +40,8 @@ class HandoverController extends BaseController
             return $this->sendError('Erreur', 'Un retour a déjà été effectué pour cette réservation.', 422);
         }
 
+        // TODO Vérifier que le retour est effectué après le retrait en terme de date
+
         $handover = Handover::create(array_merge($request->validated(), [
             'rental_id' => $rental->id,
             'customer_id' => $rental->customer_id,
@@ -62,5 +67,30 @@ class HandoverController extends BaseController
         $success['handover'] = new HandoverResource($handover);
 
         return $this->sendResponse($success, 'Retour enregistré avec succès.');
+    }
+
+    /**
+     * Ajoute les avenants à la réservation.
+     *
+     * @param AmendmentsRequest $request Les informations des avenants.
+     * @param string $id L'identifiant de la réservation.
+     * @return JsonResponse La réponse contenant les informations des avenants ajoutés.
+     */
+    public function addAmendments(AmendmentsRequest $request, string $id): JsonResponse
+    {
+        if (Auth::user()->cannot('create', Amendment::class)) {
+            return $this->sendError('Non autorisé', 'Vous n\'êtes pas autorisé à effectuer cette opération', 403);
+        }
+
+        $rental = Rental::findOrFail($id);
+
+        if (! $rental->handover) {
+            return $this->sendError('Erreur', 'Aucun retour n\'a été effectué pour cette réservation.', 422);
+        }
+
+        if (! $request->has('amendments')) {
+            MailHandoverJob::dispatch($rental->handover, $rental->customer);
+            return $this->sendResponse([], 'Aucun avenant à ajouter.');
+        }
     }
 }

@@ -207,7 +207,10 @@ class RentalController extends BaseController
         $rental->state = RentalState::CANCELED;
         $rental->save();
 
-        // TODO Changer l'état de la voiture
+        if (! $rental->car->rentals()->where('state', RentalState::PAID)->exists()) {
+            $rental->car->availability = CarAvailability::AVAILABLE;
+            $rental->car->save();
+        }
 
         $success['rental'] = new RentalResource($rental);
 

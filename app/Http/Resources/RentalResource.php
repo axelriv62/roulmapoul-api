@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Enums\DocumentType;
 use App\Models\Rental;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -19,6 +20,8 @@ class RentalResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $url = $this->documents->where('type', DocumentType::BILL)->first()->url ?? null;
+
         return [
             'id' => $this->id,
             'start' => Carbon::parse($this->start)->format('Y-m-d'),
@@ -30,6 +33,7 @@ class RentalResource extends JsonResource
             'options' => OptionResource::collection($this->options),
             'warranty' => new WarrantyResource($this->warranty),
             'total_price' => $this->total_price,
+            'bill_url' => $url ? asset('storage/'.$url) : null,
         ];
     }
 }

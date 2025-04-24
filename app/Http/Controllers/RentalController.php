@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CarAvailability;
 use App\Enums\RentalState;
 use App\Http\Requests\RentalRequest;
 use App\Http\Resources\RentalResource;
@@ -19,7 +20,7 @@ class RentalController extends BaseController
     /**
      * Crée une nouvelle location.
      */
-    public function store(RentalRequest $request): JsonResponse // TODO Ajouter l'état réservé à la voiture si elle est actuellement available
+    public function store(RentalRequest $request): JsonResponse
     {
         if (! CarRepository::isRentable($request->input('car_plate'), Carbon::parse($request->input('start')), Carbon::parse($request->input('end')))) {
             return $this->sendError([], "La voiture n'est pas disponible à ces dates.");
@@ -39,6 +40,9 @@ class RentalController extends BaseController
 
         $rental->total_price = RentalRepository::calculateTotalPrice($rental);
         $rental->save();
+
+        $rental->car->availability = CarAvailability::RESERVED;
+        $rental->car->save();
 
         $success['rental'] = new RentalResource($rental);
 
@@ -161,6 +165,11 @@ class RentalController extends BaseController
             return $this->sendError([], "La voiture n'est pas disponible à ces dates.");
         }
 
+        if (! $rental->car->rentals()->where('state', RentalState::PAID)->exists()) {
+            $rental->car->availability = CarAvailability::AVAILABLE;
+            $rental->car->save();
+        }
+
         $rental->update($request->validated());
 
         if ($request->has('options')) {
@@ -169,6 +178,9 @@ class RentalController extends BaseController
 
         $rental->total_price = RentalRepository::calculateTotalPrice($rental);
         $rental->save();
+
+        $rental->car->availability = CarAvailability::RESERVED;
+        $rental->car->save();
 
         $success['rental'] = new RentalResource($rental);
 
@@ -195,7 +207,10 @@ class RentalController extends BaseController
         $rental->state = RentalState::CANCELED;
         $rental->save();
 
-        // TODO Changer l'état de la voiture
+        if (! $rental->car->rentals()->where('state', RentalState::PAID)->exists()) {
+            $rental->car->availability = CarAvailability::AVAILABLE;
+            $rental->car->save();
+        }
 
         $success['rental'] = new RentalResource($rental);
 

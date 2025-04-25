@@ -4,10 +4,8 @@ namespace Database\Seeders;
 
 use App\Enums\DocumentType;
 use App\Enums\RentalState;
-use App\Models\Document;
 use App\Models\Rental;
 use Dompdf\Dompdf;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 

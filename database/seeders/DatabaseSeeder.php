@@ -2,17 +2,14 @@
 
 namespace Database\Seeders;
 
-use App\Enums\DocumentType;
 use App\Enums\Role;
 use App\Models\Customer;
 use App\Models\License;
 use App\Models\Rental;
 use App\Models\User;
 use App\Repositories\RentalRepository;
-use Dompdf\Dompdf;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {

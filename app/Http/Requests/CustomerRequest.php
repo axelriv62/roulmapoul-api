@@ -23,8 +23,8 @@ class CustomerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => 'required|string|between:4,50',
-            'last_name' => 'required|string|between:4,50',
+            'first_name' => 'required|string|between:3,50',
+            'last_name' => 'required|string|between:3,50',
             'email' => 'required|string|email|max:255|unique:customers,email,'.$this->route('id'),
             'phone' => 'required|string|between:4,50',
             'num' => 'required|string|between:1,5',

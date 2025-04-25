@@ -26,7 +26,7 @@ class DocumentSeeder extends Seeder
                 $dompdf->render();
 
                 $filePath = 'docs/withdrawal_'.$rental->customer->id.'_'.$rental->withdrawal->id.'.pdf';
-                Storage::put('docs/'.$filePath, $dompdf->output());
+                Storage::put($filePath, $dompdf->output());
 
                 $rental->documents()->create([
                     'type' => DocumentType::WITHDRAWAL,
@@ -47,7 +47,7 @@ class DocumentSeeder extends Seeder
                 ]);
 
             }
-            if ($rental->state === RentalState::COMPLETED) {
+            if ($rental->state == RentalState::COMPLETED->value) {
                 $dompdf = new Dompdf;
                 $dompdf->loadHtml(view('pdf.bill', ['rental' => $rental]));
                 $dompdf->setPaper('A4');

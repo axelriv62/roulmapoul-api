@@ -20,7 +20,9 @@ class RentalResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $url = $this->documents->where('type', DocumentType::BILL)->first()->url ?? null;
+        $billURL = $this->documents->where('type', DocumentType::BILL)->first()->url ?? null;
+        $withdrawalURL = $this->documents->where('type', DocumentType::WITHDRAWAL)->first()->url ?? null;
+        $handoverURL = $this->documents->where('type', DocumentType::HANDOVER)->first()->url ?? null;
 
         return [
             'id' => $this->id,
@@ -33,7 +35,9 @@ class RentalResource extends JsonResource
             'options' => OptionResource::collection($this->options),
             'warranty' => new WarrantyResource($this->warranty),
             'total_price' => $this->total_price,
-            'bill_url' => $url ? asset('storage/'.$url) : null,
+            'withdrawal_url' => $withdrawalURL ? asset('storage/'.$withdrawalURL) : null,
+            'handover_url' => $handoverURL ? asset('storage/'.$handoverURL) : null,
+            'bill_url' => $billURL ? asset('storage/'.$billURL) : null,
         ];
     }
 }

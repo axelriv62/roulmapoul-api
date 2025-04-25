@@ -1,0 +1,15 @@
+meta {
+  name: filtered index
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{URL}}/api/customers?first_name=Gérard
+  body: none
+  auth: inherit
+}
+
+params:query {
+  first_name: Gérard
+}

@@ -1,0 +1,141 @@
+@startuml
+hide empty members
+
+class USERS {
+    id SERIAL <<PK>>
+    name VARCHAR
+    email VARCHAR
+    password VARCHAR
+}
+
+class CUSTOMERS {
+    id SERIAL <<PK>>
+    first_name VARCHAR
+    last_name VARCHAR
+    email VARCHAR
+    phone VARCHAR
+    num VARCHAR
+    street VARCHAR
+    zip VARCHAR
+    city VARCHAR
+    country VARCHAR
+    num_bill VARCHAR
+    street_bill VARCHAR
+    zip_bill VARCHAR
+    city_bill VARCHAR
+    country_bill VARCHAR
+    user_id INT <<FK>>
+}
+
+class RENTALS {
+    id SERIAL <<PK>>
+    start DATETIME
+    end DATETIME
+    nb_days INT
+    state ENUM
+    total_price FLOAT
+    car_plate VARCHAR <<FK>>
+    customer_id INT <<FK>>
+    warranty_id INT <<FK>>
+}
+
+class LICENSES {
+    num VARCHAR <<PK>>
+    birthday DATE
+    acquirement_date DATE
+    distribution_date DATE
+    country VARCHAR
+    customer_id INT <<FK>>
+}
+
+class WARRANTIES {
+    id SERIAL <<PK>>
+    name VARCHAR
+    price FLOAT
+}
+
+class AMENDMENTS {
+    id SERIAL <<PK>>
+    name VARCHAR
+    price FLOAT
+    content VARCHAR
+    rental_id INT <<FK>>
+}
+
+class DOCUMENTS {
+    id SERIAL <<PK>>
+    type ENUM
+    url VARCHAR
+    rental_id INT <<FK>>
+}
+
+class WITHDRAWALS {
+    id SERIAL <<PK>>
+    fuel_level FLOAT
+    interior_condition VARCHAR
+    exterior_condition VARCHAR
+    mileage FLOAT
+    datetime DATETIME
+    comment VARCHAR
+    customer_id INT <<FK>>
+    rental_id INT <<FK>>
+}
+
+class HANDOVERS {
+    id SERIAL <<PK>>
+    fuel_level FLOAT
+    interior_condition VARCHAR
+    exterior_condition VARCHAR
+    mileage FLOAT
+    datetime DATETIME
+    comment VARCHAR
+    customer_id INT <<FK>>
+    rental_id INT <<FK>>
+}
+
+class CARS {
+    plate VARCHAR <<PK>>
+    availability ENUM
+    price_day FLOAT
+    category_id INT <<FK>>
+    agency_id INT <<FK>>
+}
+
+class OPTIONS {
+    id SERIAL <<PK>>
+    name VARCHAR
+    description VARCHAR
+    price FLOAT
+}
+
+class CATEGORIES {
+    id SERIAL <<PK>>
+    name VARCHAR
+    description VARCHAR
+}
+
+class AGENCIES {
+    id SERIAL <<PK>>
+    num VARCHAR
+    street VARCHAR
+    zip VARCHAR
+    city VARCHAR
+    country VARCHAR
+}
+
+CARS "*" -- "1" AGENCIES
+CARS "*" -- "1" CATEGORIES
+CARS "1" -- "*" RENTALS
+RENTALS "1" -- "*" AMENDMENTS
+RENTALS "1" -- "0..1" WITHDRAWALS
+WITHDRAWALS "*" -- "1" CUSTOMERS
+USERS "0..1" -- "0..1" CUSTOMERS
+LICENSES "1" -- "1" CUSTOMERS
+WARRANTIES "0..1" -- "*" RENTALS
+OPTIONS "*" -- "*" RENTALS
+DOCUMENTS "0..*" -- "1" RENTALS
+CUSTOMERS "1" -- "*" HANDOVERS
+RENTALS "1" -- "0..1" HANDOVERS
+CUSTOMERS "1" -- "*" RENTALS
+
+@enduml

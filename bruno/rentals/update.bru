@@ -1,0 +1,26 @@
+meta {
+  name: update
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{URL}}/api/rentals/54
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: 2|I3FGXGKQfS0KC714MKGgBNmyu39n9G7Kz0BrH5nfd31be48a
+}
+
+body:json {
+  {
+    "customer_id": 50,
+    "car_plate": "XX000XX",
+    "start": "2025-08-21",
+    "end": "2025-09-23",
+    "warranty_id" : 1,
+    "options": [1, 2]
+  }
+}

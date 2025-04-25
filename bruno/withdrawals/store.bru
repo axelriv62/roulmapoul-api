@@ -1,0 +1,27 @@
+meta {
+  name: store
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{URL}}/api/rentals/51/withdrawal
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: 1|ktvqWvPaUlRcKAKZhHHHGb4XCXaEfqWa6vEoqgV74bba9af3
+}
+
+body:json {
+  {
+    "datetime": "2025-01-01 13:05:21",
+    "car_plate": "XX000XX",
+    "mileage": 50,
+    "fuel_level": 21,
+    "interior_condition": "good",
+    "exterior_condition": "good",
+    "comment": "nardinamouk"
+  }
+}

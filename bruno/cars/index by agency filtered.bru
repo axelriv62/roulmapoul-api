@@ -1,0 +1,16 @@
+meta {
+  name: index by agency filtered
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{URL}}/api/cars/agency/7?start=19/04/2025&end=16/05/2025
+  body: none
+  auth: inherit
+}
+
+params:query {
+  start: 19/04/2025
+  end: 16/05/2025
+}

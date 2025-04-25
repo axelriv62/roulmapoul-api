@@ -1,0 +1,58 @@
+stages:
+  - build
+  - linting
+  - test
+
+cache:
+  paths:
+    - vendor/
+
+build:
+  stage: build
+  image: dh-iutl.univ-artois.fr/composer
+  tags:
+    - docker
+  script:
+    - touch database/database.sqlite
+    - cp .env.example .env
+    - composer install --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-req=ext-gd
+    - php artisan key:generate
+    - php artisan migrate
+  only:
+    - merge_requests
+    - main
+    - dev
+  artifacts:
+    paths:
+      - vendor/
+      - database/database.sqlite
+      - .env
+    expire_in: 1 week
+
+linting:
+  stage: linting
+  image: dh-iutl.univ-artois.fr/composer
+  tags:
+    - docker
+  script:
+    - ./vendor/bin/pint --test
+  only:
+    - merge_requests
+    - main
+    - dev
+
+phpunit:
+  stage: test
+  image: dh-iutl.univ-artois.fr/composer
+  tags:
+    - docker
+  dependencies:
+    - build
+  script:
+    - echo "Lancement des tests PHPUnit..."
+    - php artisan test
+  only:
+    - merge_requests
+    - main
+    - dev
+

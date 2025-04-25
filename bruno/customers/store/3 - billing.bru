@@ -1,0 +1,21 @@
+meta {
+  name: 3 : billing
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{URL}}/api/customers/52/billing
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "num": "32",
+    "street": "Nelson Mandela",
+    "zip": "62122",
+    "city": "Angres",
+    "country": "France"
+  }
+}

@@ -1,0 +1,18 @@
+meta {
+  name: login admin
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{URL}}/api/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "robert.duchmol@roulmapoul.fr",
+    "password": "GrosSecret"
+  }
+}

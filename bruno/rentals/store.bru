@@ -1,0 +1,26 @@
+meta {
+  name: store
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{URL}}/api/rentals
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: 11|JmOUY3l1tiaOJYjay3mjUqYEgyQWD8h3rvoeSSWu7be3167c
+}
+
+body:json {
+  {
+    "customer_id": 51,
+    "car_plate": "XX000XX",
+    "start": "2025-06-23",
+    "end": "2025-07-23",
+    "warranty_id" : 1,
+    "options": [1, 2]
+  }
+}

@@ -1,0 +1,15 @@
+meta {
+  name: index filtered
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{URL}}/api/agencies?city=Heidenreichchester
+  body: none
+  auth: inherit
+}
+
+params:query {
+  city: Heidenreichchester
+}

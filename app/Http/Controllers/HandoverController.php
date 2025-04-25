@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\CarAvailability;
 use App\Enums\CarCondition;
+use App\Enums\DocumentType;
 use App\Enums\RentalState;
 use App\Http\Requests\AmendmentsRequest;
 use App\Http\Requests\HandoverRequest;
@@ -12,10 +13,13 @@ use App\Http\Resources\HandoverResource;
 use App\Jobs\MailBillJob;
 use App\Jobs\MailHandoverJob;
 use App\Models\Amendment;
+use App\Models\Document;
 use App\Models\Handover;
 use App\Models\Rental;
+use Dompdf\Dompdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class HandoverController extends BaseController
 {
@@ -93,6 +97,7 @@ class HandoverController extends BaseController
         }
 
         if (! $request->has('amendments')) {
+            $this->generateDocuments($rental);
             MailHandoverJob::dispatch($rental->handover, $rental->customer);
             MailBillJob::dispatch($rental, $rental->customer);
 
@@ -102,14 +107,64 @@ class HandoverController extends BaseController
         foreach ($request->input('amendments') as $amendment) {
             $rental->amendments()->create($amendment);
         }
+
         $rental->total_price += $rental->amendments()->sum('price');
         $rental->save();
 
+        $this->generateDocuments($rental);
         MailHandoverJob::dispatch($rental->handover, $rental->customer);
         MailBillJob::dispatch($rental, $rental->customer);
 
         $success['amendments'] = AmendmentResource::collection($rental->amendments);
 
         return $this->sendResponse($success, 'Avenants ajoutés avec succès.');
+    }
+
+    /**
+     * Génère les documents de retour et de facture pour une réservation.
+     *
+     * @param  Rental  $rental  La réservation concernée.
+     */
+    private function generateDocuments(Rental $rental): void
+    {
+        $this->generateDocument(
+            'handover',
+            ['handover' => $rental->handover],
+            'docs/handover_'.$rental->customer->id.'_'.$rental->handover->id.'.pdf',
+            DocumentType::HANDOVER->value,
+            $rental
+        );
+
+        $this->generateDocument(
+            'bill',
+            ['rental' => $rental],
+            'docs/bill_'.$rental->customer->id.'_'.$rental->id.'.pdf',
+            DocumentType::BILL->value,
+            $rental
+        );
+    }
+
+    /**
+     * Génère un document PDF et l'enregistre.
+     *
+     * @param  string  $view  La vue utilisée pour générer le PDF.
+     * @param  array  $data  Les données à passer à la vue.
+     * @param  string  $filePath  Le chemin du fichier à enregistrer.
+     * @param  string  $type  Le type de document.
+     * @param  Rental  $rental  La réservation concernée.
+     */
+    private function generateDocument(string $view, array $data, string $filePath, string $type, Rental $rental): void
+    {
+        $dompdf = new Dompdf;
+        $dompdf->loadHtml(view('pdf.'.$view, $data));
+        $dompdf->setPaper('A4');
+        $dompdf->render();
+
+        Storage::put($filePath, $dompdf->output());
+
+        $rental->documents()->create([
+            'type' => $type,
+            'url' => $filePath,
+        ]);
     }
 }

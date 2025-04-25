@@ -5,9 +5,7 @@ namespace App\Jobs;
 use App\Enums\DocumentType;
 use App\Mail\MailWithdrawal;
 use App\Models\Customer;
-use App\Models\Document;
 use App\Models\Withdrawal;
-use Dompdf\Dompdf;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Mail;
@@ -30,23 +28,9 @@ class MailWithdrawalJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $dompdf = new Dompdf;
-        $dompdf->loadHtml(view('pdf.withdrawal', ['withdrawal' => $this->withdrawal]));
-        $dompdf->setPaper('A4');
-        $dompdf->render();
-
-        $filePath = 'docs/withdrawal_'.$this->customer->id.'_'.$this->withdrawal->id.'.pdf';
-        Storage::put('docs/'.$filePath, $dompdf->output());
-
-        Document::create([
-            'type' => DocumentType::WITHDRAWAL,
-            'url' => $filePath,
-            'rental_id' => $this->withdrawal->rental->id,
-        ]);
-
         try {
             print_r("Envoi de l'email de retrait à {$this->customer->email} pour le retrait {$this->withdrawal->id}.\n");
-
+            $filePath = $this->withdrawal->rental->documents()->where('type', DocumentType::WITHDRAWAL->value)->first()->url;
             $success = Mail::to($this->customer->email)->send(new MailWithdrawal($this->customer, Storage::path($filePath)));
 
             print_r($this->customer->email.'  : '.($success ? 'Email envoyé' : 'Email non envoyé'));
